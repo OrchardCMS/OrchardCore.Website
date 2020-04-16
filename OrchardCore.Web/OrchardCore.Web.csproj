@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TieredCompilation>true</TieredCompilation>
+    <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+    <PreserveCompilationReferences>true</PreserveCompilationReferences>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="OrchardCore.Application.Cms.Core.Targets" Version="1.0.0-rc1-12815" />
+    <PackageReference Include="OrchardCore.Logging.NLog" Version="1.0.0-rc1-12815" />
+    <!--<PackageReference Include="Disqus.OrchardCore" Version="1.0.0-rc1-10011" />-->
+  </ItemGroup>
+
+  <ItemGroup>
+    <!--<ProjectReference Include="..\..\..\Netonia\Netonia.OrchardCore\Disqus.OrchardCore\src\Disqus\Disqus.csproj" />-->
+    <ProjectReference Include="..\TheOrchardProjectTheme\TOPT.csproj" />
+  </ItemGroup>
+
+</Project>
