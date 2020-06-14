@@ -1,5 +1,10 @@
 {
   "Default": {
     "State": "Running"
+  },
+  "Blog": {
+    "Identifier": "4nxb2v6hz9ngc335k37q5ehtma",
+    "RequestUrlPrefix": "blog",
+    "State": "Running"
   }
 }
