@@ -1,24 +1,25 @@
-<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk.Razor">
 
-  <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
-    <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+		<PreserveCompilationReferences>true</PreserveCompilationReferences>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="OrchardCore.ContentManagement" Version="1.0.0" />
-    <PackageReference Include="OrchardCore.DisplayManagement" Version="1.0.0" />
-	<PackageReference Include="OrchardCore.ResourceManagement.Abstractions" Version="1.0.0" />
-    <PackageReference Include="OrchardCore.ResourceManagement" Version="1.0.0" />
-    <PackageReference Include="OrchardCore.Theme.Targets" Version="1.0.0" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="OrchardCore.ContentManagement" Version="1.6.0" />
+		<PackageReference Include="OrchardCore.DisplayManagement" Version="1.6.0" />
+		<PackageReference Include="OrchardCore.ResourceManagement.Abstractions" Version="1.6.0" />
+		<PackageReference Include="OrchardCore.ResourceManagement" Version="1.6.0" />
+		<PackageReference Include="OrchardCore.Theme.Targets" Version="1.6.0" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <EmbeddedResource Remove="**\*.less;**\*.scss;" />
-    <EmbeddedResource Remove="wwwroot\gulpfile.js" />
-    <EmbeddedResource Remove="wwwroot\index.html" />
-    <EmbeddedResource Remove="wwwroot\package-lock.json" />
-    <EmbeddedResource Remove="wwwroot\package.json" />
-  </ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Remove="**\*.less;**\*.scss;" />
+		<EmbeddedResource Remove="wwwroot\gulpfile.js" />
+		<EmbeddedResource Remove="wwwroot\index.html" />
+		<EmbeddedResource Remove="wwwroot\package-lock.json" />
+		<EmbeddedResource Remove="wwwroot\package.json" />
+	</ItemGroup>
 
 </Project>

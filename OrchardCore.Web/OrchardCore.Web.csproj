@@ -1,16 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
 	<PropertyGroup>
-		<TargetFramework>net5.0</TargetFramework>
-		<AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
-		<PreserveCompilationReferences>true</PreserveCompilationReferences>
+		<TargetFramework>net6.0</TargetFramework>
+		<AddRazorSupportForMvc>true</AddRazorSupportForMvc>
+		<LangVersion>preview</LangVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<!--<PackageReference Include="CookieConsent.OrchardCore" Version="1.0.0-rc2-10010" />
-		<PackageReference Include="Disqus.OrchardCore" Version="1.0.0-rc2-10023" />-->
-		<PackageReference Include="OrchardCore.Application.Cms.Targets" Version="1.0.0" />
-		<PackageReference Include="OrchardCore.Logging.NLog" Version="1.0.0" />
+		<PackageReference Include="OrchardCore.Application.Cms.Targets" Version="1.6.0" />
+		<PackageReference Include="OrchardCore.Logging.NLog" Version="1.6.0" />
 	</ItemGroup>
 
 	<ItemGroup>
