@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace OrchardCoreFr.Web
+namespace OrchardCore.Web
 {
     public class Startup
     {
