@@ -26,3 +26,14 @@ header.masthead {
 .timeline > li .timeline-image {
     background-color: #71ba70 !important;
 }
+
+.timeline > li .timeline-image > span {
+    top: -5px;
+}
+
+@media (min-width: 768px) {
+    .timeline > li .timeline-image {
+        width: 130px !important;
+        height: 130px !important;
+    }
+}
