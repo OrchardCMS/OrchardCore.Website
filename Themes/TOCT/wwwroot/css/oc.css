@@ -32,10 +32,10 @@ header.masthead {
 }
 
 @media (max-device-width: 768px) {
-    .fa-4x {
+    .timeline-image .fa-4x {
         font-size: 40px !important;
     }
-    .fa-4x i {
+    .timeline-image .fa-4x i {
         font-size: 40px !important;
     }
 }
