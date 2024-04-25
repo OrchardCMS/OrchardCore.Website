@@ -11,6 +11,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\Themes\OCWS\OCWS.csproj" />
 		<ProjectReference Include="..\Themes\TOCT\TOCT.csproj" />
 	</ItemGroup>
 

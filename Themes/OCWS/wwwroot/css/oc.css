@@ -1,0 +1,48 @@
+.btn-primary {
+    background-color: #71ba70 !important;
+    border-color: #71ba70 !important;
+}
+
+.text-primary {
+    color: #71ba70 !important;
+}
+
+header.masthead {
+    background-image: url(../img/header-bg.jpg);
+}
+
+.navbar-brand {
+    background-image: url("../img/logo.png");
+    background-repeat: no-repeat;
+    color: #71ba70 !important;
+    padding-left: 48px;
+    padding-top: 0px
+}
+
+.timeline-image .fa-stack {
+    width: 1.5em;
+}
+
+.timeline > li .timeline-image {
+    background-color: #71ba70 !important;
+}
+
+.timeline > li .timeline-image > span {
+    top: -5px;
+}
+
+@media (max-device-width: 768px) {
+    .timeline-image .fa-4x {
+        font-size: 40px !important;
+    }
+    .timeline-image .fa-4x i {
+        font-size: 40px !important;
+    }
+}
+
+@media (min-width: 768px) {
+    .timeline > li .timeline-image {
+        width: 130px !important;
+        height: 130px !important;
+    }
+}

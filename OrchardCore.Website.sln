@@ -14,6 +14,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Themes", "Themes", "{104BEE
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TOCT", "Themes\TOCT\TOCT.csproj", "{6E49FE60-4A01-44D7-84FB-48297A6C6C0E}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OCWS", "Themes\OCWS\OCWS.csproj", "{D8525626-1BEF-4052-8EF0-DFD5C7E3EA0D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,12 +30,17 @@ Global
 		{6E49FE60-4A01-44D7-84FB-48297A6C6C0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6E49FE60-4A01-44D7-84FB-48297A6C6C0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6E49FE60-4A01-44D7-84FB-48297A6C6C0E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8525626-1BEF-4052-8EF0-DFD5C7E3EA0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8525626-1BEF-4052-8EF0-DFD5C7E3EA0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8525626-1BEF-4052-8EF0-DFD5C7E3EA0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8525626-1BEF-4052-8EF0-DFD5C7E3EA0D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{6E49FE60-4A01-44D7-84FB-48297A6C6C0E} = {104BEE50-A6B0-46C7-B2E5-0EB6BBCCFD16}
+		{D8525626-1BEF-4052-8EF0-DFD5C7E3EA0D} = {104BEE50-A6B0-46C7-B2E5-0EB6BBCCFD16}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4F226CAA-CE35-45EF-83CA-57F68BC1EE1B}
