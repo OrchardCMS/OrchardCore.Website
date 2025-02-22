@@ -8,6 +8,8 @@ You can just launch the web app (like with <kbd>Ctrl</kbd>+<kbd>F5</kbd> in Visu
 
 You can log in with `admin` and `Passsword1!`.
 
+To reinitialize the site, just delete the `OrchardCore.Web/App_Data` folder, or use the `Reset-Local.ps1` from the root.
+
 ## Deploying to Azure
 
 The `deploy` GitHub Actions workflow deploys the app automatically. Any commit to `main` will trigger it, but you can trigger it manually too for any branch.
