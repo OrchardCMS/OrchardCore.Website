@@ -8,6 +8,7 @@ on:
 
 jobs:
   build:
+    name: Build
     runs-on: ubuntu-24.04
     permissions:
       contents: read
@@ -15,24 +16,22 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up .NET Core
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: '8.x'
+      - uses: OrchardCMS/OrchardCore/.github/actions/setup-dotnet@main
 
-      - name: Build with dotnet
-        run: dotnet build --configuration Release
+      - name: Build
+        run: dotnet build ./OrchardCore.Web/OrchardCore.Web.csproj --configuration Release
 
-      - name: dotnet publish
-        run: dotnet publish -c Release -o "${{env.DOTNET_ROOT}}/myapp"
+      - name: Publish
+        run: dotnet publish ./OrchardCore.Web/OrchardCore.Web.csproj --configuration Release --output "${{env.DOTNET_ROOT}}/publish"
 
-      - name: Upload artifact for deployment job
+      - name: Upload Publish Package
         uses: actions/upload-artifact@v4
         with:
-          name: .net-app
-          path: ${{env.DOTNET_ROOT}}/myapp
+          name: publish-package
+          path: ${{env.DOTNET_ROOT}}/publish
 
   deploy:
+    name: Deploy
     runs-on: ubuntu-24.04
     needs: build
     environment:
@@ -40,10 +39,10 @@ jobs:
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     
     steps:
-      - name: Download artifact from build job
+      - name: Download Publish Package
         uses: actions/download-artifact@v4
         with:
-          name: .net-app
+          name: publish-package
       
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
