@@ -51,7 +51,6 @@ jobs:
           app-name: 'orcharddotnet'
           slot-name: 'Production'
           package: .
-          type: zip
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_4FE0CF1DE8714910989348B2AF6EDB6D }}
           # Clean deployments would wipe all files from the server, deleting the SQLite DB and Media files too.
           clean: false
