@@ -91,4 +91,4 @@ jobs:
           package: app_offline
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_4FE0CF1DE8714910989348B2AF6EDB6D }}
           clean: true
-          target-path: site/wwwroot/app_offline.html
+          target-path: /site/wwwroot/app_offline.htm
