@@ -8,6 +8,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="app_offline\app_offline.htm" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="app_offline\app_offline.htm">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="OrchardCore.Application.Cms.Targets" Version="1.8.3" />
     <PackageReference Include="OrchardCore.Logging.NLog" Version="1.8.3" />
   </ItemGroup>

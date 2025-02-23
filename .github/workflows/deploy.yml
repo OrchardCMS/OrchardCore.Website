@@ -30,6 +30,12 @@ jobs:
           name: publish-package
           path: ${{env.DOTNET_ROOT}}/publish
 
+      - name: Upload App Offline
+        uses: actions/upload-artifact@v4
+        with:
+            name: app-offline
+            path: ./OrchardCore.Web/app_offline/app_offline.html
+
   deploy:
     name: Deploy
     runs-on: ubuntu-24.04
@@ -43,8 +49,25 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: publish-package
+
+      - name: Download App Offline
+        uses: actions/download-artifact@v4
+        with:
+          name: app-offline
+          path: app_offline
       
-      - name: Deploy to Azure Web App
+      # Stopping the app with an app_offline.htm file. Without this, files will remain locked and the deployment will
+      # fail with a generic error.
+      - name: Deploy App Offline to Azure Web App
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: 'orcharddotnet'
+          slot-name: 'Production'
+          package: app_offline/app_offline.htm
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_4FE0CF1DE8714910989348B2AF6EDB6D }}
+          clean: false
+
+      - name: Deploy Website to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
@@ -54,4 +77,18 @@ jobs:
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_4FE0CF1DE8714910989348B2AF6EDB6D }}
           # Clean deployments would wipe all files from the server, deleting the SQLite DB and Media files too.
           clean: false
-          restart: true
+
+      - name: Delete App Offline File
+        shell: pwsh
+        run: |
+          Remove-Item -Path 'app_offline/app_offline.htm'
+
+      - name: Remove App Offline from Azure Web App
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: 'orcharddotnet'
+          slot-name: 'Production'
+          package: app_offline
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_4FE0CF1DE8714910989348B2AF6EDB6D }}
+          clean: true
+          target-path: site/wwwroot/app_offline.html
