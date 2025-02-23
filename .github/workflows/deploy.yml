@@ -63,7 +63,7 @@ jobs:
         with:
           app-name: 'orcharddotnet'
           slot-name: 'Production'
-          package: app_offline/app_offline.htm
+          package: app_offline
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_4FE0CF1DE8714910989348B2AF6EDB6D }}
           clean: false
 
