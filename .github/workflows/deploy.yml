@@ -34,7 +34,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
             name: app-offline
-            path: ./OrchardCore.Web/app_offline/app_offline.html
+            path: ./OrchardCore.Web/app_offline/app_offline.htm
 
   deploy:
     name: Deploy
