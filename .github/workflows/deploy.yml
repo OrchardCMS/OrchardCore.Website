@@ -66,12 +66,3 @@ jobs:
           # Clean deployments would wipe all files from the server, deleting the SQLite DB and Media files too.
           clean: false
 
-      - name: Remove App Offline from Azure Web App
-        uses: azure/webapps-deploy@v3
-        with:
-          app-name: 'orcharddotnet'
-          slot-name: 'Production'
-          package: PostDeploymentActions
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_4FE0CF1DE8714910989348B2AF6EDB6D }}
-          clean: false
-          target-path: D:/site/deployments/tools/PostDeploymentActions/

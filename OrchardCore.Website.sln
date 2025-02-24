@@ -7,6 +7,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		NuGet.config = NuGet.config
 		README.md = README.md
+		PostDeploymentActions\Readme.md = PostDeploymentActions\Readme.md
+		PostDeploymentActions\RemoveAppOffline.ps1 = PostDeploymentActions\RemoveAppOffline.ps1
 		Reset-Local.ps1 = Reset-Local.ps1
 	EndProjectSection
 EndProject
@@ -20,8 +22,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{02EA
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{626A55B0-ACA9-4FFF-943A-9152ACB7CF08}"
 	ProjectSection(SolutionItems) = preProject
-		.github\workflows\deploy.yml = .github\workflows\deploy.yml
 		.github\workflows\ci.yml = .github\workflows\ci.yml
+		.github\workflows\deploy.yml = .github\workflows\deploy.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PostDeploymentActions", "PostDeploymentActions", "{481F35BA-54E1-477E-92DC-D968876C34D4}"
+	ProjectSection(SolutionItems) = preProject
+		PostDeploymentActions\Readme.md = PostDeploymentActions\Readme.md
+		PostDeploymentActions\RemoveAppOffline.ps1 = PostDeploymentActions\RemoveAppOffline.ps1
 	EndProjectSection
 EndProject
 Global
