@@ -46,14 +46,14 @@ jobs:
       
       # Stopping the app with an app_offline.htm file. Without this, files will remain locked and the deployment will
       # fail with a generic error.
-      - name: Deploy App Offline to Azure Web App
-        uses: azure/webapps-deploy@v3
-        with:
-          app-name: 'orcharddotnet'
-          slot-name: 'Production'
-          package: AppOffline
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_4FE0CF1DE8714910989348B2AF6EDB6D }}
-          clean: false
+      # - name: Deploy App Offline to Azure Web App
+      #   uses: azure/webapps-deploy@v3
+      #   with:
+      #     app-name: 'orcharddotnet'
+      #     slot-name: 'Production'
+      #     package: AppOffline
+      #     publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_4FE0CF1DE8714910989348B2AF6EDB6D }}
+      #     clean: false
 
       - name: Deploy Website to Azure Web App
         id: deploy-to-webapp
