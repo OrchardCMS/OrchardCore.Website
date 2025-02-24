@@ -30,12 +30,6 @@ jobs:
           name: publish-package
           path: ${{env.DOTNET_ROOT}}/publish
 
-      # - name: Upload App Offline
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #       name: app-offline
-      #       path: ./OrchardCore.Web/AppOffline/app_offline.htm
-
   deploy:
     name: Deploy
     runs-on: ubuntu-24.04
@@ -49,12 +43,6 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: publish-package
-
-      # - name: Download App Offline
-      #   uses: actions/download-artifact@v4
-      #   with:
-      #     name: app-offline
-      #     path: AppOffline
       
       # Stopping the app with an app_offline.htm file. Without this, files will remain locked and the deployment will
       # fail with a generic error.
