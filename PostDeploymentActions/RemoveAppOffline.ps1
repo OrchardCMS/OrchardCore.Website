@@ -1,10 +1,9 @@
-﻿$wwwrootPath = Join-Path $env:HOME 'wwwroot'
+﻿$wwwrootPath = Join-Path $env:HOME 'site'
+$wwwrootPath = Join-Path $wwwrootPath 'wwwroot'
 $appOfflinePath = Join-Path $wwwrootPath 'app_offline.htm'
 $markerFilePath = Join-Path $wwwrootPath 'app_offline-was-last-deployment.txt'
 
 Write-Output "The path of the wwwroot folder: $wwwrootPath."
-
-Get-ChildItem -Path $wwwrootPath -Recurse | ForEach-Object { Write-Output $_.FullName }
 
 if (Test-Path -Path $markerFilePath)
 {
