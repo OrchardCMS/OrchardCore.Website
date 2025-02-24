@@ -52,7 +52,7 @@ jobs:
           app-name: 'orcharddotnet'
           slot-name: 'Production'
           package: AppOffline
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_4FE0CF1DE8714910989348B2AF6EDB6D }}
+          publish-profile: ${{ secrets.ORCHARDDOTNET_PUBLISH_PROFILE }}
           clean: false
 
       - name: Deploy Website to Azure Web App
@@ -62,7 +62,7 @@ jobs:
           app-name: 'orcharddotnet'
           slot-name: 'Production'
           package: .
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_4FE0CF1DE8714910989348B2AF6EDB6D }}
+          publish-profile: ${{ secrets.ORCHARDDOTNET_PUBLISH_PROFILE }}
           # Clean deployments would wipe all files from the server, deleting the SQLite DB and Media files too.
           clean: false
 
