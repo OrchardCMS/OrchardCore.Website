@@ -1,5 +1,4 @@
-﻿#$wwwrootPath = '../../../wwwroot'
-$wwwrootPath = 'wwwroot'
+﻿$wwwrootPath = '../../../wwwroot'
 $appOfflinePath = $wwwrootPath + '/app_offline.htm'
 $markerFilePath = $wwwrootPath + '/app_offline was last deployment.txt'
 
