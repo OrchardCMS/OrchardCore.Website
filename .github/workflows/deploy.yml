@@ -87,3 +87,4 @@ jobs:
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_4FE0CF1DE8714910989348B2AF6EDB6D }}
           clean: false
           target-path: /home/deployments/tools/PostDeploymentActions/
+          type: 'static'
