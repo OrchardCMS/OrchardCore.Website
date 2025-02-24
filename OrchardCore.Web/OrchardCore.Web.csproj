@@ -8,11 +8,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="app_offline\app_offline.htm" />
+    <None Remove="AppOffline\app_offline.htm" />
+    <None Remove="PostDeploymentActions\RemoveAppOffline.ps1" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="app_offline\app_offline.htm">
+    <Content Include="AppOffline\app_offline.htm">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="PostDeploymentActions\RemoveAppOffline.ps1">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

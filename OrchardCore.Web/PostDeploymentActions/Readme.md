@@ -1,0 +1,1 @@
+﻿These scripts will run after each deployment, utilizing Kudu's [Post Deployment Action Hooks](https://github.com/projectkudu/kudu/wiki/Post-Deployment-Action-Hooks).
