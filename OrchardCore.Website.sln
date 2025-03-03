@@ -6,15 +6,31 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D8AC69EF-93A7-4607-8A90-FBC68A177DE8}"
 	ProjectSection(SolutionItems) = preProject
 		NuGet.config = NuGet.config
+		README.md = README.md
+		PostDeploymentActions\Readme.md = PostDeploymentActions\Readme.md
+		PostDeploymentActions\RemoveAppOffline.ps1 = PostDeploymentActions\RemoveAppOffline.ps1
+		Reset-Local.ps1 = Reset-Local.ps1
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrchardCore.Web", "OrchardCore.Web\OrchardCore.Web.csproj", "{8B90D2C5-765A-4580-8AD9-6DB7D3DD96C4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Themes", "Themes", "{104BEE50-A6B0-46C7-B2E5-0EB6BBCCFD16}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TOCT", "Themes\TOCT\TOCT.csproj", "{6E49FE60-4A01-44D7-84FB-48297A6C6C0E}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OCWS", "Themes\OCWS\OCWS.csproj", "{D8525626-1BEF-4052-8EF0-DFD5C7E3EA0D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{626A55B0-ACA9-4FFF-943A-9152ACB7CF08}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\ci.yml = .github\workflows\ci.yml
+		.github\workflows\deploy.yml = .github\workflows\deploy.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PostDeploymentActions", "PostDeploymentActions", "{481F35BA-54E1-477E-92DC-D968876C34D4}"
+	ProjectSection(SolutionItems) = preProject
+		PostDeploymentActions\Readme.md = PostDeploymentActions\Readme.md
+		PostDeploymentActions\RemoveAppOffline.ps1 = PostDeploymentActions\RemoveAppOffline.ps1
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,10 +42,6 @@ Global
 		{8B90D2C5-765A-4580-8AD9-6DB7D3DD96C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8B90D2C5-765A-4580-8AD9-6DB7D3DD96C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8B90D2C5-765A-4580-8AD9-6DB7D3DD96C4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6E49FE60-4A01-44D7-84FB-48297A6C6C0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6E49FE60-4A01-44D7-84FB-48297A6C6C0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6E49FE60-4A01-44D7-84FB-48297A6C6C0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6E49FE60-4A01-44D7-84FB-48297A6C6C0E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D8525626-1BEF-4052-8EF0-DFD5C7E3EA0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D8525626-1BEF-4052-8EF0-DFD5C7E3EA0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D8525626-1BEF-4052-8EF0-DFD5C7E3EA0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -39,8 +51,8 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{6E49FE60-4A01-44D7-84FB-48297A6C6C0E} = {104BEE50-A6B0-46C7-B2E5-0EB6BBCCFD16}
 		{D8525626-1BEF-4052-8EF0-DFD5C7E3EA0D} = {104BEE50-A6B0-46C7-B2E5-0EB6BBCCFD16}
+		{626A55B0-ACA9-4FFF-943A-9152ACB7CF08} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4F226CAA-CE35-45EF-83CA-57F68BC1EE1B}

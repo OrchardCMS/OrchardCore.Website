@@ -1,0 +1,68 @@
+name: Build and Deploy to Azure
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: OrchardCMS/OrchardCore/.github/actions/setup-dotnet@main
+
+      - name: Build
+        run: dotnet build ./OrchardCore.Web/OrchardCore.Web.csproj --configuration Release
+
+      - name: Publish
+        run: dotnet publish ./OrchardCore.Web/OrchardCore.Web.csproj --configuration Release --output "${{env.DOTNET_ROOT}}/publish"
+
+      - name: Upload Publish Package
+        uses: actions/upload-artifact@v4
+        with:
+          name: publish-package
+          path: ${{env.DOTNET_ROOT}}/publish
+
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-24.04
+    needs: build
+    environment:
+      name: 'Production'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+    
+    steps:
+      - name: Download Publish Package
+        uses: actions/download-artifact@v4
+        with:
+          name: publish-package
+      
+      # Stopping the app with an app_offline.htm file. Without this, files will remain locked and the deployment will
+      # fail with a generic error.
+      - name: Deploy App Offline to Azure Web App
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: 'orcharddotnet'
+          slot-name: 'Production'
+          package: AppOffline
+          publish-profile: ${{ secrets.ORCHARDDOTNET_PUBLISH_PROFILE }}
+          clean: false
+
+      - name: Deploy Website to Azure Web App
+        id: deploy-to-webapp
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: 'orcharddotnet'
+          slot-name: 'Production'
+          package: .
+          publish-profile: ${{ secrets.ORCHARDDOTNET_PUBLISH_PROFILE }}
+          # Clean deployments would wipe all files from the server, deleting the SQLite DB and Media files too.
+          clean: false
+

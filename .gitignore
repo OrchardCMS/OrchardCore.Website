@@ -186,6 +186,6 @@ nuget.exe
 node_modules/*
 
 **/Localization/**/*.po
-OrchardCore.Web/App_Data/Sites/*/Lucene/*
+OrchardCore.Web/App_Data/
 OrchardCore.Web/wwwroot/is-cache
 OrchardCore.Web/wwwroot/Default/is-cache
