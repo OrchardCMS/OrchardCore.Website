@@ -32,6 +32,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PostDeploymentActions", "Po
 		PostDeploymentActions\RemoveAppOffline.ps1 = PostDeploymentActions\RemoveAppOffline.ps1
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "orchardproject.net", "orchardproject.net", "{E8D96DCF-FD65-4D8C-86C1-99629D43A23D}"
+	ProjectSection(SolutionItems) = preProject
+		orchardproject.net\Readme.md = orchardproject.net\Readme.md
+		orchardproject.net\web.config = orchardproject.net\web.config
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
