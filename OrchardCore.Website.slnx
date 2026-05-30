@@ -14,8 +14,6 @@
   </Folder>
   <Folder Name="/Solution Items/">
     <File Path="NuGet.config" />
-    <File Path="PostDeploymentActions/Readme.md" />
-    <File Path="PostDeploymentActions/RemoveAppOffline.ps1" />
     <File Path="README.md" />
     <File Path="Reset-Local.ps1" />
   </Folder>
