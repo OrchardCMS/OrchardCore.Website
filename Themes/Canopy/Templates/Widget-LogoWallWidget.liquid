@@ -1,0 +1,15 @@
+{% assign logos = Model.ContentItem.Content.LogoWallWidget.Logos %}
+<section class="section-stack reveal">
+    <div class="prose">
+        <span class="eyebrow">{{ 'Trusted by teams everywhere' | t }}</span>
+    </div>
+    <div class="logo-wall" aria-label="{{ 'Partner and customer logos' | t }}">
+        {% for logo in logos %}
+            <figure class="logo-wall__item">
+                {% if logo.Paths.first != blank %}
+                    <img src="{{ logo.Paths.first | asset_url }}" alt="{{ logo.AltText | default: 'Customer logo' | escape }}" loading="lazy" />
+                {% endif %}
+            </figure>
+        {% endfor %}
+    </div>
+</section>

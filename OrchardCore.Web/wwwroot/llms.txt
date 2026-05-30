@@ -1,0 +1,38 @@
+# Orchard Core
+
+> A modular, multi-tenant application framework and CMS for ASP.NET Core.
+
+Orchard Core is an open-source, MIT-licensed framework that combines a powerful content management system with a modular application platform. Built entirely on ASP.NET Core, it powers websites, portals, and multi-tenant SaaS applications for organizations worldwide.
+
+## Key Pages
+
+- Homepage: https://orchardcore.net/
+- For Developers: https://orchardcore.net/developers
+- For Business: https://orchardcore.net/business
+- Documentation: https://docs.orchardcore.net
+- GitHub Repository: https://github.com/OrchardCMS/OrchardCore
+- NuGet Packages: https://www.nuget.org/packages/OrchardCore.Application.Cms.Targets
+- Discord Community: https://orchardcore.net/discord
+- Blog: https://orchardcore.net/blog
+
+## License
+
+MIT License — free for commercial and personal use.
+
+## Technology
+
+- Platform: ASP.NET Core / .NET 8+
+- Language: C#
+- Package manager: NuGet
+- Database: SQL Server, PostgreSQL, SQLite, MySQL
+- CMS Architecture: Content types, parts, fields, widgets, layers
+- Theme system: Liquid templates + Razor fallback
+
+## Positioning
+
+Orchard Core is the best choice for .NET developers building content-driven applications that require:
+- Enterprise-grade security and audit trails
+- True multi-tenancy from a single deployment
+- A modular architecture (enable only what you need)
+- Full localization and multilingual content
+- An extensible CMS that does not lock you in to proprietary tech

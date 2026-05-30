@@ -1,0 +1,2778 @@
+{
+  "name": "orchardcore-net",
+  "displayName": "orchardcore.net",
+  "description": "Setup recipe that seeds the orchardcore.net site for the Canopy theme.",
+  "author": "",
+  "website": "https://orchardcore.net/",
+  "version": "1.0.0",
+  "issetuprecipe": true,
+  "categories": [],
+  "tags": [
+    "Canopy"
+  ],
+  "steps": [
+    {
+      "name": "Feature",
+      "enable": [
+        "Application.Default",
+        "OrchardCore.Web",
+        "OrchardCore.Settings",
+        "OrchardCore.Admin",
+        "OrchardCore.Liquid",
+        "OrchardCore.Contents",
+        "OrchardCore.ContentTypes",
+        "OrchardCore.Shortcodes",
+        "OrchardCore.Html",
+        "OrchardCore.Recipes.Core",
+        "OrchardCore.Title",
+        "OrchardCore.AdminMenu",
+        "OrchardCore.Templates",
+        "OrchardCore.Alias",
+        "OrchardCore.AuditTrail",
+        "OrchardCore.Autoroute",
+        "OrchardCore.Scripting",
+        "OrchardCore.Recipes",
+        "OrchardCore.ContentFields",
+        "OrchardCore.Roles.Core",
+        "OrchardCore.Users",
+        "OrchardCore.ContentPreview",
+        "OrchardCore.Deployment",
+        "OrchardCore.CustomSettings",
+        "OrchardCore.Deployment.Remote",
+        "OrchardCore.Diagnostics",
+        "OrchardCore.DynamicCache",
+        "OrchardCore.Resources",
+        "OrchardCore.Email",
+        "OrchardCore.Widgets",
+        "OrchardCore.Features",
+        "OrchardCore.Feeds",
+        "OrchardCore.Flows",
+        "OrchardCore.HomeRoute",
+        "OrchardCore.Indexing",
+        "OrchardCore.Rules",
+        "OrchardCore.Layers",
+        "OrchardCore.Lists",
+        "OrchardCore.Markdown",
+        "OrchardCore.Media",
+        "OrchardCore.Menu",
+        "OrchardCore.Navigation",
+        "OrchardCore.Queries",
+        "OrchardCore.ResponseCompression",
+        "OrchardCore.Roles",
+        "OrchardCore.Taxonomies",
+        "OrchardCore.Themes",
+        "OrchardCore.Users.AuditTrail",
+        "OrchardCore.Users.Registration",
+        "TheTheme",
+        "OCWS",
+        "TheAdmin",
+        "TheAgencyTheme",
+        "TOCT",
+        "Canopy",
+        "OrchardCore.Seo",
+        "OrchardCore.Localization",
+        "OrchardCore.ContentLocalization"
+      ]
+    },
+    {
+      "name": "ReplaceContentDefinition",
+      "ContentTypes": [
+        {
+          "Name": "LandingPage",
+          "DisplayName": "Landing Page",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Creatable": true,
+              "Listable": true,
+              "Draftable": true,
+              "Versionable": true
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
+              }
+            },
+            {
+              "PartName": "FlowPart",
+              "Name": "FlowPart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                }
+              }
+            },
+            {
+              "PartName": "AutoroutePart",
+              "Name": "AutoroutePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "2"
+                },
+                "AutoroutePartSettings": {
+                  "Pattern": "{{ ContentItem | display_text | slugify }}",
+                  "AllowCustomPath": true,
+                  "ShowHomepageOption": true
+                }
+              }
+            },
+            {
+              "PartName": "SeoMetaPart",
+              "Name": "SeoMetaPart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "3"
+                }
+              }
+            },
+            {
+              "PartName": "LocalizationPart",
+              "Name": "LocalizationPart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "4"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "HeroWidget",
+          "DisplayName": "Hero Widget",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Draftable": true,
+              "Versionable": true,
+              "Stereotype": "Widget"
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
+              }
+            },
+            {
+              "PartName": "HeroWidget",
+              "Name": "HeroWidget",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "QuickstartWidget",
+          "DisplayName": "Quickstart Widget",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Draftable": true,
+              "Versionable": true,
+              "Stereotype": "Widget"
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
+              }
+            },
+            {
+              "PartName": "QuickstartWidget",
+              "Name": "QuickstartWidget",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "TrustSignalsWidget",
+          "DisplayName": "Trust Signals Widget",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Draftable": true,
+              "Versionable": true,
+              "Stereotype": "Widget"
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "FeatureGridWidget",
+          "DisplayName": "Feature Grid Widget",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Draftable": true,
+              "Versionable": true,
+              "Stereotype": "Widget"
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "CaseStudyCarouselWidget",
+          "DisplayName": "Case Study Carousel Widget",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Draftable": true,
+              "Versionable": true,
+              "Stereotype": "Widget"
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "LogoWallWidget",
+          "DisplayName": "Logo Wall Widget",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Draftable": true,
+              "Versionable": true,
+              "Stereotype": "Widget"
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
+              }
+            },
+            {
+              "PartName": "LogoWallWidget",
+              "Name": "LogoWallWidget",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "ComparisonTableWidget",
+          "DisplayName": "Comparison Table Widget",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Draftable": true,
+              "Versionable": true,
+              "Stereotype": "Widget"
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "FaqWidget",
+          "DisplayName": "FAQ Widget",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Draftable": true,
+              "Versionable": true,
+              "Stereotype": "Widget"
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
+              }
+            },
+            {
+              "PartName": "FaqWidget",
+              "Name": "FaqWidget",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "CommunityWidget",
+          "DisplayName": "Community Widget",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Draftable": true,
+              "Versionable": true,
+              "Stereotype": "Widget"
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "CtaBandWidget",
+          "DisplayName": "CTA Band Widget",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Draftable": true,
+              "Versionable": true,
+              "Stereotype": "Widget"
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
+              }
+            },
+            {
+              "PartName": "CtaBandWidget",
+              "Name": "CtaBandWidget",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "CaseStudy",
+          "DisplayName": "Case Study",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Creatable": true,
+              "Listable": true,
+              "Draftable": true,
+              "Versionable": true
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
+              }
+            },
+            {
+              "PartName": "AutoroutePart",
+              "Name": "AutoroutePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                },
+                "AutoroutePartSettings": {
+                  "Pattern": "{{ ContentItem | display_text | slugify }}",
+                  "AllowCustomPath": true
+                }
+              }
+            },
+            {
+              "PartName": "LocalizationPart",
+              "Name": "LocalizationPart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "2"
+                }
+              }
+            },
+            {
+              "PartName": "SeoMetaPart",
+              "Name": "SeoMetaPart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "3"
+                }
+              }
+            },
+            {
+              "PartName": "CaseStudy",
+              "Name": "CaseStudy",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "4"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "Feature",
+          "DisplayName": "Feature",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Creatable": true,
+              "Listable": true,
+              "Draftable": true,
+              "Versionable": true
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
+              }
+            },
+            {
+              "PartName": "LocalizationPart",
+              "Name": "LocalizationPart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                }
+              }
+            },
+            {
+              "PartName": "Feature",
+              "Name": "Feature",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "2"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "ComparisonRow",
+          "DisplayName": "Comparison Row",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Creatable": true,
+              "Listable": true,
+              "Draftable": true,
+              "Versionable": true
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
+              }
+            },
+            {
+              "PartName": "ComparisonRow",
+              "Name": "ComparisonRow",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "Faq",
+          "DisplayName": "FAQ",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Creatable": true,
+              "Listable": true,
+              "Draftable": true,
+              "Versionable": true
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
+              }
+            },
+            {
+              "PartName": "LocalizationPart",
+              "Name": "LocalizationPart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                }
+              }
+            },
+            {
+              "PartName": "Faq",
+              "Name": "Faq",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "2"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "ShowcaseModule",
+          "DisplayName": "Showcase Module",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Creatable": true,
+              "Listable": true,
+              "Draftable": true,
+              "Versionable": true
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
+              }
+            },
+            {
+              "PartName": "LocalizationPart",
+              "Name": "LocalizationPart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                }
+              }
+            },
+            {
+              "PartName": "ShowcaseModule",
+              "Name": "ShowcaseModule",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "2"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "BlogPost",
+          "DisplayName": "Blog Post",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Creatable": true,
+              "Listable": true,
+              "Draftable": true,
+              "Versionable": true
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
+              }
+            },
+            {
+              "PartName": "HtmlBodyPart",
+              "Name": "HtmlBodyPart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "1",
+                  "Editor": "Wysiwyg"
+                },
+                "HtmlBodyPartSettings": {
+                  "SanitizeHtml": false
+                }
+              }
+            },
+            {
+              "PartName": "AutoroutePart",
+              "Name": "AutoroutePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "2"
+                },
+                "AutoroutePartSettings": {
+                  "Pattern": "{{ ContentItem | display_text | slugify }}",
+                  "AllowCustomPath": true
+                }
+              }
+            },
+            {
+              "PartName": "LocalizationPart",
+              "Name": "LocalizationPart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "3"
+                }
+              }
+            },
+            {
+              "PartName": "SeoMetaPart",
+              "Name": "SeoMetaPart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "4"
+                }
+              }
+            },
+            {
+              "PartName": "BlogPost",
+              "Name": "BlogPost",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "5"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "Event",
+          "DisplayName": "Event",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Creatable": true,
+              "Listable": true,
+              "Draftable": true,
+              "Versionable": true
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
+              }
+            },
+            {
+              "PartName": "Event",
+              "Name": "Event",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "TaxonomyTerm",
+          "DisplayName": "Taxonomy Term",
+          "Settings": {
+            "ContentTypeSettings": {}
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
+              }
+            },
+            {
+              "PartName": "AutoroutePart",
+              "Name": "AutoroutePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                },
+                "AutoroutePartSettings": {
+                  "Pattern": "{{ ContentItem | display_text | slugify }}",
+                  "AllowCustomPath": true,
+                  "ManageContainedItemRoutes": true
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "ContentParts": [
+        {
+          "Name": "HeroWidget",
+          "Settings": {},
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "TextField",
+              "Name": "Headline",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Headline",
+                  "Position": "0"
+                },
+                "TextFieldSettings": {}
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "Subheadline",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Subheadline",
+                  "Position": "1"
+                },
+                "TextFieldSettings": {}
+              }
+            },
+            {
+              "FieldName": "LinkField",
+              "Name": "PrimaryCta",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Primary CTA",
+                  "Position": "2"
+                },
+                "LinkFieldSettings": {}
+              }
+            },
+            {
+              "FieldName": "LinkField",
+              "Name": "SecondaryCta",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Secondary CTA",
+                  "Position": "3"
+                },
+                "LinkFieldSettings": {}
+              }
+            },
+            {
+              "FieldName": "MediaField",
+              "Name": "Visual",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Visual",
+                  "Position": "4"
+                },
+                "MediaFieldSettings": {
+                  "Multiple": false,
+                  "Required": false
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "QuickstartWidget",
+          "Settings": {},
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "HtmlField",
+              "Name": "DotnetNewCommand",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": ".NET New Command",
+                  "Position": "0",
+                  "Editor": "Multiline"
+                },
+                "HtmlFieldSettings": {
+                  "SanitizeHtml": false
+                }
+              }
+            },
+            {
+              "FieldName": "HtmlField",
+              "Name": "DockerCommand",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Docker Command",
+                  "Position": "1",
+                  "Editor": "Multiline"
+                },
+                "HtmlFieldSettings": {
+                  "SanitizeHtml": false
+                }
+              }
+            },
+            {
+              "FieldName": "LinkField",
+              "Name": "StarterRepoUrl",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Starter Repo URL",
+                  "Position": "2"
+                },
+                "LinkFieldSettings": {}
+              }
+            }
+          ]
+        },
+        {
+          "Name": "LogoWallWidget",
+          "Settings": {},
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "MediaField",
+              "Name": "Logos",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Logos",
+                  "Position": "0"
+                },
+                "MediaFieldSettings": {
+                  "Multiple": true,
+                  "Required": false
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "FaqWidget",
+          "Settings": {},
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "TaxonomyField",
+              "Name": "FilterByAudience",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Filter By Audience",
+                  "Position": "0"
+                },
+                "TaxonomyFieldSettings": {
+                  "TaxonomyContentItemId": "4ae8918c-192b-4fa5-8542-32f96bb00ea8",
+                  "LeavesOnly": true,
+                  "Unique": true
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "CtaBandWidget",
+          "Settings": {},
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "TextField",
+              "Name": "Headline",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Headline",
+                  "Position": "0"
+                },
+                "TextFieldSettings": {}
+              }
+            },
+            {
+              "FieldName": "LinkField",
+              "Name": "Cta",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "CTA",
+                  "Position": "1"
+                },
+                "LinkFieldSettings": {}
+              }
+            }
+          ]
+        },
+        {
+          "Name": "CaseStudy",
+          "Settings": {},
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "MediaField",
+              "Name": "Screenshot",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Screenshot",
+                  "Position": "0"
+                },
+                "MediaFieldSettings": {
+                  "Multiple": false,
+                  "Required": false
+                }
+              }
+            },
+            {
+              "FieldName": "MediaField",
+              "Name": "Logo",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Logo",
+                  "Position": "1"
+                },
+                "MediaFieldSettings": {
+                  "Multiple": false,
+                  "Required": false
+                }
+              }
+            },
+            {
+              "FieldName": "TaxonomyField",
+              "Name": "Industry",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Industry",
+                  "Position": "2"
+                },
+                "TaxonomyFieldSettings": {
+                  "TaxonomyContentItemId": "c043b3de-49d4-4cdb-9027-9e4b4ac7c60f",
+                  "LeavesOnly": true,
+                  "Unique": true
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "Organisation",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Organisation",
+                  "Position": "3"
+                },
+                "TextFieldSettings": {}
+              }
+            },
+            {
+              "FieldName": "HtmlField",
+              "Name": "Summary",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Summary",
+                  "Position": "4",
+                  "Editor": "Wysiwyg"
+                },
+                "HtmlFieldSettings": {
+                  "SanitizeHtml": false
+                }
+              }
+            },
+            {
+              "FieldName": "HtmlField",
+              "Name": "Results",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Results",
+                  "Position": "5",
+                  "Editor": "Wysiwyg"
+                },
+                "HtmlFieldSettings": {
+                  "SanitizeHtml": false
+                }
+              }
+            },
+            {
+              "FieldName": "LinkField",
+              "Name": "LiveUrl",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Live URL",
+                  "Position": "6"
+                },
+                "LinkFieldSettings": {}
+              }
+            }
+          ]
+        },
+        {
+          "Name": "Feature",
+          "Settings": {},
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "TextField",
+              "Name": "Icon",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Icon",
+                  "Position": "0"
+                },
+                "TextFieldSettings": {}
+              }
+            },
+            {
+              "FieldName": "TaxonomyField",
+              "Name": "Capability",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Capability",
+                  "Position": "1"
+                },
+                "TaxonomyFieldSettings": {
+                  "TaxonomyContentItemId": "c6fb4d89-33dc-4147-815b-0bd3506c188e",
+                  "LeavesOnly": true,
+                  "Unique": true
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "Summary",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Summary",
+                  "Position": "2"
+                },
+                "TextFieldSettings": {}
+              }
+            },
+            {
+              "FieldName": "HtmlField",
+              "Name": "Body",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Body",
+                  "Position": "3",
+                  "Editor": "Wysiwyg"
+                },
+                "HtmlFieldSettings": {
+                  "SanitizeHtml": false
+                }
+              }
+            },
+            {
+              "FieldName": "LinkField",
+              "Name": "DocsLink",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Docs Link",
+                  "Position": "4"
+                },
+                "LinkFieldSettings": {}
+              }
+            }
+          ]
+        },
+        {
+          "Name": "ComparisonRow",
+          "Settings": {},
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "TextField",
+              "Name": "Capability",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Capability",
+                  "Position": "0"
+                },
+                "TextFieldSettings": {}
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "OrchardCoreSupport",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Orchard Core Support",
+                  "Position": "1"
+                },
+                "TextFieldSettings": {}
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "OrchardCoreNote",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Orchard Core Note",
+                  "Position": "2"
+                },
+                "TextFieldSettings": {}
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "UmbracoSupport",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Umbraco Support",
+                  "Position": "3"
+                },
+                "TextFieldSettings": {}
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "UmbracoNote",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Umbraco Note",
+                  "Position": "4"
+                },
+                "TextFieldSettings": {}
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "AbpSupport",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "ABP Support",
+                  "Position": "5"
+                },
+                "TextFieldSettings": {}
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "AbpNote",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "ABP Note",
+                  "Position": "6"
+                },
+                "TextFieldSettings": {}
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "SitecoreSupport",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Sitecore Support",
+                  "Position": "7"
+                },
+                "TextFieldSettings": {}
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "SitecoreNote",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Sitecore Note",
+                  "Position": "8"
+                },
+                "TextFieldSettings": {}
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "KenticoSupport",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Kentico Support",
+                  "Position": "9"
+                },
+                "TextFieldSettings": {}
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "KenticoNote",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Kentico Note",
+                  "Position": "10"
+                },
+                "TextFieldSettings": {}
+              }
+            }
+          ]
+        },
+        {
+          "Name": "Faq",
+          "Settings": {},
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "TextField",
+              "Name": "Question",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Question",
+                  "Position": "0"
+                },
+                "TextFieldSettings": {}
+              }
+            },
+            {
+              "FieldName": "HtmlField",
+              "Name": "Answer",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Answer",
+                  "Position": "1",
+                  "Editor": "Wysiwyg"
+                },
+                "HtmlFieldSettings": {
+                  "SanitizeHtml": false
+                }
+              }
+            },
+            {
+              "FieldName": "TaxonomyField",
+              "Name": "Audience",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Audience",
+                  "Position": "2"
+                },
+                "TaxonomyFieldSettings": {
+                  "TaxonomyContentItemId": "4ae8918c-192b-4fa5-8542-32f96bb00ea8",
+                  "LeavesOnly": true,
+                  "Unique": true
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "ShowcaseModule",
+          "Settings": {},
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "TextField",
+              "Name": "Author",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Author",
+                  "Position": "0"
+                },
+                "TextFieldSettings": {}
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "NuGetId",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "NuGet ID",
+                  "Position": "1"
+                },
+                "TextFieldSettings": {}
+              }
+            },
+            {
+              "FieldName": "LinkField",
+              "Name": "RepoUrl",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Repo URL",
+                  "Position": "2"
+                },
+                "LinkFieldSettings": {}
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "Description",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Description",
+                  "Position": "3"
+                },
+                "TextFieldSettings": {}
+              }
+            },
+            {
+              "FieldName": "TaxonomyField",
+              "Name": "ModuleTags",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Module Tags",
+                  "Position": "4"
+                },
+                "TaxonomyFieldSettings": {
+                  "TaxonomyContentItemId": "6bd76570-1051-4206-b1d8-24a2c4f0d927",
+                  "LeavesOnly": true
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "BlogPost",
+          "Settings": {},
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "TaxonomyField",
+              "Name": "Tags",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Tags",
+                  "Position": "0",
+                  "Editor": "Tags",
+                  "DisplayMode": "Tags"
+                },
+                "TaxonomyFieldSettings": {
+                  "TaxonomyContentItemId": "908ed3e3-8ff0-420f-b79a-5cba5e1b9f8a",
+                  "LeavesOnly": true
+                },
+                "TaxonomyFieldTagsEditorSettings": {}
+              }
+            }
+          ]
+        },
+        {
+          "Name": "Event",
+          "Settings": {},
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "DateTimeField",
+              "Name": "StartDate",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Start Date",
+                  "Position": "0"
+                },
+                "DateTimeFieldSettings": {}
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "Location",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Location",
+                  "Position": "1"
+                },
+                "TextFieldSettings": {}
+              }
+            },
+            {
+              "FieldName": "LinkField",
+              "Name": "Url",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "URL",
+                  "Position": "2"
+                },
+                "LinkFieldSettings": {}
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "Summary",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Summary",
+                  "Position": "3"
+                },
+                "TextFieldSettings": {}
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Content",
+      "data": [
+        {
+          "ContentItemId": "c043b3de-49d4-4cdb-9027-9e4b4ac7c60f",
+          "ContentType": "Taxonomy",
+          "DisplayText": "Industry",
+          "Latest": true,
+          "Published": true,
+          "Owner": "[js: parameters('AdminUserId')]",
+          "Author": "[js: parameters('AdminUsername')]",
+          "TitlePart": {
+            "Title": "Industry"
+          },
+          "AliasPart": {
+            "Alias": "industry"
+          },
+          "TaxonomyPart": {
+            "Terms": [
+              {
+                "ContentItemId": "a1bd2825-1050-4750-8af2-29df5192e105",
+                "ContentType": "TaxonomyTerm",
+                "DisplayText": "Healthcare",
+                "TitlePart": {
+                  "Title": "Healthcare"
+                },
+                "AutoroutePart": {
+                  "Path": "healthcare"
+                },
+                "TermPart": {
+                  "TaxonomyContentItemId": "c043b3de-49d4-4cdb-9027-9e4b4ac7c60f"
+                }
+              },
+              {
+                "ContentItemId": "dd392ce2-1413-43c7-a10b-4074a55be939",
+                "ContentType": "TaxonomyTerm",
+                "DisplayText": "Finance",
+                "TitlePart": {
+                  "Title": "Finance"
+                },
+                "AutoroutePart": {
+                  "Path": "finance"
+                },
+                "TermPart": {
+                  "TaxonomyContentItemId": "c043b3de-49d4-4cdb-9027-9e4b4ac7c60f"
+                }
+              },
+              {
+                "ContentItemId": "be4e324c-0e7c-4b27-8d62-4fe1a247ce9c",
+                "ContentType": "TaxonomyTerm",
+                "DisplayText": "Education",
+                "TitlePart": {
+                  "Title": "Education"
+                },
+                "AutoroutePart": {
+                  "Path": "education"
+                },
+                "TermPart": {
+                  "TaxonomyContentItemId": "c043b3de-49d4-4cdb-9027-9e4b4ac7c60f"
+                }
+              },
+              {
+                "ContentItemId": "28030d8b-01aa-4a41-9ce3-a7f334a368bd",
+                "ContentType": "TaxonomyTerm",
+                "DisplayText": "Government",
+                "TitlePart": {
+                  "Title": "Government"
+                },
+                "AutoroutePart": {
+                  "Path": "government"
+                },
+                "TermPart": {
+                  "TaxonomyContentItemId": "c043b3de-49d4-4cdb-9027-9e4b4ac7c60f"
+                }
+              },
+              {
+                "ContentItemId": "2e072745-a9a2-4a50-9f06-4f48540355e7",
+                "ContentType": "TaxonomyTerm",
+                "DisplayText": "Retail",
+                "TitlePart": {
+                  "Title": "Retail"
+                },
+                "AutoroutePart": {
+                  "Path": "retail"
+                },
+                "TermPart": {
+                  "TaxonomyContentItemId": "c043b3de-49d4-4cdb-9027-9e4b4ac7c60f"
+                }
+              },
+              {
+                "ContentItemId": "c92697be-3786-4d90-8ea2-a92622ec0a71",
+                "ContentType": "TaxonomyTerm",
+                "DisplayText": "Manufacturing",
+                "TitlePart": {
+                  "Title": "Manufacturing"
+                },
+                "AutoroutePart": {
+                  "Path": "manufacturing"
+                },
+                "TermPart": {
+                  "TaxonomyContentItemId": "c043b3de-49d4-4cdb-9027-9e4b4ac7c60f"
+                }
+              },
+              {
+                "ContentItemId": "ab00f0bb-a560-4872-b4b4-977c8089449e",
+                "ContentType": "TaxonomyTerm",
+                "DisplayText": "Media",
+                "TitlePart": {
+                  "Title": "Media"
+                },
+                "AutoroutePart": {
+                  "Path": "media"
+                },
+                "TermPart": {
+                  "TaxonomyContentItemId": "c043b3de-49d4-4cdb-9027-9e4b4ac7c60f"
+                }
+              },
+              {
+                "ContentItemId": "8ef1cc88-5081-4d8a-8f0f-394c729fcfaf",
+                "ContentType": "TaxonomyTerm",
+                "DisplayText": "Non-profit",
+                "TitlePart": {
+                  "Title": "Non-profit"
+                },
+                "AutoroutePart": {
+                  "Path": "non-profit"
+                },
+                "TermPart": {
+                  "TaxonomyContentItemId": "c043b3de-49d4-4cdb-9027-9e4b4ac7c60f"
+                }
+              },
+              {
+                "ContentItemId": "c86fa82c-3bfe-4a9f-9cdb-e95985d1c49e",
+                "ContentType": "TaxonomyTerm",
+                "DisplayText": "Technology",
+                "TitlePart": {
+                  "Title": "Technology"
+                },
+                "AutoroutePart": {
+                  "Path": "technology"
+                },
+                "TermPart": {
+                  "TaxonomyContentItemId": "c043b3de-49d4-4cdb-9027-9e4b4ac7c60f"
+                }
+              }
+            ],
+            "TermContentType": "TaxonomyTerm"
+          },
+          "AutoroutePart": {
+            "Path": "industry",
+            "RouteContainedItems": true
+          }
+        },
+        {
+          "ContentItemId": "c6fb4d89-33dc-4147-815b-0bd3506c188e",
+          "ContentType": "Taxonomy",
+          "DisplayText": "Capability",
+          "Latest": true,
+          "Published": true,
+          "Owner": "[js: parameters('AdminUserId')]",
+          "Author": "[js: parameters('AdminUsername')]",
+          "TitlePart": {
+            "Title": "Capability"
+          },
+          "AliasPart": {
+            "Alias": "capability"
+          },
+          "TaxonomyPart": {
+            "Terms": [
+              {
+                "ContentItemId": "ecf2fbb7-97f0-481d-91e1-e2cc1882f483",
+                "ContentType": "TaxonomyTerm",
+                "DisplayText": "Content Management",
+                "TitlePart": {
+                  "Title": "Content Management"
+                },
+                "AutoroutePart": {
+                  "Path": "content-management"
+                },
+                "TermPart": {
+                  "TaxonomyContentItemId": "c6fb4d89-33dc-4147-815b-0bd3506c188e"
+                }
+              },
+              {
+                "ContentItemId": "765f6180-1ccf-4017-af02-7d40e3bcb4ef",
+                "ContentType": "TaxonomyTerm",
+                "DisplayText": "Multi-tenancy",
+                "TitlePart": {
+                  "Title": "Multi-tenancy"
+                },
+                "AutoroutePart": {
+                  "Path": "multi-tenancy"
+                },
+                "TermPart": {
+                  "TaxonomyContentItemId": "c6fb4d89-33dc-4147-815b-0bd3506c188e"
+                }
+              },
+              {
+                "ContentItemId": "6169279f-47ff-481b-a776-b6d74e4c497c",
+                "ContentType": "TaxonomyTerm",
+                "DisplayText": "Localization",
+                "TitlePart": {
+                  "Title": "Localization"
+                },
+                "AutoroutePart": {
+                  "Path": "localization"
+                },
+                "TermPart": {
+                  "TaxonomyContentItemId": "c6fb4d89-33dc-4147-815b-0bd3506c188e"
+                }
+              },
+              {
+                "ContentItemId": "eb7b024a-ed39-472a-9a7f-e31531ddf09e",
+                "ContentType": "TaxonomyTerm",
+                "DisplayText": "Media Management",
+                "TitlePart": {
+                  "Title": "Media Management"
+                },
+                "AutoroutePart": {
+                  "Path": "media-management"
+                },
+                "TermPart": {
+                  "TaxonomyContentItemId": "c6fb4d89-33dc-4147-815b-0bd3506c188e"
+                }
+              },
+              {
+                "ContentItemId": "e733ea01-d392-4d6d-b35a-3eb6c7b69a83",
+                "ContentType": "TaxonomyTerm",
+                "DisplayText": "Security",
+                "TitlePart": {
+                  "Title": "Security"
+                },
+                "AutoroutePart": {
+                  "Path": "security"
+                },
+                "TermPart": {
+                  "TaxonomyContentItemId": "c6fb4d89-33dc-4147-815b-0bd3506c188e"
+                }
+              },
+              {
+                "ContentItemId": "a7423017-7606-4ad7-9e54-88cb0661aa52",
+                "ContentType": "TaxonomyTerm",
+                "DisplayText": "Workflows",
+                "TitlePart": {
+                  "Title": "Workflows"
+                },
+                "AutoroutePart": {
+                  "Path": "workflows"
+                },
+                "TermPart": {
+                  "TaxonomyContentItemId": "c6fb4d89-33dc-4147-815b-0bd3506c188e"
+                }
+              },
+              {
+                "ContentItemId": "75611e6d-d97b-418f-8bde-40e1bcf405bf",
+                "ContentType": "TaxonomyTerm",
+                "DisplayText": "Search",
+                "TitlePart": {
+                  "Title": "Search"
+                },
+                "AutoroutePart": {
+                  "Path": "search"
+                },
+                "TermPart": {
+                  "TaxonomyContentItemId": "c6fb4d89-33dc-4147-815b-0bd3506c188e"
+                }
+              },
+              {
+                "ContentItemId": "7b5efb28-da16-4418-98f5-556f995ca242",
+                "ContentType": "TaxonomyTerm",
+                "DisplayText": "API",
+                "TitlePart": {
+                  "Title": "API"
+                },
+                "AutoroutePart": {
+                  "Path": "api"
+                },
+                "TermPart": {
+                  "TaxonomyContentItemId": "c6fb4d89-33dc-4147-815b-0bd3506c188e"
+                }
+              },
+              {
+                "ContentItemId": "ea565f4b-a4a4-4198-b5e6-c5b283a763c6",
+                "ContentType": "TaxonomyTerm",
+                "DisplayText": "Theming",
+                "TitlePart": {
+                  "Title": "Theming"
+                },
+                "AutoroutePart": {
+                  "Path": "theming"
+                },
+                "TermPart": {
+                  "TaxonomyContentItemId": "c6fb4d89-33dc-4147-815b-0bd3506c188e"
+                }
+              },
+              {
+                "ContentItemId": "fd7a96ed-986b-453d-ad18-f8dac4cce1c7",
+                "ContentType": "TaxonomyTerm",
+                "DisplayText": "E-commerce",
+                "TitlePart": {
+                  "Title": "E-commerce"
+                },
+                "AutoroutePart": {
+                  "Path": "e-commerce"
+                },
+                "TermPart": {
+                  "TaxonomyContentItemId": "c6fb4d89-33dc-4147-815b-0bd3506c188e"
+                }
+              }
+            ],
+            "TermContentType": "TaxonomyTerm"
+          },
+          "AutoroutePart": {
+            "Path": "capability",
+            "RouteContainedItems": true
+          }
+        },
+        {
+          "ContentItemId": "4ae8918c-192b-4fa5-8542-32f96bb00ea8",
+          "ContentType": "Taxonomy",
+          "DisplayText": "Audience",
+          "Latest": true,
+          "Published": true,
+          "Owner": "[js: parameters('AdminUserId')]",
+          "Author": "[js: parameters('AdminUsername')]",
+          "TitlePart": {
+            "Title": "Audience"
+          },
+          "AliasPart": {
+            "Alias": "audience"
+          },
+          "TaxonomyPart": {
+            "Terms": [
+              {
+                "ContentItemId": "bbb82025-d598-4a21-b6e6-c841bc59b4c4",
+                "ContentType": "TaxonomyTerm",
+                "DisplayText": "developer",
+                "TitlePart": {
+                  "Title": "developer"
+                },
+                "AutoroutePart": {
+                  "Path": "developer"
+                },
+                "TermPart": {
+                  "TaxonomyContentItemId": "4ae8918c-192b-4fa5-8542-32f96bb00ea8"
+                }
+              },
+              {
+                "ContentItemId": "f2b8654f-f116-459c-ae1c-2bcefba6e0e5",
+                "ContentType": "TaxonomyTerm",
+                "DisplayText": "business",
+                "TitlePart": {
+                  "Title": "business"
+                },
+                "AutoroutePart": {
+                  "Path": "business"
+                },
+                "TermPart": {
+                  "TaxonomyContentItemId": "4ae8918c-192b-4fa5-8542-32f96bb00ea8"
+                }
+              }
+            ],
+            "TermContentType": "TaxonomyTerm"
+          },
+          "AutoroutePart": {
+            "Path": "audience",
+            "RouteContainedItems": true
+          }
+        },
+        {
+          "ContentItemId": "6bd76570-1051-4206-b1d8-24a2c4f0d927",
+          "ContentType": "Taxonomy",
+          "DisplayText": "ModuleTags",
+          "Latest": true,
+          "Published": true,
+          "Owner": "[js: parameters('AdminUserId')]",
+          "Author": "[js: parameters('AdminUsername')]",
+          "TitlePart": {
+            "Title": "ModuleTags"
+          },
+          "AliasPart": {
+            "Alias": "moduletags"
+          },
+          "TaxonomyPart": {
+            "Terms": [
+              {
+                "ContentItemId": "c4698c7f-cbe7-4139-ae3e-eba4e9c55b4c",
+                "ContentType": "TaxonomyTerm",
+                "DisplayText": "Commerce",
+                "TitlePart": {
+                  "Title": "Commerce"
+                },
+                "AutoroutePart": {
+                  "Path": "commerce"
+                },
+                "TermPart": {
+                  "TaxonomyContentItemId": "6bd76570-1051-4206-b1d8-24a2c4f0d927"
+                }
+              },
+              {
+                "ContentItemId": "c7e7c45e-4a30-479c-a170-8a55a9a14516",
+                "ContentType": "TaxonomyTerm",
+                "DisplayText": "Forms",
+                "TitlePart": {
+                  "Title": "Forms"
+                },
+                "AutoroutePart": {
+                  "Path": "forms"
+                },
+                "TermPart": {
+                  "TaxonomyContentItemId": "6bd76570-1051-4206-b1d8-24a2c4f0d927"
+                }
+              },
+              {
+                "ContentItemId": "eab685b8-9cc9-424e-a0b5-5e3b2fd66de0",
+                "ContentType": "TaxonomyTerm",
+                "DisplayText": "Media",
+                "TitlePart": {
+                  "Title": "Media"
+                },
+                "AutoroutePart": {
+                  "Path": "media"
+                },
+                "TermPart": {
+                  "TaxonomyContentItemId": "6bd76570-1051-4206-b1d8-24a2c4f0d927"
+                }
+              },
+              {
+                "ContentItemId": "dec61c5f-470b-4a4f-ad2d-1b8ab28ef744",
+                "ContentType": "TaxonomyTerm",
+                "DisplayText": "Authentication",
+                "TitlePart": {
+                  "Title": "Authentication"
+                },
+                "AutoroutePart": {
+                  "Path": "authentication"
+                },
+                "TermPart": {
+                  "TaxonomyContentItemId": "6bd76570-1051-4206-b1d8-24a2c4f0d927"
+                }
+              },
+              {
+                "ContentItemId": "80c6ce99-e7b9-470d-8872-b91e0b01884d",
+                "ContentType": "TaxonomyTerm",
+                "DisplayText": "Search",
+                "TitlePart": {
+                  "Title": "Search"
+                },
+                "AutoroutePart": {
+                  "Path": "search"
+                },
+                "TermPart": {
+                  "TaxonomyContentItemId": "6bd76570-1051-4206-b1d8-24a2c4f0d927"
+                }
+              },
+              {
+                "ContentItemId": "af397879-4e06-477b-9f2e-54f897470e06",
+                "ContentType": "TaxonomyTerm",
+                "DisplayText": "SEO",
+                "TitlePart": {
+                  "Title": "SEO"
+                },
+                "AutoroutePart": {
+                  "Path": "seo"
+                },
+                "TermPart": {
+                  "TaxonomyContentItemId": "6bd76570-1051-4206-b1d8-24a2c4f0d927"
+                }
+              },
+              {
+                "ContentItemId": "a9b36d08-7830-4368-98ea-c0ea9e76c3ec",
+                "ContentType": "TaxonomyTerm",
+                "DisplayText": "Analytics",
+                "TitlePart": {
+                  "Title": "Analytics"
+                },
+                "AutoroutePart": {
+                  "Path": "analytics"
+                },
+                "TermPart": {
+                  "TaxonomyContentItemId": "6bd76570-1051-4206-b1d8-24a2c4f0d927"
+                }
+              },
+              {
+                "ContentItemId": "26475c22-3d6e-4a54-99cf-b3a3b4c27585",
+                "ContentType": "TaxonomyTerm",
+                "DisplayText": "Blog",
+                "TitlePart": {
+                  "Title": "Blog"
+                },
+                "AutoroutePart": {
+                  "Path": "blog"
+                },
+                "TermPart": {
+                  "TaxonomyContentItemId": "6bd76570-1051-4206-b1d8-24a2c4f0d927"
+                }
+              },
+              {
+                "ContentItemId": "99018db7-15d3-46b9-874d-7b13c2dea615",
+                "ContentType": "TaxonomyTerm",
+                "DisplayText": "Calendar",
+                "TitlePart": {
+                  "Title": "Calendar"
+                },
+                "AutoroutePart": {
+                  "Path": "calendar"
+                },
+                "TermPart": {
+                  "TaxonomyContentItemId": "6bd76570-1051-4206-b1d8-24a2c4f0d927"
+                }
+              },
+              {
+                "ContentItemId": "9c248cd1-190b-4725-be86-972388069df8",
+                "ContentType": "TaxonomyTerm",
+                "DisplayText": "Social",
+                "TitlePart": {
+                  "Title": "Social"
+                },
+                "AutoroutePart": {
+                  "Path": "social"
+                },
+                "TermPart": {
+                  "TaxonomyContentItemId": "6bd76570-1051-4206-b1d8-24a2c4f0d927"
+                }
+              }
+            ],
+            "TermContentType": "TaxonomyTerm"
+          },
+          "AutoroutePart": {
+            "Path": "moduletags",
+            "RouteContainedItems": true
+          }
+        },
+        {
+          "ContentItemId": "908ed3e3-8ff0-420f-b79a-5cba5e1b9f8a",
+          "ContentType": "Taxonomy",
+          "DisplayText": "Tags",
+          "Latest": true,
+          "Published": true,
+          "Owner": "[js: parameters('AdminUserId')]",
+          "Author": "[js: parameters('AdminUsername')]",
+          "TitlePart": {
+            "Title": "Tags"
+          },
+          "AliasPart": {
+            "Alias": "tags"
+          },
+          "TaxonomyPart": {
+            "Terms": [],
+            "TermContentType": "TaxonomyTerm"
+          },
+          "AutoroutePart": {
+            "Path": "tags",
+            "RouteContainedItems": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "Layers",
+      "Layers": [
+        {
+          "Name": "Always",
+          "Rule": "true",
+          "Description": "The widgets in this layer are displayed on any page of this site.",
+          "LayerRule": {
+            "ConditionId": "6de266b5-34f6-4e49-b894-ed400e6b0b61",
+            "Conditions": [
+              {
+                "$type": "OrchardCore.Rules.Models.BooleanCondition, OrchardCore.Rules",
+                "Value": true,
+                "Name": "BooleanCondition",
+                "ConditionId": "9c063ac3-7751-4835-bd25-0d26125cdb37"
+              }
+            ]
+          }
+        },
+        {
+          "Name": "Homepage",
+          "Rule": "isHomepage()",
+          "Description": "The widgets in this layer are only displayed on the homepage.",
+          "LayerRule": {
+            "ConditionId": "83938e16-1e6f-4b1c-83a2-4d98182e888c",
+            "Conditions": [
+              {
+                "$type": "OrchardCore.Rules.Models.HomepageCondition, OrchardCore.Rules",
+                "Value": true,
+                "Name": "HomepageCondition",
+                "ConditionId": "d647c53e-955f-4e41-bd60-e5a3f5f7a1b6"
+              }
+            ]
+          }
+        },
+        {
+          "Name": "Developers",
+          "Rule": "url('/developers*')",
+          "Description": "The widgets in this layer are displayed on developer-focused pages.",
+          "LayerRule": {
+            "ConditionId": "1dab2181-9dd0-45e2-9f06-e1c2f846dc06",
+            "Conditions": [
+              {
+                "$type": "OrchardCore.Rules.Models.UrlCondition, OrchardCore.Rules",
+                "Name": "UrlCondition",
+                "Value": "/developers",
+                "Operation": {
+                  "$type": "OrchardCore.Rules.Models.StringStartsWithOperator, OrchardCore.Rules",
+                  "CaseSensitive": false
+                },
+                "ConditionId": "d0e0afcf-d78d-4efa-8531-00168567a964"
+              }
+            ]
+          }
+        },
+        {
+          "Name": "Business",
+          "Rule": "url('/business*')",
+          "Description": "The widgets in this layer are displayed on business-focused pages.",
+          "LayerRule": {
+            "ConditionId": "f7218d46-cac3-47b0-b431-74464f21598b",
+            "Conditions": [
+              {
+                "$type": "OrchardCore.Rules.Models.UrlCondition, OrchardCore.Rules",
+                "Name": "UrlCondition",
+                "Value": "/business",
+                "Operation": {
+                  "$type": "OrchardCore.Rules.Models.StringStartsWithOperator, OrchardCore.Rules",
+                  "CaseSensitive": false
+                },
+                "ConditionId": "d01a3c75-8562-4c75-9f4f-6c7648f17ebe"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Content",
+      "data": [
+        {
+          "ContentItemId": "555b4029-54ce-443b-927a-da86296b42b1",
+          "ContentType": "LandingPage",
+          "DisplayText": "Build Better. Ship Faster. With Orchard Core.",
+          "Latest": true,
+          "Published": true,
+          "Owner": "[js: parameters('AdminUserId')]",
+          "Author": "[js: parameters('AdminUsername')]",
+          "TitlePart": {
+            "Title": "Build Better. Ship Faster. With Orchard Core."
+          },
+          "FlowPart": {},
+          "AutoroutePart": {
+            "Path": "",
+            "SetHomepage": true
+          },
+          "SeoMetaPart": {},
+          "LocalizationPart": {}
+        },
+        {
+          "ContentItemId": "0d5380f7-e341-48ef-8818-a763b3d2a345",
+          "ContentType": "LandingPage",
+          "DisplayText": "For .NET Developers",
+          "Latest": true,
+          "Published": true,
+          "Owner": "[js: parameters('AdminUserId')]",
+          "Author": "[js: parameters('AdminUsername')]",
+          "TitlePart": {
+            "Title": "For .NET Developers"
+          },
+          "FlowPart": {},
+          "AutoroutePart": {
+            "Path": "developers",
+            "SetHomepage": false
+          },
+          "SeoMetaPart": {},
+          "LocalizationPart": {}
+        },
+        {
+          "ContentItemId": "041198ab-adc7-4b5d-a715-348d3ef8a518",
+          "ContentType": "LandingPage",
+          "DisplayText": "For Business Leaders",
+          "Latest": true,
+          "Published": true,
+          "Owner": "[js: parameters('AdminUserId')]",
+          "Author": "[js: parameters('AdminUsername')]",
+          "TitlePart": {
+            "Title": "For Business Leaders"
+          },
+          "FlowPart": {},
+          "AutoroutePart": {
+            "Path": "business",
+            "SetHomepage": false
+          },
+          "SeoMetaPart": {},
+          "LocalizationPart": {}
+        },
+        {
+          "ContentItemId": "0543ac3c-ab6b-49ed-9e4b-2349d63fcb15",
+          "ContentType": "CaseStudy",
+          "DisplayText": "Acme Corp",
+          "Latest": true,
+          "Published": true,
+          "Owner": "[js: parameters('AdminUserId')]",
+          "Author": "[js: parameters('AdminUsername')]",
+          "TitlePart": {
+            "Title": "Acme Corp"
+          },
+          "AutoroutePart": {
+            "Path": "case-studies/acme-corp"
+          },
+          "LocalizationPart": {},
+          "SeoMetaPart": {},
+          "CaseStudy": {
+            "Screenshot": {
+              "Paths": []
+            },
+            "Logo": {
+              "Paths": []
+            },
+            "Industry": {
+              "TaxonomyContentItemId": "c043b3de-49d4-4cdb-9027-9e4b4ac7c60f",
+              "TermContentItemIds": [
+                "c86fa82c-3bfe-4a9f-9cdb-e95985d1c49e"
+              ]
+            },
+            "Organisation": {
+              "Text": "Acme Corp"
+            },
+            "Summary": {
+              "Html": "<p>Rebuilt enterprise intranet on Orchard Core.</p>"
+            },
+            "Results": {
+              "Html": "<p>Delivered a modern, modular digital workplace with faster editorial workflows.</p>"
+            },
+            "LiveUrl": {
+              "Text": "https://example.com/acme"
+            }
+          }
+        },
+        {
+          "ContentItemId": "25da8b38-95b5-42c3-b722-1ae16b98b82d",
+          "ContentType": "CaseStudy",
+          "DisplayText": "City of Springfield",
+          "Latest": true,
+          "Published": true,
+          "Owner": "[js: parameters('AdminUserId')]",
+          "Author": "[js: parameters('AdminUsername')]",
+          "TitlePart": {
+            "Title": "City of Springfield"
+          },
+          "AutoroutePart": {
+            "Path": "case-studies/city-of-springfield"
+          },
+          "LocalizationPart": {},
+          "SeoMetaPart": {},
+          "CaseStudy": {
+            "Screenshot": {
+              "Paths": []
+            },
+            "Logo": {
+              "Paths": []
+            },
+            "Industry": {
+              "TaxonomyContentItemId": "c043b3de-49d4-4cdb-9027-9e4b4ac7c60f",
+              "TermContentItemIds": [
+                "28030d8b-01aa-4a41-9ce3-a7f334a368bd"
+              ]
+            },
+            "Organisation": {
+              "Text": "City of Springfield"
+            },
+            "Summary": {
+              "Html": "<p>Citizen portal serving 50,000 residents.</p>"
+            },
+            "Results": {
+              "Html": "<p>Improved access to city services with scalable publishing and forms-ready architecture.</p>"
+            },
+            "LiveUrl": {
+              "Text": "https://example.com/springfield"
+            }
+          }
+        },
+        {
+          "ContentItemId": "92954888-ab68-4ba6-a6ab-5727e48d11af",
+          "ContentType": "Feature",
+          "DisplayText": "Multi-tenancy",
+          "Latest": true,
+          "Published": true,
+          "Owner": "[js: parameters('AdminUserId')]",
+          "Author": "[js: parameters('AdminUsername')]",
+          "TitlePart": {
+            "Title": "Multi-tenancy"
+          },
+          "LocalizationPart": {},
+          "Feature": {
+            "Icon": {
+              "Text": "fa-building"
+            },
+            "Capability": {
+              "TaxonomyContentItemId": "c6fb4d89-33dc-4147-815b-0bd3506c188e",
+              "TermContentItemIds": [
+                "765f6180-1ccf-4017-af02-7d40e3bcb4ef"
+              ]
+            },
+            "Summary": {
+              "Text": "Run hundreds of sites from one install."
+            },
+            "Body": {
+              "Html": "<p>Run hundreds of sites from one install.</p>"
+            },
+            "DocsLink": {
+              "Text": "https://docs.orchardcore.net/en/latest/docs/reference/modules/Tenants/"
+            }
+          }
+        },
+        {
+          "ContentItemId": "9c841574-251a-42ce-b24f-419e1a1b1a61",
+          "ContentType": "Feature",
+          "DisplayText": "Workflows",
+          "Latest": true,
+          "Published": true,
+          "Owner": "[js: parameters('AdminUserId')]",
+          "Author": "[js: parameters('AdminUsername')]",
+          "TitlePart": {
+            "Title": "Workflows"
+          },
+          "LocalizationPart": {},
+          "Feature": {
+            "Icon": {
+              "Text": "fa-diagram-project"
+            },
+            "Capability": {
+              "TaxonomyContentItemId": "c6fb4d89-33dc-4147-815b-0bd3506c188e",
+              "TermContentItemIds": [
+                "a7423017-7606-4ad7-9e54-88cb0661aa52"
+              ]
+            },
+            "Summary": {
+              "Text": "Visual workflow designer with email, HTTP, and scripting."
+            },
+            "Body": {
+              "Html": "<p>Visual workflow designer with email, HTTP, and scripting.</p>"
+            },
+            "DocsLink": {
+              "Text": "https://docs.orchardcore.net/en/latest/docs/reference/modules/Workflows/"
+            }
+          }
+        },
+        {
+          "ContentItemId": "dd6f1023-cb3f-4ae4-9a98-27c078a88a8b",
+          "ContentType": "Feature",
+          "DisplayText": "Full-text Search",
+          "Latest": true,
+          "Published": true,
+          "Owner": "[js: parameters('AdminUserId')]",
+          "Author": "[js: parameters('AdminUsername')]",
+          "TitlePart": {
+            "Title": "Full-text Search"
+          },
+          "LocalizationPart": {},
+          "Feature": {
+            "Icon": {
+              "Text": "fa-magnifying-glass"
+            },
+            "Capability": {
+              "TaxonomyContentItemId": "c6fb4d89-33dc-4147-815b-0bd3506c188e",
+              "TermContentItemIds": [
+                "75611e6d-d97b-418f-8bde-40e1bcf405bf"
+              ]
+            },
+            "Summary": {
+              "Text": "Lucene and Elasticsearch support built in."
+            },
+            "Body": {
+              "Html": "<p>Lucene and Elasticsearch support built in.</p>"
+            },
+            "DocsLink": {
+              "Text": "https://docs.orchardcore.net/en/latest/docs/reference/modules/Search/"
+            }
+          }
+        },
+        {
+          "ContentItemId": "c7b13d06-094d-4cde-bcf0-3df23cd968eb",
+          "ContentType": "Feature",
+          "DisplayText": "Media Management",
+          "Latest": true,
+          "Published": true,
+          "Owner": "[js: parameters('AdminUserId')]",
+          "Author": "[js: parameters('AdminUsername')]",
+          "TitlePart": {
+            "Title": "Media Management"
+          },
+          "LocalizationPart": {},
+          "Feature": {
+            "Icon": {
+              "Text": "fa-photo-film"
+            },
+            "Capability": {
+              "TaxonomyContentItemId": "c6fb4d89-33dc-4147-815b-0bd3506c188e",
+              "TermContentItemIds": [
+                "eb7b024a-ed39-472a-9a7f-e31531ddf09e"
+              ]
+            },
+            "Summary": {
+              "Text": "Azure Blob, S3, and local disk storage."
+            },
+            "Body": {
+              "Html": "<p>Azure Blob, S3, and local disk storage.</p>"
+            },
+            "DocsLink": {
+              "Text": "https://docs.orchardcore.net/en/latest/docs/reference/modules/Media/"
+            }
+          }
+        },
+        {
+          "ContentItemId": "a5a02cc0-11b6-4c55-8137-50ae824bb941",
+          "ContentType": "Feature",
+          "DisplayText": "Localization",
+          "Latest": true,
+          "Published": true,
+          "Owner": "[js: parameters('AdminUserId')]",
+          "Author": "[js: parameters('AdminUsername')]",
+          "TitlePart": {
+            "Title": "Localization"
+          },
+          "LocalizationPart": {},
+          "Feature": {
+            "Icon": {
+              "Text": "fa-language"
+            },
+            "Capability": {
+              "TaxonomyContentItemId": "c6fb4d89-33dc-4147-815b-0bd3506c188e",
+              "TermContentItemIds": [
+                "6169279f-47ff-481b-a776-b6d74e4c497c"
+              ]
+            },
+            "Summary": {
+              "Text": "True multilingual content with culture routing."
+            },
+            "Body": {
+              "Html": "<p>True multilingual content with culture routing.</p>"
+            },
+            "DocsLink": {
+              "Text": "https://docs.orchardcore.net/en/latest/docs/reference/modules/Contents/#localization"
+            }
+          }
+        },
+        {
+          "ContentItemId": "ef51664e-3334-48e7-a5d2-ddd9a8af582c",
+          "ContentType": "Feature",
+          "DisplayText": "Security",
+          "Latest": true,
+          "Published": true,
+          "Owner": "[js: parameters('AdminUserId')]",
+          "Author": "[js: parameters('AdminUsername')]",
+          "TitlePart": {
+            "Title": "Security"
+          },
+          "LocalizationPart": {},
+          "Feature": {
+            "Icon": {
+              "Text": "fa-shield-halved"
+            },
+            "Capability": {
+              "TaxonomyContentItemId": "c6fb4d89-33dc-4147-815b-0bd3506c188e",
+              "TermContentItemIds": [
+                "e733ea01-d392-4d6d-b35a-3eb6c7b69a83"
+              ]
+            },
+            "Summary": {
+              "Text": "Granular roles, permissions, and audit trail."
+            },
+            "Body": {
+              "Html": "<p>Granular roles, permissions, and audit trail.</p>"
+            },
+            "DocsLink": {
+              "Text": "https://docs.orchardcore.net/en/latest/docs/reference/modules/Security/"
+            }
+          }
+        },
+        {
+          "ContentItemId": "88956664-bbbe-4de5-b179-1b0750c6f124",
+          "ContentType": "ComparisonRow",
+          "DisplayText": "Multi-tenancy",
+          "Latest": true,
+          "Published": true,
+          "Owner": "[js: parameters('AdminUserId')]",
+          "Author": "[js: parameters('AdminUsername')]",
+          "TitlePart": {
+            "Title": "Multi-tenancy"
+          },
+          "ComparisonRow": {
+            "Capability": {
+              "Text": "Multi-tenancy"
+            },
+            "OrchardCoreSupport": {
+              "Text": "✓"
+            },
+            "OrchardCoreNote": {
+              "Text": ""
+            },
+            "UmbracoSupport": {
+              "Text": "✗"
+            },
+            "UmbracoNote": {
+              "Text": ""
+            },
+            "AbpSupport": {
+              "Text": "partial"
+            },
+            "AbpNote": {
+              "Text": ""
+            },
+            "SitecoreSupport": {
+              "Text": "✓"
+            },
+            "SitecoreNote": {
+              "Text": ""
+            },
+            "KenticoSupport": {
+              "Text": "partial"
+            },
+            "KenticoNote": {
+              "Text": ""
+            }
+          }
+        },
+        {
+          "ContentItemId": "d8eb98e6-8ecb-4170-8265-03c7fa714f65",
+          "ContentType": "ComparisonRow",
+          "DisplayText": "Open Source (MIT)",
+          "Latest": true,
+          "Published": true,
+          "Owner": "[js: parameters('AdminUserId')]",
+          "Author": "[js: parameters('AdminUsername')]",
+          "TitlePart": {
+            "Title": "Open Source (MIT)"
+          },
+          "ComparisonRow": {
+            "Capability": {
+              "Text": "Open Source (MIT)"
+            },
+            "OrchardCoreSupport": {
+              "Text": "✓"
+            },
+            "OrchardCoreNote": {
+              "Text": ""
+            },
+            "UmbracoSupport": {
+              "Text": "✓"
+            },
+            "UmbracoNote": {
+              "Text": ""
+            },
+            "AbpSupport": {
+              "Text": "✓"
+            },
+            "AbpNote": {
+              "Text": ""
+            },
+            "SitecoreSupport": {
+              "Text": "✗"
+            },
+            "SitecoreNote": {
+              "Text": ""
+            },
+            "KenticoSupport": {
+              "Text": "✗"
+            },
+            "KenticoNote": {
+              "Text": ""
+            }
+          }
+        },
+        {
+          "ContentItemId": "9b7d13c9-1ade-47a5-8213-fb16648e3073",
+          "ContentType": "ComparisonRow",
+          "DisplayText": "Built on .NET",
+          "Latest": true,
+          "Published": true,
+          "Owner": "[js: parameters('AdminUserId')]",
+          "Author": "[js: parameters('AdminUsername')]",
+          "TitlePart": {
+            "Title": "Built on .NET"
+          },
+          "ComparisonRow": {
+            "Capability": {
+              "Text": "Built on .NET"
+            },
+            "OrchardCoreSupport": {
+              "Text": "✓"
+            },
+            "OrchardCoreNote": {
+              "Text": ""
+            },
+            "UmbracoSupport": {
+              "Text": "✓"
+            },
+            "UmbracoNote": {
+              "Text": ""
+            },
+            "AbpSupport": {
+              "Text": "✓"
+            },
+            "AbpNote": {
+              "Text": ""
+            },
+            "SitecoreSupport": {
+              "Text": "✓"
+            },
+            "SitecoreNote": {
+              "Text": ""
+            },
+            "KenticoSupport": {
+              "Text": "✓"
+            },
+            "KenticoNote": {
+              "Text": ""
+            }
+          }
+        },
+        {
+          "ContentItemId": "02ad56b8-4232-420a-9158-b3c521777ddd",
+          "ContentType": "Faq",
+          "DisplayText": "Is Orchard Core free?",
+          "Latest": true,
+          "Published": true,
+          "Owner": "[js: parameters('AdminUserId')]",
+          "Author": "[js: parameters('AdminUsername')]",
+          "TitlePart": {
+            "Title": "Is Orchard Core free?"
+          },
+          "LocalizationPart": {},
+          "Faq": {
+            "Question": {
+              "Text": "Is Orchard Core free?"
+            },
+            "Answer": {
+              "Html": "<p>Yes, Orchard Core is MIT licensed and completely free.</p>"
+            },
+            "Audience": {
+              "TaxonomyContentItemId": "4ae8918c-192b-4fa5-8542-32f96bb00ea8",
+              "TermContentItemIds": [
+                "f2b8654f-f116-459c-ae1c-2bcefba6e0e5"
+              ]
+            }
+          }
+        },
+        {
+          "ContentItemId": "5e3d8a49-bf44-45a3-ab34-adf35e30eccb",
+          "ContentType": "Faq",
+          "DisplayText": "What .NET version does Orchard Core support?",
+          "Latest": true,
+          "Published": true,
+          "Owner": "[js: parameters('AdminUserId')]",
+          "Author": "[js: parameters('AdminUsername')]",
+          "TitlePart": {
+            "Title": "What .NET version does Orchard Core support?"
+          },
+          "LocalizationPart": {},
+          "Faq": {
+            "Question": {
+              "Text": "What .NET version does Orchard Core support?"
+            },
+            "Answer": {
+              "Html": "<p>Orchard Core 1.x targets .NET 8.</p>"
+            },
+            "Audience": {
+              "TaxonomyContentItemId": "4ae8918c-192b-4fa5-8542-32f96bb00ea8",
+              "TermContentItemIds": [
+                "bbb82025-d598-4a21-b6e6-c841bc59b4c4"
+              ]
+            }
+          }
+        },
+        {
+          "ContentItemId": "16bd3c3d-34ec-40f8-9ee6-304bf461d6d7",
+          "ContentType": "Faq",
+          "DisplayText": "How do I get started?",
+          "Latest": true,
+          "Published": true,
+          "Owner": "[js: parameters('AdminUserId')]",
+          "Author": "[js: parameters('AdminUsername')]",
+          "TitlePart": {
+            "Title": "How do I get started?"
+          },
+          "LocalizationPart": {},
+          "Faq": {
+            "Question": {
+              "Text": "How do I get started?"
+            },
+            "Answer": {
+              "Html": "<p>Run <code>dotnet new occms</code> to scaffold a new site.</p>"
+            },
+            "Audience": {
+              "TaxonomyContentItemId": "4ae8918c-192b-4fa5-8542-32f96bb00ea8",
+              "TermContentItemIds": [
+                "bbb82025-d598-4a21-b6e6-c841bc59b4c4"
+              ]
+            }
+          }
+        },
+        {
+          "ContentItemId": "c3f8399c-495e-4345-8d5e-53514fa7644d",
+          "ContentType": "Faq",
+          "DisplayText": "Who uses Orchard Core?",
+          "Latest": true,
+          "Published": true,
+          "Owner": "[js: parameters('AdminUserId')]",
+          "Author": "[js: parameters('AdminUsername')]",
+          "TitlePart": {
+            "Title": "Who uses Orchard Core?"
+          },
+          "LocalizationPart": {},
+          "Faq": {
+            "Question": {
+              "Text": "Who uses Orchard Core?"
+            },
+            "Answer": {
+              "Html": "<p>Fortune 500 companies, governments, and startups worldwide.</p>"
+            },
+            "Audience": {
+              "TaxonomyContentItemId": "4ae8918c-192b-4fa5-8542-32f96bb00ea8",
+              "TermContentItemIds": [
+                "f2b8654f-f116-459c-ae1c-2bcefba6e0e5"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Themes",
+      "Site": "Canopy",
+      "Admin": "TheAdmin"
+    },
+    {
+      "name": "Content",
+      "data": [
+        {
+          "ContentItemId": "cf569c5a-9945-4c8b-8caf-78a927120ef1",
+          "ContentType": "Menu",
+          "DisplayText": "Main Menu",
+          "Latest": true,
+          "Published": true,
+          "Owner": "[js: parameters('AdminUserId')]",
+          "Author": "[js: parameters('AdminUsername')]",
+          "TitlePart": {
+            "Title": "Main Menu"
+          },
+          "AliasPart": {
+            "Alias": "main-menu"
+          },
+          "MenuPart": {},
+          "MenuItemsListPart": {
+            "MenuItems": [
+              {
+                "ContentItemId": "df35aab6-2039-4de0-99aa-b22577327c2c",
+                "ContentType": "LinkMenuItem",
+                "DisplayText": "Get Started",
+                "LinkMenuItemPart": {
+                  "Name": "Get Started",
+                  "Url": "~/developers/quickstart"
+                }
+              },
+              {
+                "ContentItemId": "6fb07d80-ae1f-43fd-8d21-18bb93f7d7f8",
+                "ContentType": "LinkMenuItem",
+                "DisplayText": "Why Orchard Core",
+                "LinkMenuItemPart": {
+                  "Name": "Why Orchard Core",
+                  "Url": "~/business/why"
+                }
+              },
+              {
+                "ContentItemId": "aa36dd79-256f-4759-9415-bb4317be72af",
+                "ContentType": "LinkMenuItem",
+                "DisplayText": "Features",
+                "LinkMenuItemPart": {
+                  "Name": "Features",
+                  "Url": "~/developers/features"
+                }
+              },
+              {
+                "ContentItemId": "787cdd9b-b2c4-4ce2-8029-8260cb34ebda",
+                "ContentType": "LinkMenuItem",
+                "DisplayText": "Compare",
+                "LinkMenuItemPart": {
+                  "Name": "Compare",
+                  "Url": "~/developers/compare"
+                }
+              },
+              {
+                "ContentItemId": "cb436938-3276-40ed-9c76-6bc65e92a3b9",
+                "ContentType": "LinkMenuItem",
+                "DisplayText": "Showcase",
+                "LinkMenuItemPart": {
+                  "Name": "Showcase",
+                  "Url": "~/developers/showcase"
+                }
+              },
+              {
+                "ContentItemId": "5862c3d6-2681-49b5-8e31-91903835e25a",
+                "ContentType": "LinkMenuItem",
+                "DisplayText": "Community",
+                "LinkMenuItemPart": {
+                  "Name": "Community",
+                  "Url": "~/community"
+                }
+              },
+              {
+                "ContentItemId": "ff4ba5c2-62a8-47af-9306-087efa18a2fd",
+                "ContentType": "LinkMenuItem",
+                "DisplayText": "Blog",
+                "LinkMenuItemPart": {
+                  "Name": "Blog",
+                  "Url": "~/blog"
+                }
+              },
+              {
+                "ContentItemId": "adc5bf97-ceea-4828-b491-921eabfa4303",
+                "ContentType": "LinkMenuItem",
+                "DisplayText": "Docs ↗",
+                "LinkMenuItemPart": {
+                  "Name": "Docs ↗",
+                  "Url": "https://docs.orchardcore.net"
+                }
+              },
+              {
+                "ContentItemId": "3bb3ab91-96cb-4a1f-ab11-97ee787d1f84",
+                "ContentType": "LinkMenuItem",
+                "DisplayText": "GitHub ↗",
+                "LinkMenuItemPart": {
+                  "Name": "GitHub ↗",
+                  "Url": "https://github.com/OrchardCMS/OrchardCore"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Settings",
+      "SiteName": "Orchard Core",
+      "HomeRoute": {
+        "Action": "Display",
+        "Controller": "Item",
+        "Area": "OrchardCore.Contents",
+        "ContentItemId": "555b4029-54ce-443b-927a-da86296b42b1"
+      }
+    }
+  ]
+}

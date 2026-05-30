@@ -1,0 +1,37 @@
+{% assign widget = Model.ContentItem.Content.QuickstartWidget %}
+{% assign dotnet_command = widget.DotNetCommand.Text | default: "dotnet new occms -n OrchardStarter && cd OrchardStarter && dotnet run" %}
+{% assign docker_command = widget.DockerCommand.Text | default: "docker run --rm -p 8080:80 orchardcore/orchardcore-cms:latest" %}
+{% assign starter_command = widget.StarterRepoCommand.Text | default: "git clone https://github.com/OrchardCMS/OrchardCore.git && cd OrchardCore" %}
+<section class="code-shell reveal" data-tabs>
+    <div class="code-shell__toolbar">
+        <div class="code-shell__tabs" role="tablist" aria-label="{{ 'Quickstart options' | t }}">
+            <button class="code-shell__tab is-active" type="button" role="tab" aria-selected="true" tabindex="0" data-tab="dotnet">dotnet new</button>
+            <button class="code-shell__tab" type="button" role="tab" aria-selected="false" tabindex="-1" data-tab="docker">Docker</button>
+            <button class="code-shell__tab" type="button" role="tab" aria-selected="false" tabindex="-1" data-tab="starter">Starter Repo</button>
+        </div>
+    </div>
+    <section role="tabpanel" data-tab-panel="dotnet" class="is-active">
+        <div class="code-shell__toolbar">
+            <span>{{ 'Create a new solution' | t }}</span>
+            <button class="copy-button" type="button" data-copy data-copy-target="#quickstart-dotnet" data-copy-event="quickstart_command_copied">{{ 'Copy' | t }}</button>
+        </div>
+        <pre id="quickstart-dotnet"><code>{{ dotnet_command }}</code></pre>
+    </section>
+    <section role="tabpanel" data-tab-panel="docker" hidden>
+        <div class="code-shell__toolbar">
+            <span>{{ 'Run Orchard Core with Docker' | t }}</span>
+            <button class="copy-button" type="button" data-copy data-copy-target="#quickstart-docker" data-copy-event="docker_command_copied">{{ 'Copy' | t }}</button>
+        </div>
+        <pre id="quickstart-docker"><code>{{ docker_command }}</code></pre>
+    </section>
+    <section role="tabpanel" data-tab-panel="starter" hidden>
+        <div class="code-shell__toolbar">
+            <span>{{ 'Clone the starter repository' | t }}</span>
+            <button class="copy-button" type="button" data-copy data-copy-target="#quickstart-starter" data-copy-event="quickstart_command_copied">{{ 'Copy' | t }}</button>
+        </div>
+        <pre id="quickstart-starter"><code>{{ starter_command }}</code></pre>
+        <div class="code-shell__toolbar">
+            <a href="https://github.com/OrchardCMS/OrchardCore" data-analytics-event="starter_repo_clicked">{{ 'View starter repo' | t }}</a>
+        </div>
+    </section>
+</section>

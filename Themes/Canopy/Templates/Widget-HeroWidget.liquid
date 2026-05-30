@@ -1,0 +1,34 @@
+{% assign widget = Model.ContentItem.Content.HeroWidget %}
+{% assign headline = widget.Headline.Text | default: Model.ContentItem.DisplayText %}
+{% assign subheadline = widget.Subheadline.Text | default: "The composable application framework and CMS for teams building on .NET." %}
+{% assign primary_label = widget.PrimaryCta.Text | default: "Start building" %}
+{% assign primary_url = widget.PrimaryCta.Url | default: "/docs/getting-started" %}
+{% assign secondary_label = widget.SecondaryCta.Text | default: "Explore the docs" %}
+{% assign secondary_url = widget.SecondaryCta.Url | default: "/docs" %}
+{% assign media_path = widget.Media.Paths.first %}
+{% assign embed_url = widget.EmbedUrl.Text %}
+<section class="hero">
+    <div class="container hero__inner">
+        <div class="hero__content reveal">
+            <span class="eyebrow">{{ widget.Eyebrow.Text | default: 'Official theme' | t }}</span>
+            <h1 class="hero__headline">{{ headline }}</h1>
+            <p class="hero__subheadline">{{ subheadline }}</p>
+            <div class="hero__actions">
+                <a class="hero__button" href="{{ primary_url | href }}" {% if primary_label contains 'Business' or primary_url contains '/business' %}data-analytics-event="business_path_entered" onclick="document.dispatchEvent(new CustomEvent('business_path_entered', { detail: { href: '{{ primary_url }}', label: '{{ primary_label }}' } }))"{% endif %}>{{ primary_label | t }}</a>
+                <a class="hero__button-secondary" href="{{ secondary_url | href }}" {% if secondary_label contains 'Business' or secondary_url contains '/business' %}data-analytics-event="business_path_entered" onclick="document.dispatchEvent(new CustomEvent('business_path_entered', { detail: { href: '{{ secondary_url }}', label: '{{ secondary_label }}' } }))"{% endif %}>{{ secondary_label | t }}</a>
+            </div>
+        </div>
+        <div class="hero__media reveal">
+            {% if embed_url != blank %}
+                <iframe src="{{ embed_url }}" title="{{ headline | escape }}" loading="lazy" allowfullscreen></iframe>
+            {% elsif media_path != blank %}
+                <img src="{{ media_path | asset_url }}" alt="{{ headline | escape }}" loading="eager" />
+            {% else %}
+                <div class="zone-card prose">
+                    <h2>{{ 'Ship faster with Orchard Core' | t }}</h2>
+                    <p>{{ 'Compose pages, APIs, workflows, and commerce-ready experiences with one platform.' | t }}</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>

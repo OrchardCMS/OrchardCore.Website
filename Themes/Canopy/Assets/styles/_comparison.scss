@@ -1,0 +1,60 @@
+.comparison-table {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+}
+
+.comparison-table__scroll {
+  overflow-x: auto;
+}
+
+.comparison-table table {
+  min-width: 60rem;
+  width: 100%;
+}
+
+.comparison-table th,
+.comparison-table td {
+  border-bottom: 1px solid var(--color-border);
+  padding: var(--space-4);
+  text-align: left;
+}
+
+.comparison-table thead th {
+  background: var(--color-surface);
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+.comparison-table thead th:first-child,
+.comparison-table tbody td:first-child {
+  background: var(--color-surface);
+  left: 0;
+  position: sticky;
+  z-index: 1;
+}
+
+.comparison-table__platform--orchardcore { color: var(--color-brand); }
+.comparison-table__platform--umbraco { color: #3544dc; }
+.comparison-table__platform--abp { color: #f76707; }
+.comparison-table__platform--sitecore { color: #be123c; }
+.comparison-table__platform--kentico { color: #0f766e; }
+
+.comparison-yes,
+.comparison-no {
+  align-items: center;
+  display: inline-flex;
+  font-weight: 700;
+  gap: var(--space-2);
+}
+
+.comparison-yes::before {
+  color: var(--color-success);
+  content: "✓";
+}
+
+.comparison-no::before {
+  color: var(--color-danger);
+  content: "✕";
+}

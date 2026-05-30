@@ -1,0 +1,57 @@
+{% assign site_name = Site.SiteName | default: "Orchard Core" %}
+{% assign page_title = Model.Title | default: Model.ContentItem | display_text | default: site_name %}
+{% assign page_description = Model.Description | default: Model.ContentItem.Content.MetaDescription.Text | default: "Canopy is the official public theme for orchardcore.net." %}
+{% assign page_url = "https://orchardcore.net" | append: Request.Path %}
+<!DOCTYPE html>
+<html lang="{{ Culture.Name | default: 'en' }}">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{{ page_title }} · {{ site_name }}</title>
+    <meta name="description" content="{{ page_description | escape }}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="{{ page_title | escape }}" />
+    <meta property="og:description" content="{{ page_description | escape }}" />
+    <meta property="og:url" content="{{ page_url }}" />
+    <meta property="og:site_name" content="{{ site_name | escape }}" />
+    <link rel="canonical" href="{{ page_url }}" />
+    <link rel="alternate" hreflang="en" href="https://orchardcore.net{{ Request.Path }}" />
+    <link rel="alternate" hreflang="fr" href="https://orchardcore.net/fr{{ Request.Path }}" />
+    <link rel="stylesheet" href="{{ '~/Canopy/css/canopy.min.css?v=1.8.3' | href }}" />
+    {% resources type: "Meta" %}
+    {% resources type: "HeadLink" %}
+    {% resources type: "Stylesheet" %}
+    {% resources type: "HeadScript" %}
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "SoftwareApplication",
+          "name": "Orchard Core",
+          "applicationCategory": "ContentManagementSystem",
+          "operatingSystem": "Cross-platform",
+          "url": "https://orchardcore.net",
+          "creator": {
+            "@type": "Organization",
+            "name": "The Orchard Team"
+          }
+        },
+        {
+          "@type": "Organization",
+          "name": "The Orchard Team",
+          "url": "https://orchardcore.net",
+          "sameAs": [
+            "https://github.com/OrchardCMS/OrchardCore",
+            "https://discord.gg/orchardcore"
+          ]
+        }
+      ]
+    }
+    </script>
+</head>
+<body class="canopy-site">
+    {{ Model.Layout | shape_render }}
+    {% resources type: "FootScript" %}
+</body>
+</html>

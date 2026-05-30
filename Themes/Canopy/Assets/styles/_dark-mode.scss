@@ -1,0 +1,46 @@
+[data-theme="dark"] {
+  --color-background: #0f1511;
+  --color-background-alt: #151f18;
+  --color-surface: #18231c;
+  --color-surface-muted: #223128;
+  --color-surface-strong: #2a3b30;
+  --color-border: rgba(255, 255, 255, 0.12);
+  --color-border-strong: rgba(255, 255, 255, 0.2);
+  --color-text: #eff7f1;
+  --color-text-muted: #c5d0c7;
+  --color-text-subtle: #9bac9f;
+  --color-link: #7fd8a6;
+  --color-link-hover: #b7f3ce;
+  --color-selection: rgba(224, 122, 47, 0.3);
+}
+
+[data-theme="dark"] .site-header {
+  background: rgba(15, 21, 17, 0.88);
+}
+
+[data-theme="dark"] .hero {
+  background: radial-gradient(circle at top right, rgba(224, 122, 47, 0.12), transparent 20rem), linear-gradient(135deg, rgba(45, 106, 79, 0.26), rgba(15, 21, 17, 0.98));
+}
+
+[data-theme="dark"] .code-shell,
+[data-theme="dark"] .site-footer {
+  box-shadow: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --color-background: #0f1511;
+    --color-background-alt: #151f18;
+    --color-surface: #18231c;
+    --color-surface-muted: #223128;
+    --color-surface-strong: #2a3b30;
+    --color-border: rgba(255, 255, 255, 0.12);
+    --color-border-strong: rgba(255, 255, 255, 0.2);
+    --color-text: #eff7f1;
+    --color-text-muted: #c5d0c7;
+    --color-text-subtle: #9bac9f;
+    --color-link: #7fd8a6;
+    --color-link-hover: #b7f3ce;
+    --color-selection: rgba(224, 122, 47, 0.3);
+  }
+}

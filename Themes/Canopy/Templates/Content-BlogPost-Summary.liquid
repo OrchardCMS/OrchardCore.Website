@@ -1,0 +1,16 @@
+{% assign post = Model.ContentItem.Content.BlogPost %}
+<article class="feature-card">
+    <div class="feature-card__body">
+        <p class="eyebrow">{{ Model.ContentItem.CreatedUtc | date: '%B %d, %Y' }}</p>
+        <h2 class="type-2xl">{{ Model.ContentItem | display_text }}</h2>
+        <p>{{ post.Excerpt.Text | default: Model.ContentItem.Content.HtmlBodyPart.Body | strip_html | truncatewords: 28 }}</p>
+        {% if post.Tags.TermContentItems.size > 0 %}
+            <div>
+                {% for tag in post.Tags.TermContentItems %}
+                    <span class="tag-pill">{{ tag | display_text }}</span>
+                {% endfor %}
+            </div>
+        {% endif %}
+        <a href="{{ Model.ContentItem | display_url }}">{{ 'Read more' | t }}</a>
+    </div>
+</article>

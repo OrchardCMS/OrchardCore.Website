@@ -1,0 +1,34 @@
+{% assign case_study = Model.ContentItem.Content.CaseStudy %}
+<article class="section-stack">
+    <section class="hero">
+        <div class="container hero__inner">
+            <div class="hero__content">
+                <span class="industry-pill">{{ case_study.Industry.Text | default: 'Customer story' | t }}</span>
+                <h1>{{ Model.ContentItem | display_text }}</h1>
+                <p>{{ case_study.Summary.Text }}</p>
+                <div class="hero__actions">
+                    {% if case_study.LiveUrl.Url != blank %}
+                        <a class="hero__button" href="{{ case_study.LiveUrl.Url }}">{{ 'Visit live site' | t }}</a>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="hero__media">
+                {% if case_study.Screenshot.Paths.first != blank %}
+                    <img src="{{ case_study.Screenshot.Paths.first | asset_url }}" alt="{{ Model.ContentItem | display_text | escape }}" loading="lazy" />
+                {% endif %}
+            </div>
+        </div>
+    </section>
+    <section class="container card-grid">
+        <article class="zone-card">
+            <h2>{{ 'Organization' | t }}</h2>
+            {% if case_study.OrganizationLogo.Paths.first != blank %}
+                <img src="{{ case_study.OrganizationLogo.Paths.first | asset_url }}" alt="{{ Model.ContentItem | display_text | escape }}" loading="lazy" />
+            {% endif %}
+        </article>
+        <article class="zone-card prose">
+            <h2>{{ 'Results' | t }}</h2>
+            {{ case_study.Results.Html | default: case_study.Results.Text | raw }}
+        </article>
+    </section>
+</article>

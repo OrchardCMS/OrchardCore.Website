@@ -1,0 +1,13 @@
+{% assign widget = Model.ContentItem.Content.CtaBandWidget %}
+<section class="hero reveal" aria-label="{{ 'Call to action' | t }}">
+    <div class="container hero__inner">
+        <div class="hero__content">
+            <span class="eyebrow">{{ widget.Eyebrow.Text | default: 'Ready when you are' | t }}</span>
+            <h2>{{ widget.Headline.Text | default: 'Launch your next .NET experience with Orchard Core' | t }}</h2>
+            <p>{{ widget.Subheadline.Text | default: 'Use the official docs, starter kits, and community channels to get into production fast.' | t }}</p>
+            <div class="hero__actions">
+                <a class="hero__button" href="{{ widget.Cta.Url | default: '/docs' | href }}">{{ widget.Cta.Text | default: 'Start now' | t }}</a>
+            </div>
+        </div>
+    </div>
+</section>

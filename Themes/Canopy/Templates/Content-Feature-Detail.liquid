@@ -1,0 +1,9 @@
+{% assign feature = Model.ContentItem.Content.Feature %}
+<article class="section-stack zone-card prose">
+    <div class="feature-card__icon">{{ feature.Icon.Text | default: '⬢' }}</div>
+    <h1>{{ Model.ContentItem | display_text }}</h1>
+    {{ feature.Body.Html | default: Model.ContentItem.Content.HtmlBodyPart.Body | raw }}
+    {% if feature.DocsLink.Url != blank %}
+        <p><a href="{{ feature.DocsLink.Url }}" data-analytics-event="docs_clicked">{{ 'Open the documentation' | t }}</a></p>
+    {% endif %}
+</article>

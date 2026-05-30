@@ -1,0 +1,59 @@
+{% assign widget = Model.ContentItem.Content.FaqWidget %}
+{% assign faqs = widget.Faqs.ContentItems %}
+{% assign audience = widget.FilterByAudience.Text | default: '' %}
+<section class="section-stack reveal" id="faq">
+    <div class="prose">
+        <span class="eyebrow">{{ widget.Eyebrow.Text | default: 'FAQ' | t }}</span>
+        <h2>{{ widget.Headline.Text | default: 'Frequently asked questions' | t }}</h2>
+    </div>
+    <div class="faq-list">
+        {% for faq in faqs %}
+            {% if audience == blank or faq.Faq.Audience.Text == audience %}
+                <article class="faq-item">
+                    <button class="faq-item__button" type="button" aria-expanded="false">
+                        <span>{{ faq | display_text }}</span>
+                        <span class="faq-item__chevron">⌄</span>
+                    </button>
+                    <div class="faq-item__content">
+                        <div class="faq-item__content-inner prose">
+                            {{ faq.Faq.Answer.Html | default: faq.HtmlBodyPart.Body | raw }}
+                        </div>
+                    </div>
+                </article>
+            {% endif %}
+        {% endfor %}
+    </div>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {% assign first = true %}
+        {% for faq in faqs %}
+            {% if audience == blank or faq.Faq.Audience.Text == audience %}
+                {% unless first %},{% endunless %}
+                {
+                  "@type": "Question",
+                  "name": {{ faq | display_text | json }},
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": {{ faq.Faq.Answer.Html | default: faq.HtmlBodyPart.Body | strip_html | json }}
+                  }
+                }
+                {% assign first = false %}
+            {% endif %}
+        {% endfor %}
+      ]
+    }
+    </script>
+    <script>
+        document.addEventListener('click', function (event) {
+            var trigger = event.target.closest('.faq-item__button');
+            if (!trigger) { return; }
+            var item = trigger.closest('.faq-item');
+            var expanded = trigger.getAttribute('aria-expanded') === 'true';
+            trigger.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+            item.classList.toggle('is-open', !expanded);
+        });
+    </script>
+</section>

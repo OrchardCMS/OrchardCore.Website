@@ -1,0 +1,87 @@
+.card-grid {
+  display: grid;
+  gap: var(--space-6);
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+}
+
+.feature-card,
+.case-study-card,
+.logo-wall__item {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  transition: transform var(--transition-base), box-shadow var(--transition-base), border-color var(--transition-base);
+}
+
+.feature-card:hover,
+.case-study-card:hover {
+  border-color: rgba(45, 106, 79, 0.28);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-4px);
+}
+
+.feature-card__body,
+.case-study-card__body {
+  display: grid;
+  gap: var(--space-4);
+  padding: var(--space-6);
+}
+
+.feature-card__icon,
+.case-study-card__logo {
+  align-items: center;
+  background: linear-gradient(135deg, var(--color-brand-soft), var(--color-accent-soft));
+  border-radius: var(--radius-md);
+  display: inline-flex;
+  height: 3.5rem;
+  justify-content: center;
+  width: 3.5rem;
+}
+
+.industry-pill,
+.tag-pill {
+  align-items: center;
+  background: var(--color-surface-muted);
+  border-radius: var(--radius-pill);
+  color: var(--color-text);
+  display: inline-flex;
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 0.45rem 0.75rem;
+  text-transform: uppercase;
+}
+
+.case-study-card__shot {
+  aspect-ratio: 16 / 9;
+  background: linear-gradient(135deg, var(--color-background-alt), var(--color-surface-strong));
+  border-bottom: 1px solid var(--color-border);
+  overflow: hidden;
+}
+
+.case-study-card__shot img {
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+.logo-wall {
+  display: grid;
+  gap: var(--space-4);
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(10rem, 14rem);
+  overflow-x: auto;
+  padding-bottom: var(--space-3);
+  scroll-snap-type: x proximity;
+}
+
+.logo-wall__item {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  min-height: 6rem;
+  padding: var(--space-5);
+  scroll-snap-align: center;
+}

@@ -1,0 +1,84 @@
+{% assign trust = '' | trust_signals %}
+<div class="site-shell">
+    <header class="site-header site-header-zone">
+        <div class="container site-header__inner">
+            <a class="brand-lockup" href="{{ '~/' | href }}" aria-label="{{ 'Orchard Core home' | t }}">
+                <span class="brand-lockup__mark">OC</span>
+                <span>
+                    <strong>{{ 'Orchard Core' | t }}</strong><br />
+                    <span class="type-sm">{{ 'Composable apps and CMS' | t }}</span>
+                </span>
+            </a>
+            <div class="site-nav">
+                <div class="site-nav__links">
+                    <a class="site-nav__link" href="{{ '/docs' | href }}" data-analytics-event="docs_clicked">{{ 'Docs' | t }}</a>
+                    <a class="site-nav__link" href="https://github.com/OrchardCMS/OrchardCore">{{ 'GitHub' | t }}</a>
+                    <a class="site-nav__link" href="{{ '/community' | href }}">{{ 'Community' | t }}</a>
+                    <a class="site-nav__cta" href="{{ '/download' | href }}">{{ 'Get started' | t }}</a>
+                </div>
+                <a class="github-chip" href="https://github.com/OrchardCMS/OrchardCore" aria-label="{{ 'GitHub stars' | t }}">
+                    <span>★</span>
+                    <span>{{ trust.Stars | default: 0 }}</span>
+                </a>
+                <button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false">
+                    <span class="theme-toggle__icon">◐</span>
+                    <span data-theme-label>{{ 'Dark mode' | t }}</span>
+                </button>
+                <nav class="language-switcher" aria-label="{{ 'Language switcher' | t }}">
+                    <a href="https://orchardcore.net{{ Request.Path }}" class="{% if Culture.Name == 'en' %}is-active{% endif %}">EN</a>
+                    <a href="https://orchardcore.net/fr{{ Request.Path }}" class="{% if Culture.Name contains 'fr' %}is-active{% endif %}">FR</a>
+                </nav>
+            </div>
+        </div>
+        {% if Model.Header != nil %}
+            <div class="container">{{ Model.Header | shape_render }}</div>
+        {% endif %}
+    </header>
+
+    {% if Model.Navigation != nil %}
+        <nav class="site-navigation-zone">{{ Model.Navigation | shape_render }}</nav>
+    {% endif %}
+
+    {% if Model.HeroZone != nil %}
+        <section class="site-hero-zone">{{ Model.HeroZone | shape_render }}</section>
+    {% endif %}
+
+    {% if Model.BeforeContent != nil %}
+        <section class="site-before-content-zone shell-container section-stack">{{ Model.BeforeContent | shape_render }}</section>
+    {% endif %}
+
+    <main class="site-main-zone shell-container section-stack" id="main-content">
+        {% if Model.Content != nil %}
+            {{ Model.Content | shape_render }}
+        {% endif %}
+    </main>
+
+    {% if Model.AfterContent != nil %}
+        <section class="site-after-content-zone shell-container section-stack">{{ Model.AfterContent | shape_render }}</section>
+    {% endif %}
+
+    {% if Model.AsideFirst != nil %}
+        <aside class="site-aside-first-zone section-stack" aria-label="{{ 'Primary sidebar' | t }}">{{ Model.AsideFirst | shape_render }}</aside>
+    {% endif %}
+
+    {% if Model.AsideSecond != nil %}
+        <aside class="site-aside-second-zone section-stack" aria-label="{{ 'Secondary sidebar' | t }}">{{ Model.AsideSecond | shape_render }}</aside>
+    {% endif %}
+
+    <footer class="site-footer site-footer-zone">
+        <div class="container site-footer__grid">
+            {% if Model.Footer != nil %}
+                {{ Model.Footer | shape_render }}
+            {% else %}
+                <div class="site-footer__brand">
+                    <h2>{{ 'Build with Orchard Core' | t }}</h2>
+                    <p>{{ 'A modern, modular framework and CMS for ambitious .NET teams.' | t }}</p>
+                </div>
+            {% endif %}
+        </div>
+        {% if Model.Analytics != nil %}
+            <div class="container">{{ Model.Analytics | shape_render }}</div>
+        {% endif %}
+    </footer>
+</div>
+<script src="{{ '~/Canopy/js/canopy.bundle.js?v=1.8.3' | href }}" defer></script>

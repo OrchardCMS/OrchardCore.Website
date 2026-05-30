@@ -1,0 +1,9 @@
+{% assign case_study = Model.ContentItem.Content.CaseStudy %}
+<article class="case-study-card">
+    <div class="case-study-card__body">
+        <span class="industry-pill">{{ case_study.Industry.Text | default: 'Case study' | t }}</span>
+        <h2 class="type-2xl">{{ Model.ContentItem | display_text }}</h2>
+        <p>{{ case_study.Summary.Text | default: case_study.Results.Text | truncatewords: 28 }}</p>
+        <a href="{{ Model.ContentItem | display_url }}">{{ 'Read more' | t }}</a>
+    </div>
+</article>

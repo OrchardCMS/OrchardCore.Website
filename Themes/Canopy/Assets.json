@@ -1,0 +1,20 @@
+[
+  {
+    "generateSourceMaps": false,
+    "inputs": [
+      "Assets/styles/main.scss"
+    ],
+    "output": "wwwroot/css/canopy.min.css"
+  },
+  {
+    "generateSourceMaps": false,
+    "inputs": [
+      "Assets/scripts/copy-to-clipboard.js",
+      "Assets/scripts/dark-mode-toggle.js",
+      "Assets/scripts/scroll-reveal.js",
+      "Assets/scripts/tabs.js",
+      "Assets/scripts/analytics.js"
+    ],
+    "output": "wwwroot/js/canopy.bundle.js"
+  }
+]

@@ -1,0 +1,34 @@
+{% assign widget = Model.ContentItem.Content.ComparisonTableWidget %}
+{% assign rows = widget.Rows.ContentItems %}
+<section class="section-stack reveal comparison-table" id="platform-comparison" data-observe-event="compare_viewed" data-analytics-label="platform-comparison">
+    <div class="prose">
+        <span class="eyebrow">{{ widget.Eyebrow.Text | default: 'Comparison' | t }}</span>
+        <h2>{{ widget.Headline.Text | default: 'Compare Orchard Core to legacy stacks' | t }}</h2>
+    </div>
+    <div class="comparison-table__scroll">
+        <table>
+            <thead>
+                <tr>
+                    <th>{{ 'Capability' | t }}</th>
+                    <th class="comparison-table__platform--orchardcore">Orchard Core</th>
+                    <th class="comparison-table__platform--umbraco">Umbraco</th>
+                    <th class="comparison-table__platform--abp">abp.io</th>
+                    <th class="comparison-table__platform--sitecore">Sitecore</th>
+                    <th class="comparison-table__platform--kentico">Kentico</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in rows %}
+                    <tr>
+                        <th scope="row">{{ row | display_text }}</th>
+                        <td><span class="{% if row.ComparisonRow.OrchardCore.Value %}comparison-yes{% else %}comparison-no{% endif %}">{{ row.ComparisonRow.OrchardCoreText.Text | default: row.ComparisonRow.OrchardCore.Value }}</span></td>
+                        <td><span class="{% if row.ComparisonRow.Umbraco.Value %}comparison-yes{% else %}comparison-no{% endif %}">{{ row.ComparisonRow.UmbracoText.Text | default: row.ComparisonRow.Umbraco.Value }}</span></td>
+                        <td><span class="{% if row.ComparisonRow.Abp.Value %}comparison-yes{% else %}comparison-no{% endif %}">{{ row.ComparisonRow.AbpText.Text | default: row.ComparisonRow.Abp.Value }}</span></td>
+                        <td><span class="{% if row.ComparisonRow.Sitecore.Value %}comparison-yes{% else %}comparison-no{% endif %}">{{ row.ComparisonRow.SitecoreText.Text | default: row.ComparisonRow.Sitecore.Value }}</span></td>
+                        <td><span class="{% if row.ComparisonRow.Kentico.Value %}comparison-yes{% else %}comparison-no{% endif %}">{{ row.ComparisonRow.KenticoText.Text | default: row.ComparisonRow.Kentico.Value }}</span></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>

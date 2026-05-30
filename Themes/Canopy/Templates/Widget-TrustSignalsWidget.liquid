@@ -1,0 +1,22 @@
+{% assign trust = '' | trust_signals %}
+<section class="zone-card reveal" aria-label="{{ 'Orchard Core trust signals' | t }}">
+    <div class="card-grid">
+        <article>
+            <span class="eyebrow">⭐ {{ 'Stars' | t }}</span>
+            <h2>{{ trust.Stars | default: '…' }}</h2>
+        </article>
+        <article>
+            <span class="eyebrow">👥 {{ 'Contributors' | t }}</span>
+            <h2>{{ trust.Contributors | default: '…' }}</h2>
+        </article>
+        <article>
+            <span class="eyebrow">📦 {{ 'NuGet Downloads' | t }}</span>
+            <h2>{{ trust.NuGetDownloads | default: '…' }}</h2>
+        </article>
+        <article>
+            <span class="eyebrow">🏷️ {{ 'Latest Release' | t }}</span>
+            <h2>{{ trust.LatestRelease | default: 'Loading…' }}</h2>
+            <p class="type-sm">{{ 'Last commit' | t }}: {{ trust.LastCommitDate | default: '…' }}</p>
+        </article>
+    </div>
+</section>

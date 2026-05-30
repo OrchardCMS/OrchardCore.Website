@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Themes\OCWS\OCWS.csproj" />
+    <ProjectReference Include="..\Themes\Canopy\Canopy.csproj" />
   </ItemGroup>
 
 </Project>

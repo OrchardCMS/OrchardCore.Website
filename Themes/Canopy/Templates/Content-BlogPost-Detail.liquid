@@ -1,0 +1,43 @@
+{% assign post = Model.ContentItem.Content.BlogPost %}
+{% assign article_url = 'https://orchardcore.net' | append: Request.Path %}
+<article class="section-stack zone-card prose">
+    <header class="section-stack">
+        <p class="eyebrow">{{ 'Blog' | t }}</p>
+        <h1>{{ Model.ContentItem | display_text }}</h1>
+        <p>{{ Model.ContentItem.CreatedUtc | date: '%B %d, %Y' }} · {{ post.Author.Text | default: 'The Orchard Team' | t }}</p>
+    </header>
+    {{ post.Body.Html | default: Model.ContentItem.Content.HtmlBodyPart.Body | raw }}
+    {% if post.Tags.TermContentItems.size > 0 %}
+        <div class="card-grid">
+            {% for tag in post.Tags.TermContentItems %}
+                <span class="tag-pill">{{ tag | display_text }}</span>
+            {% endfor %}
+        </div>
+    {% endif %}
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://orchardcore.net/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://orchardcore.net/blog"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": {{ Model.ContentItem | display_text | json }},
+          "item": {{ article_url | json }}
+        }
+      ]
+    }
+    </script>
+</article>

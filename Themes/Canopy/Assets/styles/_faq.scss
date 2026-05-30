@@ -1,0 +1,55 @@
+.faq-list {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.faq-item {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.faq-item__button {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  color: var(--color-text);
+  display: flex;
+  font-weight: 700;
+  justify-content: space-between;
+  padding: var(--space-5);
+  text-align: left;
+  width: 100%;
+}
+
+.faq-item__chevron {
+  transition: transform var(--transition-base);
+}
+
+.faq-item.is-open .faq-item__chevron,
+.faq-item__button[aria-expanded="true"] .faq-item__chevron {
+  transform: rotate(180deg);
+}
+
+.faq-item__content {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--transition-slow);
+}
+
+.faq-item__content-inner {
+  min-height: 0;
+  overflow: hidden;
+  padding: 0 var(--space-5);
+}
+
+.faq-item.is-open .faq-item__content,
+.faq-item__button[aria-expanded="true"] + .faq-item__content {
+  grid-template-rows: 1fr;
+}
+
+.faq-item.is-open .faq-item__content-inner,
+.faq-item__button[aria-expanded="true"] + .faq-item__content .faq-item__content-inner {
+  padding-bottom: var(--space-5);
+}
