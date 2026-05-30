@@ -1,6 +1,6 @@
 {% assign site_name = Site.SiteName | default: "Orchard Core" %}
 {% assign page_title = Model.Title | default: Model.ContentItem | display_text | default: site_name %}
-{% assign page_description = Model.Description | default: Model.ContentItem.Content.MetaDescription.Text | default: "Canopy is the official public theme for orchardcore.net." %}
+{% assign page_description = Model.Description | default: Model.ContentItem.Content.MetaDescription.Text | default: "A modular, multi-tenant application framework and CMS for ASP.NET Core." %}
 {% assign page_url = "https://orchardcore.net" | append: Request.Path %}
 <!DOCTYPE html>
 <html lang="{{ Culture.Name | default: 'en' }}">

@@ -94,7 +94,7 @@
     }
 
     function getEventName(trigger, text) {
-      return trigger.getAttribute('data-copy-event') || (text.toLowerCase().indexOf('docker') >= 0 ? 'docker_command_copied' : 'quickstart_command_copied');
+      return trigger.getAttribute('data-copy-event') || (text.toLowerCase().includes('docker') ? 'docker_command_copied' : 'quickstart_command_copied');
     }
 
     function copyText(text) {
@@ -264,7 +264,7 @@
   })();
 
   (function analytics() {
-    var isDev = ['localhost', '127.0.0.1'].indexOf(window.location.hostname) >= 0;
+    var isDev = ['localhost', '127.0.0.1'].includes(window.location.hostname);
 
     function track(eventName, detail) {
       if (typeof window.gtag === 'function') {

@@ -244,6 +244,15 @@
                   "Position": "0"
                 }
               }
+            },
+            {
+              "PartName": "FeatureGridWidget",
+              "Name": "FeatureGridWidget",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                }
+              }
             }
           ]
         },
@@ -264,6 +273,15 @@
               "Settings": {
                 "ContentTypePartSettings": {
                   "Position": "0"
+                }
+              }
+            },
+            {
+              "PartName": "CaseStudyCarouselWidget",
+              "Name": "CaseStudyCarouselWidget",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "1"
                 }
               }
             }
@@ -317,6 +335,15 @@
               "Settings": {
                 "ContentTypePartSettings": {
                   "Position": "0"
+                }
+              }
+            },
+            {
+              "PartName": "ComparisonTableWidget",
+              "Name": "ComparisonTableWidget",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "1"
                 }
               }
             }
@@ -772,11 +799,22 @@
           "ContentPartFieldDefinitionRecords": [
             {
               "FieldName": "TextField",
+              "Name": "Eyebrow",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Eyebrow",
+                  "Position": "0"
+                },
+                "TextFieldSettings": {}
+              }
+            },
+            {
+              "FieldName": "TextField",
               "Name": "Headline",
               "Settings": {
                 "ContentPartFieldSettings": {
                   "DisplayName": "Headline",
-                  "Position": "0"
+                  "Position": "1"
                 },
                 "TextFieldSettings": {}
               }
@@ -787,7 +825,7 @@
               "Settings": {
                 "ContentPartFieldSettings": {
                   "DisplayName": "Subheadline",
-                  "Position": "1"
+                  "Position": "2"
                 },
                 "TextFieldSettings": {}
               }
@@ -798,7 +836,7 @@
               "Settings": {
                 "ContentPartFieldSettings": {
                   "DisplayName": "Primary CTA",
-                  "Position": "2"
+                  "Position": "3"
                 },
                 "LinkFieldSettings": {}
               }
@@ -809,7 +847,7 @@
               "Settings": {
                 "ContentPartFieldSettings": {
                   "DisplayName": "Secondary CTA",
-                  "Position": "3"
+                  "Position": "4"
                 },
                 "LinkFieldSettings": {}
               }
@@ -820,12 +858,37 @@
               "Settings": {
                 "ContentPartFieldSettings": {
                   "DisplayName": "Visual",
-                  "Position": "4"
+                  "Position": "5"
                 },
                 "MediaFieldSettings": {
                   "Multiple": false,
                   "Required": false
                 }
+              }
+            },
+            {
+              "FieldName": "MediaField",
+              "Name": "Media",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Media",
+                  "Position": "6"
+                },
+                "MediaFieldSettings": {
+                  "Multiple": false,
+                  "Required": false
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "EmbedUrl",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Embed URL",
+                  "Position": "7"
+                },
+                "TextFieldSettings": {}
               }
             }
           ]
@@ -849,17 +912,27 @@
               }
             },
             {
-              "FieldName": "HtmlField",
+              "FieldName": "TextField",
+              "Name": "DotNetCommand",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "dotnet new Command",
+                  "Position": "1",
+                  "Editor": "Multiline"
+                },
+                "TextFieldSettings": {}
+              }
+            },
+            {
+              "FieldName": "TextField",
               "Name": "DockerCommand",
               "Settings": {
                 "ContentPartFieldSettings": {
                   "DisplayName": "Docker Command",
-                  "Position": "1",
+                  "Position": "2",
                   "Editor": "Multiline"
                 },
-                "HtmlFieldSettings": {
-                  "SanitizeHtml": false
-                }
+                "TextFieldSettings": {}
               }
             },
             {
@@ -868,9 +941,21 @@
               "Settings": {
                 "ContentPartFieldSettings": {
                   "DisplayName": "Starter Repo URL",
-                  "Position": "2"
+                  "Position": "3"
                 },
                 "LinkFieldSettings": {}
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "StarterRepoCommand",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Starter Repo Command",
+                  "Position": "4",
+                  "Editor": "Multiline"
+                },
+                "TextFieldSettings": {}
               }
             }
           ]
@@ -900,18 +985,59 @@
           "Settings": {},
           "ContentPartFieldDefinitionRecords": [
             {
+              "FieldName": "TextField",
+              "Name": "Eyebrow",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Eyebrow",
+                  "Position": "0"
+                },
+                "TextFieldSettings": {}
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "Headline",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Headline",
+                  "Position": "1"
+                },
+                "TextFieldSettings": {}
+              }
+            },
+            {
               "FieldName": "TaxonomyField",
               "Name": "FilterByAudience",
               "Settings": {
                 "ContentPartFieldSettings": {
                   "DisplayName": "Filter By Audience",
-                  "Position": "0"
+                  "Position": "2"
                 },
                 "TaxonomyFieldSettings": {
                   "TaxonomyContentItemId": "4ae8918c-192b-4fa5-8542-32f96bb00ea8",
                   "LeavesOnly": true,
                   "Unique": true
                 }
+              }
+            },
+            {
+              "FieldName": "ContentPickerField",
+              "Name": "Faqs",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "FAQs",
+                  "Position": "3"
+                },
+                "ContentPickerFieldSettings": {
+                  "Required": false,
+                  "Multiple": true,
+                  "DisplayAllContentTypes": false,
+                  "DisplayedContentTypes": [
+                    "Faq"
+                  ]
+                },
+                "ContentIndexSettings": {}
               }
             }
           ]
@@ -922,11 +1048,33 @@
           "ContentPartFieldDefinitionRecords": [
             {
               "FieldName": "TextField",
+              "Name": "Eyebrow",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Eyebrow",
+                  "Position": "0"
+                },
+                "TextFieldSettings": {}
+              }
+            },
+            {
+              "FieldName": "TextField",
               "Name": "Headline",
               "Settings": {
                 "ContentPartFieldSettings": {
                   "DisplayName": "Headline",
-                  "Position": "0"
+                  "Position": "1"
+                },
+                "TextFieldSettings": {}
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "Subheadline",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Subheadline",
+                  "Position": "2"
                 },
                 "TextFieldSettings": {}
               }
@@ -937,7 +1085,7 @@
               "Settings": {
                 "ContentPartFieldSettings": {
                   "DisplayName": "CTA",
-                  "Position": "1"
+                  "Position": "3"
                 },
                 "LinkFieldSettings": {}
               }
@@ -977,12 +1125,26 @@
               }
             },
             {
+              "FieldName": "MediaField",
+              "Name": "OrganizationLogo",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Organization Logo",
+                  "Position": "2"
+                },
+                "MediaFieldSettings": {
+                  "Multiple": false,
+                  "Required": false
+                }
+              }
+            },
+            {
               "FieldName": "TaxonomyField",
               "Name": "Industry",
               "Settings": {
                 "ContentPartFieldSettings": {
                   "DisplayName": "Industry",
-                  "Position": "2"
+                  "Position": "3"
                 },
                 "TaxonomyFieldSettings": {
                   "TaxonomyContentItemId": "c043b3de-49d4-4cdb-9027-9e4b4ac7c60f",
@@ -997,37 +1159,33 @@
               "Settings": {
                 "ContentPartFieldSettings": {
                   "DisplayName": "Organisation",
-                  "Position": "3"
+                  "Position": "4"
                 },
                 "TextFieldSettings": {}
               }
             },
             {
-              "FieldName": "HtmlField",
+              "FieldName": "TextField",
               "Name": "Summary",
               "Settings": {
                 "ContentPartFieldSettings": {
                   "DisplayName": "Summary",
-                  "Position": "4",
-                  "Editor": "Wysiwyg"
+                  "Position": "5",
+                  "Editor": "Multiline"
                 },
-                "HtmlFieldSettings": {
-                  "SanitizeHtml": false
-                }
+                "TextFieldSettings": {}
               }
             },
             {
-              "FieldName": "HtmlField",
+              "FieldName": "TextField",
               "Name": "Results",
               "Settings": {
                 "ContentPartFieldSettings": {
                   "DisplayName": "Results",
-                  "Position": "5",
-                  "Editor": "Wysiwyg"
+                  "Position": "6",
+                  "Editor": "Multiline"
                 },
-                "HtmlFieldSettings": {
-                  "SanitizeHtml": false
-                }
+                "TextFieldSettings": {}
               }
             },
             {
@@ -1036,7 +1194,7 @@
               "Settings": {
                 "ContentPartFieldSettings": {
                   "DisplayName": "Live URL",
-                  "Position": "6"
+                  "Position": "7"
                 },
                 "LinkFieldSettings": {}
               }
@@ -1235,6 +1393,116 @@
                 },
                 "TextFieldSettings": {}
               }
+            },
+            {
+              "FieldName": "BooleanField",
+              "Name": "OrchardCore",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Orchard Core",
+                  "Position": "11"
+                },
+                "BooleanFieldSettings": {}
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "OrchardCoreText",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Orchard Core Text",
+                  "Position": "12"
+                },
+                "TextFieldSettings": {}
+              }
+            },
+            {
+              "FieldName": "BooleanField",
+              "Name": "Umbraco",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Umbraco",
+                  "Position": "13"
+                },
+                "BooleanFieldSettings": {}
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "UmbracoText",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Umbraco Text",
+                  "Position": "14"
+                },
+                "TextFieldSettings": {}
+              }
+            },
+            {
+              "FieldName": "BooleanField",
+              "Name": "Abp",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "ABP",
+                  "Position": "15"
+                },
+                "BooleanFieldSettings": {}
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "AbpText",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "ABP Text",
+                  "Position": "16"
+                },
+                "TextFieldSettings": {}
+              }
+            },
+            {
+              "FieldName": "BooleanField",
+              "Name": "Sitecore",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Sitecore",
+                  "Position": "17"
+                },
+                "BooleanFieldSettings": {}
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "SitecoreText",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Sitecore Text",
+                  "Position": "18"
+                },
+                "TextFieldSettings": {}
+              }
+            },
+            {
+              "FieldName": "BooleanField",
+              "Name": "Kentico",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Kentico",
+                  "Position": "19"
+                },
+                "BooleanFieldSettings": {}
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "KenticoText",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Kentico Text",
+                  "Position": "20"
+                },
+                "TextFieldSettings": {}
+              }
             }
           ]
         },
@@ -1417,6 +1685,158 @@
                   "Position": "3"
                 },
                 "TextFieldSettings": {}
+              }
+            }
+          ]
+        },
+        {
+          "Name": "FeatureGridWidget",
+          "Settings": {},
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "TextField",
+              "Name": "Eyebrow",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Eyebrow",
+                  "Position": "0"
+                },
+                "TextFieldSettings": {}
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "Headline",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Headline",
+                  "Position": "1"
+                },
+                "TextFieldSettings": {}
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "Subheadline",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Subheadline",
+                  "Position": "2"
+                },
+                "TextFieldSettings": {}
+              }
+            },
+            {
+              "FieldName": "ContentPickerField",
+              "Name": "Features",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Features",
+                  "Position": "3"
+                },
+                "ContentPickerFieldSettings": {
+                  "Required": false,
+                  "Multiple": true,
+                  "DisplayAllContentTypes": false,
+                  "DisplayedContentTypes": [
+                    "Feature"
+                  ]
+                },
+                "ContentIndexSettings": {}
+              }
+            }
+          ]
+        },
+        {
+          "Name": "CaseStudyCarouselWidget",
+          "Settings": {},
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "TextField",
+              "Name": "Eyebrow",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Eyebrow",
+                  "Position": "0"
+                },
+                "TextFieldSettings": {}
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "Headline",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Headline",
+                  "Position": "1"
+                },
+                "TextFieldSettings": {}
+              }
+            },
+            {
+              "FieldName": "ContentPickerField",
+              "Name": "CaseStudies",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Case Studies",
+                  "Position": "2"
+                },
+                "ContentPickerFieldSettings": {
+                  "Required": false,
+                  "Multiple": true,
+                  "DisplayAllContentTypes": false,
+                  "DisplayedContentTypes": [
+                    "CaseStudy"
+                  ]
+                },
+                "ContentIndexSettings": {}
+              }
+            }
+          ]
+        },
+        {
+          "Name": "ComparisonTableWidget",
+          "Settings": {},
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "TextField",
+              "Name": "Eyebrow",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Eyebrow",
+                  "Position": "0"
+                },
+                "TextFieldSettings": {}
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "Headline",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Headline",
+                  "Position": "1"
+                },
+                "TextFieldSettings": {}
+              }
+            },
+            {
+              "FieldName": "ContentPickerField",
+              "Name": "Rows",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Rows",
+                  "Position": "2"
+                },
+                "ContentPickerFieldSettings": {
+                  "Required": false,
+                  "Multiple": true,
+                  "DisplayAllContentTypes": false,
+                  "DisplayedContentTypes": [
+                    "ComparisonRow"
+                  ]
+                },
+                "ContentIndexSettings": {}
               }
             }
           ]
@@ -2072,7 +2492,265 @@
           "TitlePart": {
             "Title": "Build Better. Ship Faster. With Orchard Core."
           },
-          "FlowPart": {},
+          "FlowPart": {
+            "Widgets": [
+              {
+                "Id": 0,
+                "ContentItemId": "6e925e64-6f2b-4b4d-bf1d-813242b82e12",
+                "ContentItemVersionId": null,
+                "ContentType": "HeroWidget",
+                "DisplayText": "Homepage Hero",
+                "Latest": false,
+                "Published": false,
+                "Owner": null,
+                "Author": "[js: parameters('AdminUsername')]",
+                "FlowMetadata": {
+                  "Alignment": 3,
+                  "Size": 100
+                },
+                "HeroWidget": {
+                  "Eyebrow": {
+                    "Text": "Official .NET CMS"
+                  },
+                  "Headline": {
+                    "Text": "Build Better. Ship Faster. With Orchard Core."
+                  },
+                  "Subheadline": {
+                    "Text": "The composable application framework and CMS for teams building on .NET."
+                  },
+                  "PrimaryCta": {
+                    "Text": "For .NET Developers",
+                    "Url": "~/developers"
+                  },
+                  "SecondaryCta": {
+                    "Text": "For Business Leaders",
+                    "Url": "~/business"
+                  }
+                }
+              },
+              {
+                "Id": 0,
+                "ContentItemId": "2d7f1270-3bd8-42f6-af40-f318b2625dc1",
+                "ContentItemVersionId": null,
+                "ContentType": "QuickstartWidget",
+                "DisplayText": "Homepage Quickstart",
+                "Latest": false,
+                "Published": false,
+                "Owner": null,
+                "Author": "[js: parameters('AdminUsername')]",
+                "FlowMetadata": {
+                  "Alignment": 3,
+                  "Size": 100
+                },
+                "QuickstartWidget": {
+                  "DotnetNewCommand": {
+                    "Html": "dotnet new occms -n OrchardStarter && cd OrchardStarter && dotnet run"
+                  },
+                  "DotNetCommand": {
+                    "Text": "dotnet new occms -n OrchardStarter && cd OrchardStarter && dotnet run"
+                  },
+                  "DockerCommand": {
+                    "Text": "docker run --rm -p 8080:80 orchardcore/orchardcore-cms:latest"
+                  },
+                  "StarterRepoUrl": {
+                    "Text": "View starter repo",
+                    "Url": "https://github.com/OrchardCMS/OrchardCore"
+                  },
+                  "StarterRepoCommand": {
+                    "Text": "git clone https://github.com/OrchardCMS/OrchardCore.git && cd OrchardCore"
+                  }
+                }
+              },
+              {
+                "Id": 0,
+                "ContentItemId": "e1d6fe98-8443-4d51-9609-9847dc420f4e",
+                "ContentItemVersionId": null,
+                "ContentType": "TrustSignalsWidget",
+                "DisplayText": "Trust Signals",
+                "Latest": false,
+                "Published": false,
+                "Owner": null,
+                "Author": "[js: parameters('AdminUsername')]",
+                "FlowMetadata": {
+                  "Alignment": 3,
+                  "Size": 100
+                },
+                "TrustSignalsWidget": {}
+              },
+              {
+                "Id": 0,
+                "ContentItemId": "2b34e433-c309-4399-93d8-e19da2094ce9",
+                "ContentItemVersionId": null,
+                "ContentType": "FeatureGridWidget",
+                "DisplayText": "Homepage Features",
+                "Latest": false,
+                "Published": false,
+                "Owner": null,
+                "Author": "[js: parameters('AdminUsername')]",
+                "FlowMetadata": {
+                  "Alignment": 3,
+                  "Size": 100
+                },
+                "FeatureGridWidget": {
+                  "Eyebrow": {
+                    "Text": "Capabilities"
+                  },
+                  "Headline": {
+                    "Text": "Compose your application experience"
+                  },
+                  "Subheadline": {
+                    "Text": "Feature building blocks that scale from content pages to line-of-business solutions."
+                  },
+                  "Features": {
+                    "ContentItemIds": [
+                      "92954888-ab68-4ba6-a6ab-5727e48d11af",
+                      "9c841574-251a-42ce-b24f-419e1a1b1a61",
+                      "dd6f1023-cb3f-4ae4-9a98-27c078a88a8b",
+                      "c7b13d06-094d-4cde-bcf0-3df23cd968eb",
+                      "a5a02cc0-11b6-4c55-8137-50ae824bb941",
+                      "ef51664e-3334-48e7-a5d2-ddd9a8af582c"
+                    ]
+                  }
+                }
+              },
+              {
+                "Id": 0,
+                "ContentItemId": "589b590b-93f8-45ca-b867-7e9d5bd21479",
+                "ContentItemVersionId": null,
+                "ContentType": "ComparisonTableWidget",
+                "DisplayText": "Homepage Comparison",
+                "Latest": false,
+                "Published": false,
+                "Owner": null,
+                "Author": "[js: parameters('AdminUsername')]",
+                "FlowMetadata": {
+                  "Alignment": 3,
+                  "Size": 100
+                },
+                "ComparisonTableWidget": {
+                  "Eyebrow": {
+                    "Text": "Comparison"
+                  },
+                  "Headline": {
+                    "Text": "Compare Orchard Core to legacy stacks"
+                  },
+                  "Rows": {
+                    "ContentItemIds": [
+                      "88956664-bbbe-4de5-b179-1b0750c6f124",
+                      "d8eb98e6-8ecb-4170-8265-03c7fa714f65",
+                      "9b7d13c9-1ade-47a5-8213-fb16648e3073"
+                    ]
+                  }
+                }
+              },
+              {
+                "Id": 0,
+                "ContentItemId": "5f355f56-39a7-4138-b64f-4d055c6f7316",
+                "ContentItemVersionId": null,
+                "ContentType": "CaseStudyCarouselWidget",
+                "DisplayText": "Homepage Case Studies",
+                "Latest": false,
+                "Published": false,
+                "Owner": null,
+                "Author": "[js: parameters('AdminUsername')]",
+                "FlowMetadata": {
+                  "Alignment": 3,
+                  "Size": 100
+                },
+                "CaseStudyCarouselWidget": {
+                  "Eyebrow": {
+                    "Text": "Case studies"
+                  },
+                  "Headline": {
+                    "Text": "Teams shipping Orchard Core in production"
+                  },
+                  "CaseStudies": {
+                    "ContentItemIds": [
+                      "0543ac3c-ab6b-49ed-9e4b-2349d63fcb15",
+                      "25da8b38-95b5-42c3-b722-1ae16b98b82d"
+                    ]
+                  }
+                }
+              },
+              {
+                "Id": 0,
+                "ContentItemId": "ef1d7124-cce6-46fd-93d5-4c4dc503491f",
+                "ContentItemVersionId": null,
+                "ContentType": "FaqWidget",
+                "DisplayText": "Homepage FAQs",
+                "Latest": false,
+                "Published": false,
+                "Owner": null,
+                "Author": "[js: parameters('AdminUsername')]",
+                "FlowMetadata": {
+                  "Alignment": 3,
+                  "Size": 100
+                },
+                "FaqWidget": {
+                  "Eyebrow": {
+                    "Text": "FAQ"
+                  },
+                  "Headline": {
+                    "Text": "Frequently asked questions"
+                  },
+                  "Faqs": {
+                    "ContentItemIds": [
+                      "02ad56b8-4232-420a-9158-b3c521777ddd",
+                      "5e3d8a49-bf44-45a3-ab34-adf35e30eccb",
+                      "16bd3c3d-34ec-40f8-9ee6-304bf461d6d7",
+                      "c3f8399c-495e-4345-8d5e-53514fa7644d"
+                    ]
+                  }
+                }
+              },
+              {
+                "Id": 0,
+                "ContentItemId": "462a6f20-e3a3-47a0-b54b-27b8f6b676d3",
+                "ContentItemVersionId": null,
+                "ContentType": "CommunityWidget",
+                "DisplayText": "Community",
+                "Latest": false,
+                "Published": false,
+                "Owner": null,
+                "Author": "[js: parameters('AdminUsername')]",
+                "FlowMetadata": {
+                  "Alignment": 3,
+                  "Size": 100
+                },
+                "CommunityWidget": {}
+              },
+              {
+                "Id": 0,
+                "ContentItemId": "f6c59a4e-9f46-46b9-9efb-c674e8559e3f",
+                "ContentItemVersionId": null,
+                "ContentType": "CtaBandWidget",
+                "DisplayText": "Homepage CTA",
+                "Latest": false,
+                "Published": false,
+                "Owner": null,
+                "Author": "[js: parameters('AdminUsername')]",
+                "FlowMetadata": {
+                  "Alignment": 3,
+                  "Size": 100
+                },
+                "CtaBandWidget": {
+                  "Eyebrow": {
+                    "Text": "Ready when you are"
+                  },
+                  "Headline": {
+                    "Text": "Launch your next .NET experience with Orchard Core"
+                  },
+                  "Subheadline": {
+                    "Text": "Use the official docs, starter kits, and community channels to get into production fast."
+                  },
+                  "Cta": {
+                    "Text": "Start building",
+                    "Url": "https://docs.orchardcore.net/en/latest/docs/getting-started/"
+                  }
+                }
+              }
+            ]
+          },
           "AutoroutePart": {
             "Path": "",
             "SetHomepage": true
@@ -2091,7 +2769,209 @@
           "TitlePart": {
             "Title": "For .NET Developers"
           },
-          "FlowPart": {},
+          "FlowPart": {
+            "Widgets": [
+              {
+                "Id": 0,
+                "ContentItemId": "86ee485f-90b1-4b40-b390-7576bc0c9976",
+                "ContentItemVersionId": null,
+                "ContentType": "HeroWidget",
+                "DisplayText": "Developers Hero",
+                "Latest": false,
+                "Published": false,
+                "Owner": null,
+                "Author": "[js: parameters('AdminUsername')]",
+                "FlowMetadata": {
+                  "Alignment": 3,
+                  "Size": 100
+                },
+                "HeroWidget": {
+                  "Eyebrow": {
+                    "Text": "For developers"
+                  },
+                  "Headline": {
+                    "Text": "Compose modular .NET applications without reinventing the CMS"
+                  },
+                  "Subheadline": {
+                    "Text": "Ship pages, APIs, workflows, search, and multi-tenant experiences from one Orchard Core solution."
+                  },
+                  "PrimaryCta": {
+                    "Text": "Get started",
+                    "Url": "https://docs.orchardcore.net/en/latest/docs/getting-started/"
+                  },
+                  "SecondaryCta": {
+                    "Text": "Compare platforms",
+                    "Url": "~/#platform-comparison"
+                  }
+                }
+              },
+              {
+                "Id": 0,
+                "ContentItemId": "c6dca9a8-ea54-47dd-a5b7-cf08eec5613e",
+                "ContentItemVersionId": null,
+                "ContentType": "QuickstartWidget",
+                "DisplayText": "Developers Quickstart",
+                "Latest": false,
+                "Published": false,
+                "Owner": null,
+                "Author": "[js: parameters('AdminUsername')]",
+                "FlowMetadata": {
+                  "Alignment": 3,
+                  "Size": 100
+                },
+                "QuickstartWidget": {
+                  "DotnetNewCommand": {
+                    "Html": "dotnet new occms -n OrchardStarter && cd OrchardStarter && dotnet run"
+                  },
+                  "DotNetCommand": {
+                    "Text": "dotnet new occms -n OrchardStarter && cd OrchardStarter && dotnet run"
+                  },
+                  "DockerCommand": {
+                    "Text": "docker run --rm -p 8080:80 orchardcore/orchardcore-cms:latest"
+                  },
+                  "StarterRepoUrl": {
+                    "Text": "View starter repo",
+                    "Url": "https://github.com/OrchardCMS/OrchardCore"
+                  },
+                  "StarterRepoCommand": {
+                    "Text": "git clone https://github.com/OrchardCMS/OrchardCore.git && cd OrchardCore"
+                  }
+                }
+              },
+              {
+                "Id": 0,
+                "ContentItemId": "58c23325-3f25-4fbd-91d1-ad4d0585f2b2",
+                "ContentItemVersionId": null,
+                "ContentType": "FeatureGridWidget",
+                "DisplayText": "Developers Features",
+                "Latest": false,
+                "Published": false,
+                "Owner": null,
+                "Author": "[js: parameters('AdminUsername')]",
+                "FlowMetadata": {
+                  "Alignment": 3,
+                  "Size": 100
+                },
+                "FeatureGridWidget": {
+                  "Eyebrow": {
+                    "Text": "Capabilities"
+                  },
+                  "Headline": {
+                    "Text": "Build on production-proven modules"
+                  },
+                  "Subheadline": {
+                    "Text": "Start with the platform features teams typically wire up from scratch."
+                  },
+                  "Features": {
+                    "ContentItemIds": [
+                      "92954888-ab68-4ba6-a6ab-5727e48d11af",
+                      "9c841574-251a-42ce-b24f-419e1a1b1a61",
+                      "dd6f1023-cb3f-4ae4-9a98-27c078a88a8b",
+                      "c7b13d06-094d-4cde-bcf0-3df23cd968eb"
+                    ]
+                  }
+                }
+              },
+              {
+                "Id": 0,
+                "ContentItemId": "7437b1f6-cf55-4e73-aa6d-47553e7c9f52",
+                "ContentItemVersionId": null,
+                "ContentType": "ComparisonTableWidget",
+                "DisplayText": "Developers Comparison",
+                "Latest": false,
+                "Published": false,
+                "Owner": null,
+                "Author": "[js: parameters('AdminUsername')]",
+                "FlowMetadata": {
+                  "Alignment": 3,
+                  "Size": 100
+                },
+                "ComparisonTableWidget": {
+                  "Eyebrow": {
+                    "Text": "Comparison"
+                  },
+                  "Headline": {
+                    "Text": "See where Orchard Core stands out"
+                  },
+                  "Rows": {
+                    "ContentItemIds": [
+                      "88956664-bbbe-4de5-b179-1b0750c6f124",
+                      "d8eb98e6-8ecb-4170-8265-03c7fa714f65",
+                      "9b7d13c9-1ade-47a5-8213-fb16648e3073"
+                    ]
+                  }
+                }
+              },
+              {
+                "Id": 0,
+                "ContentItemId": "5ed858da-84df-4895-82bb-a4df5d8080db",
+                "ContentItemVersionId": null,
+                "ContentType": "FaqWidget",
+                "DisplayText": "Developers FAQs",
+                "Latest": false,
+                "Published": false,
+                "Owner": null,
+                "Author": "[js: parameters('AdminUsername')]",
+                "FlowMetadata": {
+                  "Alignment": 3,
+                  "Size": 100
+                },
+                "FaqWidget": {
+                  "Eyebrow": {
+                    "Text": "Developer FAQ"
+                  },
+                  "Headline": {
+                    "Text": "Answers for engineering teams"
+                  },
+                  "FilterByAudience": {
+                    "TaxonomyContentItemId": "4ae8918c-192b-4fa5-8542-32f96bb00ea8",
+                    "TermContentItemIds": [
+                      "bbb82025-d598-4a21-b6e6-c841bc59b4c4"
+                    ],
+                    "Text": "developer"
+                  },
+                  "Faqs": {
+                    "ContentItemIds": [
+                      "02ad56b8-4232-420a-9158-b3c521777ddd",
+                      "5e3d8a49-bf44-45a3-ab34-adf35e30eccb",
+                      "16bd3c3d-34ec-40f8-9ee6-304bf461d6d7",
+                      "c3f8399c-495e-4345-8d5e-53514fa7644d"
+                    ]
+                  }
+                }
+              },
+              {
+                "Id": 0,
+                "ContentItemId": "d2cb1f1d-6a6f-4153-a520-0e5f0335a452",
+                "ContentItemVersionId": null,
+                "ContentType": "CtaBandWidget",
+                "DisplayText": "Developers CTA",
+                "Latest": false,
+                "Published": false,
+                "Owner": null,
+                "Author": "[js: parameters('AdminUsername')]",
+                "FlowMetadata": {
+                  "Alignment": 3,
+                  "Size": 100
+                },
+                "CtaBandWidget": {
+                  "Eyebrow": {
+                    "Text": "Next steps"
+                  },
+                  "Headline": {
+                    "Text": "Go deeper with the docs, samples, and community"
+                  },
+                  "Subheadline": {
+                    "Text": "From local setup to production deployment, the official docs cover the full stack."
+                  },
+                  "Cta": {
+                    "Text": "Read the docs",
+                    "Url": "https://docs.orchardcore.net"
+                  }
+                }
+              }
+            ]
+          },
           "AutoroutePart": {
             "Path": "developers",
             "SetHomepage": false
@@ -2110,7 +2990,173 @@
           "TitlePart": {
             "Title": "For Business Leaders"
           },
-          "FlowPart": {},
+          "FlowPart": {
+            "Widgets": [
+              {
+                "Id": 0,
+                "ContentItemId": "be7a4ca3-3d76-4c85-84e3-acbd916926b4",
+                "ContentItemVersionId": null,
+                "ContentType": "HeroWidget",
+                "DisplayText": "Business Hero",
+                "Latest": false,
+                "Published": false,
+                "Owner": null,
+                "Author": "[js: parameters('AdminUsername')]",
+                "FlowMetadata": {
+                  "Alignment": 3,
+                  "Size": 100
+                },
+                "HeroWidget": {
+                  "Eyebrow": {
+                    "Text": "For business leaders"
+                  },
+                  "Headline": {
+                    "Text": "Modernize digital experiences on a secure, adaptable .NET platform"
+                  },
+                  "Subheadline": {
+                    "Text": "Orchard Core helps teams reduce platform sprawl while giving editors and developers room to move."
+                  },
+                  "PrimaryCta": {
+                    "Text": "View case studies",
+                    "Url": "~/#case-studies"
+                  },
+                  "SecondaryCta": {
+                    "Text": "Meet the community",
+                    "Url": "https://github.com/OrchardCMS/OrchardCore/discussions"
+                  }
+                }
+              },
+              {
+                "Id": 0,
+                "ContentItemId": "209c9c5a-8511-49ab-b92a-e37b0dadb0a6",
+                "ContentItemVersionId": null,
+                "ContentType": "TrustSignalsWidget",
+                "DisplayText": "Business Trust Signals",
+                "Latest": false,
+                "Published": false,
+                "Owner": null,
+                "Author": "[js: parameters('AdminUsername')]",
+                "FlowMetadata": {
+                  "Alignment": 3,
+                  "Size": 100
+                },
+                "TrustSignalsWidget": {}
+              },
+              {
+                "Id": 0,
+                "ContentItemId": "c054bdc1-58f7-47ea-bcb0-f7ae1ce4c3e6",
+                "ContentItemVersionId": null,
+                "ContentType": "CaseStudyCarouselWidget",
+                "DisplayText": "Business Case Studies",
+                "Latest": false,
+                "Published": false,
+                "Owner": null,
+                "Author": "[js: parameters('AdminUsername')]",
+                "FlowMetadata": {
+                  "Alignment": 3,
+                  "Size": 100
+                },
+                "CaseStudyCarouselWidget": {
+                  "Eyebrow": {
+                    "Text": "Case studies"
+                  },
+                  "Headline": {
+                    "Text": "Organizations delivering with Orchard Core"
+                  },
+                  "CaseStudies": {
+                    "ContentItemIds": [
+                      "0543ac3c-ab6b-49ed-9e4b-2349d63fcb15",
+                      "25da8b38-95b5-42c3-b722-1ae16b98b82d"
+                    ]
+                  }
+                }
+              },
+              {
+                "Id": 0,
+                "ContentItemId": "853b4fb4-25c3-432f-aea2-2ec7080815f7",
+                "ContentItemVersionId": null,
+                "ContentType": "FaqWidget",
+                "DisplayText": "Business FAQs",
+                "Latest": false,
+                "Published": false,
+                "Owner": null,
+                "Author": "[js: parameters('AdminUsername')]",
+                "FlowMetadata": {
+                  "Alignment": 3,
+                  "Size": 100
+                },
+                "FaqWidget": {
+                  "Eyebrow": {
+                    "Text": "Business FAQ"
+                  },
+                  "Headline": {
+                    "Text": "What decision-makers ask most"
+                  },
+                  "FilterByAudience": {
+                    "TaxonomyContentItemId": "4ae8918c-192b-4fa5-8542-32f96bb00ea8",
+                    "TermContentItemIds": [
+                      "f2b8654f-f116-459c-ae1c-2bcefba6e0e5"
+                    ],
+                    "Text": "business"
+                  },
+                  "Faqs": {
+                    "ContentItemIds": [
+                      "02ad56b8-4232-420a-9158-b3c521777ddd",
+                      "5e3d8a49-bf44-45a3-ab34-adf35e30eccb",
+                      "16bd3c3d-34ec-40f8-9ee6-304bf461d6d7",
+                      "c3f8399c-495e-4345-8d5e-53514fa7644d"
+                    ]
+                  }
+                }
+              },
+              {
+                "Id": 0,
+                "ContentItemId": "f7d20257-c1e2-4e0d-8c84-839d93da9593",
+                "ContentItemVersionId": null,
+                "ContentType": "CommunityWidget",
+                "DisplayText": "Business Community",
+                "Latest": false,
+                "Published": false,
+                "Owner": null,
+                "Author": "[js: parameters('AdminUsername')]",
+                "FlowMetadata": {
+                  "Alignment": 3,
+                  "Size": 100
+                },
+                "CommunityWidget": {}
+              },
+              {
+                "Id": 0,
+                "ContentItemId": "2e767d08-e835-4fab-9451-919f65a4afbc",
+                "ContentItemVersionId": null,
+                "ContentType": "CtaBandWidget",
+                "DisplayText": "Business CTA",
+                "Latest": false,
+                "Published": false,
+                "Owner": null,
+                "Author": "[js: parameters('AdminUsername')]",
+                "FlowMetadata": {
+                  "Alignment": 3,
+                  "Size": 100
+                },
+                "CtaBandWidget": {
+                  "Eyebrow": {
+                    "Text": "Explore Orchard Core"
+                  },
+                  "Headline": {
+                    "Text": "See how teams use Orchard Core in production"
+                  },
+                  "Subheadline": {
+                    "Text": "Review the official documentation, code, and community channels before your next platform decision."
+                  },
+                  "Cta": {
+                    "Text": "Explore on GitHub",
+                    "Url": "https://github.com/OrchardCMS/OrchardCore"
+                  }
+                }
+              }
+            ]
+          },
           "AutoroutePart": {
             "Path": "business",
             "SetHomepage": false
@@ -2151,13 +3197,17 @@
               "Text": "Acme Corp"
             },
             "Summary": {
-              "Html": "<p>Rebuilt enterprise intranet on Orchard Core.</p>"
+              "Text": "Rebuilt enterprise intranet on Orchard Core."
             },
             "Results": {
-              "Html": "<p>Delivered a modern, modular digital workplace with faster editorial workflows.</p>"
+              "Text": "Delivered a modern, modular digital workplace with faster editorial workflows."
             },
             "LiveUrl": {
-              "Text": "https://example.com/acme"
+              "Text": "Visit live site",
+              "Url": "https://example.com/acme"
+            },
+            "OrganizationLogo": {
+              "Paths": []
             }
           }
         },
@@ -2194,13 +3244,17 @@
               "Text": "City of Springfield"
             },
             "Summary": {
-              "Html": "<p>Citizen portal serving 50,000 residents.</p>"
+              "Text": "Citizen portal serving 50,000 residents."
             },
             "Results": {
-              "Html": "<p>Improved access to city services with scalable publishing and forms-ready architecture.</p>"
+              "Text": "Improved access to city services with scalable publishing and forms-ready architecture."
             },
             "LiveUrl": {
-              "Text": "https://example.com/springfield"
+              "Text": "Visit live site",
+              "Url": "https://example.com/springfield"
+            },
+            "OrganizationLogo": {
+              "Paths": []
             }
           }
         },
@@ -2233,7 +3287,8 @@
               "Html": "<p>Run hundreds of sites from one install.</p>"
             },
             "DocsLink": {
-              "Text": "https://docs.orchardcore.net/en/latest/docs/reference/modules/Tenants/"
+              "Text": "Read the docs",
+              "Url": "https://docs.orchardcore.net/en/latest/docs/reference/modules/Tenants/"
             }
           }
         },
@@ -2266,7 +3321,8 @@
               "Html": "<p>Visual workflow designer with email, HTTP, and scripting.</p>"
             },
             "DocsLink": {
-              "Text": "https://docs.orchardcore.net/en/latest/docs/reference/modules/Workflows/"
+              "Text": "Read the docs",
+              "Url": "https://docs.orchardcore.net/en/latest/docs/reference/modules/Workflows/"
             }
           }
         },
@@ -2299,7 +3355,8 @@
               "Html": "<p>Lucene and Elasticsearch support built in.</p>"
             },
             "DocsLink": {
-              "Text": "https://docs.orchardcore.net/en/latest/docs/reference/modules/Search/"
+              "Text": "Read the docs",
+              "Url": "https://docs.orchardcore.net/en/latest/docs/reference/modules/Search/"
             }
           }
         },
@@ -2332,7 +3389,8 @@
               "Html": "<p>Azure Blob, S3, and local disk storage.</p>"
             },
             "DocsLink": {
-              "Text": "https://docs.orchardcore.net/en/latest/docs/reference/modules/Media/"
+              "Text": "Read the docs",
+              "Url": "https://docs.orchardcore.net/en/latest/docs/reference/modules/Media/"
             }
           }
         },
@@ -2365,7 +3423,8 @@
               "Html": "<p>True multilingual content with culture routing.</p>"
             },
             "DocsLink": {
-              "Text": "https://docs.orchardcore.net/en/latest/docs/reference/modules/Contents/#localization"
+              "Text": "Read the docs",
+              "Url": "https://docs.orchardcore.net/en/latest/docs/reference/modules/Contents/#localization"
             }
           }
         },
@@ -2398,7 +3457,8 @@
               "Html": "<p>Granular roles, permissions, and audit trail.</p>"
             },
             "DocsLink": {
-              "Text": "https://docs.orchardcore.net/en/latest/docs/reference/modules/Security/"
+              "Text": "Read the docs",
+              "Url": "https://docs.orchardcore.net/en/latest/docs/reference/modules/Security/"
             }
           }
         },
@@ -2418,13 +3478,13 @@
               "Text": "Multi-tenancy"
             },
             "OrchardCoreSupport": {
-              "Text": "✓"
+              "Text": "\u2713"
             },
             "OrchardCoreNote": {
               "Text": ""
             },
             "UmbracoSupport": {
-              "Text": "✗"
+              "Text": "\u2717"
             },
             "UmbracoNote": {
               "Text": ""
@@ -2436,7 +3496,7 @@
               "Text": ""
             },
             "SitecoreSupport": {
-              "Text": "✓"
+              "Text": "\u2713"
             },
             "SitecoreNote": {
               "Text": ""
@@ -2446,6 +3506,36 @@
             },
             "KenticoNote": {
               "Text": ""
+            },
+            "OrchardCore": {
+              "Value": true
+            },
+            "OrchardCoreText": {
+              "Text": "Yes"
+            },
+            "Umbraco": {
+              "Value": false
+            },
+            "UmbracoText": {
+              "Text": "No"
+            },
+            "Abp": {
+              "Value": false
+            },
+            "AbpText": {
+              "Text": "Partial"
+            },
+            "Sitecore": {
+              "Value": true
+            },
+            "SitecoreText": {
+              "Text": "Yes"
+            },
+            "Kentico": {
+              "Value": false
+            },
+            "KenticoText": {
+              "Text": "Partial"
             }
           }
         },
@@ -2465,34 +3555,64 @@
               "Text": "Open Source (MIT)"
             },
             "OrchardCoreSupport": {
-              "Text": "✓"
+              "Text": "\u2713"
             },
             "OrchardCoreNote": {
               "Text": ""
             },
             "UmbracoSupport": {
-              "Text": "✓"
+              "Text": "\u2713"
             },
             "UmbracoNote": {
               "Text": ""
             },
             "AbpSupport": {
-              "Text": "✓"
+              "Text": "\u2713"
             },
             "AbpNote": {
               "Text": ""
             },
             "SitecoreSupport": {
-              "Text": "✗"
+              "Text": "\u2717"
             },
             "SitecoreNote": {
               "Text": ""
             },
             "KenticoSupport": {
-              "Text": "✗"
+              "Text": "\u2717"
             },
             "KenticoNote": {
               "Text": ""
+            },
+            "OrchardCore": {
+              "Value": true
+            },
+            "OrchardCoreText": {
+              "Text": "Yes"
+            },
+            "Umbraco": {
+              "Value": true
+            },
+            "UmbracoText": {
+              "Text": "Yes"
+            },
+            "Abp": {
+              "Value": true
+            },
+            "AbpText": {
+              "Text": "Yes"
+            },
+            "Sitecore": {
+              "Value": false
+            },
+            "SitecoreText": {
+              "Text": "No"
+            },
+            "Kentico": {
+              "Value": false
+            },
+            "KenticoText": {
+              "Text": "No"
             }
           }
         },
@@ -2512,34 +3632,64 @@
               "Text": "Built on .NET"
             },
             "OrchardCoreSupport": {
-              "Text": "✓"
+              "Text": "\u2713"
             },
             "OrchardCoreNote": {
               "Text": ""
             },
             "UmbracoSupport": {
-              "Text": "✓"
+              "Text": "\u2713"
             },
             "UmbracoNote": {
               "Text": ""
             },
             "AbpSupport": {
-              "Text": "✓"
+              "Text": "\u2713"
             },
             "AbpNote": {
               "Text": ""
             },
             "SitecoreSupport": {
-              "Text": "✓"
+              "Text": "\u2713"
             },
             "SitecoreNote": {
               "Text": ""
             },
             "KenticoSupport": {
-              "Text": "✓"
+              "Text": "\u2713"
             },
             "KenticoNote": {
               "Text": ""
+            },
+            "OrchardCore": {
+              "Value": true
+            },
+            "OrchardCoreText": {
+              "Text": "Yes"
+            },
+            "Umbraco": {
+              "Value": true
+            },
+            "UmbracoText": {
+              "Text": "Yes"
+            },
+            "Abp": {
+              "Value": true
+            },
+            "AbpText": {
+              "Text": "Yes"
+            },
+            "Sitecore": {
+              "Value": true
+            },
+            "SitecoreText": {
+              "Text": "Yes"
+            },
+            "Kentico": {
+              "Value": true
+            },
+            "KenticoText": {
+              "Text": "Yes"
             }
           }
         },
@@ -2684,7 +3834,7 @@
                 "DisplayText": "Get Started",
                 "LinkMenuItemPart": {
                   "Name": "Get Started",
-                  "Url": "~/developers/quickstart"
+                  "Url": "~/developers"
                 }
               },
               {
@@ -2693,7 +3843,7 @@
                 "DisplayText": "Why Orchard Core",
                 "LinkMenuItemPart": {
                   "Name": "Why Orchard Core",
-                  "Url": "~/business/why"
+                  "Url": "~/business"
                 }
               },
               {
@@ -2702,7 +3852,7 @@
                 "DisplayText": "Features",
                 "LinkMenuItemPart": {
                   "Name": "Features",
-                  "Url": "~/developers/features"
+                  "Url": "~/developers"
                 }
               },
               {
@@ -2711,7 +3861,7 @@
                 "DisplayText": "Compare",
                 "LinkMenuItemPart": {
                   "Name": "Compare",
-                  "Url": "~/developers/compare"
+                  "Url": "~/#platform-comparison"
                 }
               },
               {
@@ -2720,7 +3870,7 @@
                 "DisplayText": "Showcase",
                 "LinkMenuItemPart": {
                   "Name": "Showcase",
-                  "Url": "~/developers/showcase"
+                  "Url": "~/#case-studies"
                 }
               },
               {
@@ -2729,7 +3879,7 @@
                 "DisplayText": "Community",
                 "LinkMenuItemPart": {
                   "Name": "Community",
-                  "Url": "~/community"
+                  "Url": "https://github.com/OrchardCMS/OrchardCore/discussions"
                 }
               },
               {
@@ -2744,18 +3894,18 @@
               {
                 "ContentItemId": "adc5bf97-ceea-4828-b491-921eabfa4303",
                 "ContentType": "LinkMenuItem",
-                "DisplayText": "Docs ↗",
+                "DisplayText": "Docs \u2197",
                 "LinkMenuItemPart": {
-                  "Name": "Docs ↗",
+                  "Name": "Docs \u2197",
                   "Url": "https://docs.orchardcore.net"
                 }
               },
               {
                 "ContentItemId": "3bb3ab91-96cb-4a1f-ab11-97ee787d1f84",
                 "ContentType": "LinkMenuItem",
-                "DisplayText": "GitHub ↗",
+                "DisplayText": "GitHub \u2197",
                 "LinkMenuItemPart": {
-                  "Name": "GitHub ↗",
+                  "Name": "GitHub \u2197",
                   "Url": "https://github.com/OrchardCMS/OrchardCore"
                 }
               }

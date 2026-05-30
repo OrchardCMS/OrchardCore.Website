@@ -46,14 +46,4 @@
       ]
     }
     </script>
-    <script>
-        document.addEventListener('click', function (event) {
-            var trigger = event.target.closest('.faq-item__button');
-            if (!trigger) { return; }
-            var item = trigger.closest('.faq-item');
-            var expanded = trigger.getAttribute('aria-expanded') === 'true';
-            trigger.setAttribute('aria-expanded', expanded ? 'false' : 'true');
-            item.classList.toggle('is-open', !expanded);
-        });
-    </script>
 </section>

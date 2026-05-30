@@ -14,8 +14,8 @@
             <h1 class="hero__headline">{{ headline }}</h1>
             <p class="hero__subheadline">{{ subheadline }}</p>
             <div class="hero__actions">
-                <a class="hero__button" href="{{ primary_url | href }}" {% if primary_label contains 'Business' or primary_url contains '/business' %}data-analytics-event="business_path_entered" onclick="document.dispatchEvent(new CustomEvent('business_path_entered', { detail: { href: '{{ primary_url }}', label: '{{ primary_label }}' } }))"{% endif %}>{{ primary_label | t }}</a>
-                <a class="hero__button-secondary" href="{{ secondary_url | href }}" {% if secondary_label contains 'Business' or secondary_url contains '/business' %}data-analytics-event="business_path_entered" onclick="document.dispatchEvent(new CustomEvent('business_path_entered', { detail: { href: '{{ secondary_url }}', label: '{{ secondary_label }}' } }))"{% endif %}>{{ secondary_label | t }}</a>
+                <a class="hero__button" href="{{ primary_url | href }}" {% if primary_label contains 'Business' or primary_url contains '/business' %}data-analytics-event="business_path_entered"{% endif %}>{{ primary_label | t }}</a>
+                <a class="hero__button-secondary" href="{{ secondary_url | href }}" {% if secondary_label contains 'Business' or secondary_url contains '/business' %}data-analytics-event="business_path_entered"{% endif %}>{{ secondary_label | t }}</a>
             </div>
         </div>
         <div class="hero__media reveal">

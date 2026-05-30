@@ -25,8 +25,8 @@
                     <span data-theme-label>{{ 'Dark mode' | t }}</span>
                 </button>
                 <nav class="language-switcher" aria-label="{{ 'Language switcher' | t }}">
-                    <a href="https://orchardcore.net{{ Request.Path }}" class="{% if Culture.Name == 'en' %}is-active{% endif %}">EN</a>
-                    <a href="https://orchardcore.net/fr{{ Request.Path }}" class="{% if Culture.Name contains 'fr' %}is-active{% endif %}">FR</a>
+                    <a href="{{ Request.Path }}" hreflang="en" class="{% if Culture.Name == 'en' %}is-active{% endif %}">EN</a>
+                    <a href="{{ '/fr' | append: Request.Path }}" hreflang="fr" class="{% if Culture.Name contains 'fr' %}is-active{% endif %}">FR</a>
                 </nav>
             </div>
         </div>
