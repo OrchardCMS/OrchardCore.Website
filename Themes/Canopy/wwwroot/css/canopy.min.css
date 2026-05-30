@@ -1142,7 +1142,7 @@ hr {
 }
 
 @media (min-width: 62rem) {
-  .site-shell {
+  .site-shell:has(.site-aside-first-zone, .site-aside-second-zone) {
     grid-template-areas:
       "header header"
       "navigation navigation"

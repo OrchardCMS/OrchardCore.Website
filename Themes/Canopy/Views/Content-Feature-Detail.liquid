@@ -1,6 +1,7 @@
 {% assign feature = Model.ContentItem.Content.Feature %}
 <article class="section-stack zone-card prose">
-    <div class="feature-card__icon">{{ feature.Icon.Text | default: '⬢' }}</div>
+    {% assign feature_icon = feature.Icon.Text %}
+    <div class="feature-card__icon">{% if feature_icon != blank %}<i class="fa-solid {{ feature_icon }}" aria-hidden="true"></i>{% else %}⬢{% endif %}</div>
     <h1>{{ Model.ContentItem | display_text }}</h1>
     {{ feature.Body.Html | default: Model.ContentItem.Content.HtmlBodyPart.Body | raw }}
     {% if feature.DocsLink.Url != blank %}

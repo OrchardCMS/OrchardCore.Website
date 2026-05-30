@@ -1,5 +1,5 @@
 {% assign widget = Model.ContentItem.Content.FeatureGridWidget %}
-{% assign features = widget.Features.ContentItems %}
+{% assign features = widget.Features.ContentItemIds | content_item_id %}
 <section class="section-stack reveal">
     <div class="prose">
         <span class="eyebrow">{{ widget.Eyebrow.Text | default: 'Capabilities' | t }}</span>
@@ -11,10 +11,11 @@
             {% assign detail_url = feature | display_url %}
             <article class="feature-card">
                 <div class="feature-card__body">
-                    <div class="feature-card__icon">{{ feature.Feature.Icon.Text | default: '⬢' }}</div>
+                    {% assign feature_icon = feature.Content.Feature.Icon.Text %}
+                    <div class="feature-card__icon">{% if feature_icon != blank %}<i class="fa-solid {{ feature_icon }}" aria-hidden="true"></i>{% else %}⬢{% endif %}</div>
                     <h3>{{ feature | display_text }}</h3>
-                    <p>{{ feature.Feature.Summary.Text | default: feature.HtmlBodyPart.Body | strip_html | truncatewords: 28 }}</p>
-                    <a href="{{ feature.Feature.DocsLink.Url | default: detail_url | href }}" data-analytics-event="docs_clicked">{{ 'Read the docs' | t }}</a>
+                    <p>{{ feature.Content.Feature.Summary.Text | default: feature.Content.HtmlBodyPart.Body | strip_html | truncatewords: 28 }}</p>
+                    <a href="{{ feature.Content.Feature.DocsLink.Url | default: detail_url | href }}" data-analytics-event="docs_clicked">{{ 'Read the docs' | t }}</a>
                 </div>
             </article>
         {% endfor %}

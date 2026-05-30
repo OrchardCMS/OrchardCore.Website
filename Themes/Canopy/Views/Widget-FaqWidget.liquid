@@ -1,5 +1,5 @@
 {% assign widget = Model.ContentItem.Content.FaqWidget %}
-{% assign faqs = widget.Faqs.ContentItems %}
+{% assign faqs = widget.Faqs.ContentItemIds | content_item_id %}
 {% assign audience = widget.FilterByAudience.Text | default: '' %}
 <section class="section-stack reveal" id="faq">
     <div class="prose">
@@ -8,7 +8,7 @@
     </div>
     <div class="faq-list">
         {% for faq in faqs %}
-            {% if audience == blank or faq.Faq.Audience.Text == audience %}
+            {% if audience == blank or faq.Content.Faq.Audience.Text == audience %}
                 <article class="faq-item">
                     <button class="faq-item__button" type="button" aria-expanded="false">
                         <span>{{ faq | display_text }}</span>
@@ -16,7 +16,7 @@
                     </button>
                     <div class="faq-item__content">
                         <div class="faq-item__content-inner prose">
-                            {{ faq.Faq.Answer.Html | default: faq.HtmlBodyPart.Body | raw }}
+                            {{ faq.Content.Faq.Answer.Html | default: faq.Content.HtmlBodyPart.Body | raw }}
                         </div>
                     </div>
                 </article>
@@ -30,14 +30,14 @@
       "mainEntity": [
         {% assign first = true %}
         {% for faq in faqs %}
-            {% if audience == blank or faq.Faq.Audience.Text == audience %}
+            {% if audience == blank or faq.Content.Faq.Audience.Text == audience %}
                 {% unless first %},{% endunless %}
                 {
                   "@type": "Question",
                   "name": {{ faq | display_text | json }},
                   "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": {{ faq.Faq.Answer.Html | default: faq.HtmlBodyPart.Body | strip_html | json }}
+                    "text": {{ faq.Content.Faq.Answer.Html | default: faq.Content.HtmlBodyPart.Body | strip_html | json }}
                   }
                 }
                 {% assign first = false %}

@@ -1,3 +1,56 @@
+{% assign site_name = Site.SiteName | default: "Orchard Core" %}
+{% assign page_title = Model.Title | default: Model.ContentItem | display_text | default: site_name %}
+{% assign page_description = Model.Description | default: Model.ContentItem.Content.MetaDescription.Text | default: "A modular, multi-tenant application framework and CMS for ASP.NET Core." %}
+{% assign page_url = "https://orchardcore.net" | append: Request.Path %}
+<!DOCTYPE html>
+<html lang="{{ Culture.Name | default: 'en' }}">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{{ page_title }} · {{ site_name }}</title>
+    <meta name="description" content="{{ page_description | escape }}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="{{ page_title | escape }}" />
+    <meta property="og:description" content="{{ page_description | escape }}" />
+    <meta property="og:url" content="{{ page_url }}" />
+    <meta property="og:site_name" content="{{ site_name | escape }}" />
+    <link rel="canonical" href="{{ page_url }}" />
+    <link rel="alternate" hreflang="en" href="https://orchardcore.net{{ Request.Path }}" />
+    <link rel="stylesheet" href="{{ '~/Canopy/css/canopy.min.css' | href }}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    {% resources type: "Meta" %}
+    {% resources type: "HeadLink" %}
+    {% resources type: "Stylesheet" %}
+    {% resources type: "HeadScript" %}
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "SoftwareApplication",
+          "name": "Orchard Core",
+          "applicationCategory": "ContentManagementSystem",
+          "operatingSystem": "Cross-platform",
+          "url": "https://orchardcore.net",
+          "creator": {
+            "@type": "Organization",
+            "name": "The Orchard Team"
+          }
+        },
+        {
+          "@type": "Organization",
+          "name": "The Orchard Team",
+          "url": "https://orchardcore.net",
+          "sameAs": [
+            "https://github.com/OrchardCMS/OrchardCore",
+            "https://discord.gg/orchardcore"
+          ]
+        }
+      ]
+    }
+    </script>
+</head>
+<body class="canopy-site">
 {% assign trust = '' | trust_signals %}
 <div class="site-shell">
     <header class="site-header site-header-zone">
@@ -11,10 +64,10 @@
             </a>
             <div class="site-nav">
                 <div class="site-nav__links">
-                    <a class="site-nav__link" href="{{ '/docs' | href }}" data-analytics-event="docs_clicked">{{ 'Docs' | t }}</a>
+                    <a class="site-nav__link" href="https://docs.orchardcore.net/" data-analytics-event="docs_clicked">{{ 'Docs' | t }}</a>
                     <a class="site-nav__link" href="https://github.com/OrchardCMS/OrchardCore">{{ 'GitHub' | t }}</a>
-                    <a class="site-nav__link" href="{{ '/community' | href }}">{{ 'Community' | t }}</a>
-                    <a class="site-nav__cta" href="{{ '/download' | href }}">{{ 'Get started' | t }}</a>
+                    <a class="site-nav__link" href="https://orchardcore.net/discord">{{ 'Community' | t }}</a>
+                    <a class="site-nav__cta" href="https://try.orchardcore.net/">{{ 'Try' | t }}</a>
                 </div>
                 <a class="github-chip" href="https://github.com/OrchardCMS/OrchardCore" aria-label="{{ 'GitHub stars' | t }}">
                     <span>★</span>
@@ -24,10 +77,12 @@
                     <span class="theme-toggle__icon">◐</span>
                     <span data-theme-label>{{ 'Dark mode' | t }}</span>
                 </button>
+                {% comment %}
                 <nav class="language-switcher" aria-label="{{ 'Language switcher' | t }}">
                     <a href="{{ Request.Path }}" hreflang="en" class="{% if Culture.Name == 'en' %}is-active{% endif %}">EN</a>
                     <a href="{{ '/fr' | append: Request.Path }}" hreflang="fr" class="{% if Culture.Name contains 'fr' %}is-active{% endif %}">FR</a>
                 </nav>
+                {% endcomment %}
             </div>
         </div>
         {% if Model.Header != nil %}
@@ -82,3 +137,6 @@
     </footer>
 </div>
 <script src="{{ '~/Canopy/js/canopy.bundle.js?v=1.8.3' | href }}" defer></script>
+    {% resources type: "FootScript" %}
+</body>
+</html>

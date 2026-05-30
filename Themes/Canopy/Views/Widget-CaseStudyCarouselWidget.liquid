@@ -1,0 +1,38 @@
+{% assign widget = Model.ContentItem.Content.CaseStudyCarouselWidget %}
+{% assign studies = widget.CaseStudies.ContentItemIds | content_item_id %}
+<section class="section-stack reveal" id="case-studies" data-observe-event="casestudy_viewed" data-analytics-label="case-study-carousel">
+    <div class="prose">
+        <span class="eyebrow">{{ widget.Eyebrow.Text | default: 'Case studies' | t }}</span>
+        <h2>{{ widget.Headline.Text | default: 'Teams shipping Orchard Core in production' | t }}</h2>
+    </div>
+    <div class="logo-wall">
+        {% for study in studies %}
+            <article class="case-study-card logo-wall__item" aria-label="{{ study | display_text }}">
+                <div class="case-study-card__shot">
+                    {% if study.Content.CaseStudy.Screenshot.Paths.first != blank %}
+                        <img src="{{ study.Content.CaseStudy.Screenshot.Paths.first | asset_url }}" alt="{{ study | display_text | escape }}" loading="lazy" />
+                    {% endif %}
+                </div>
+                <div class="case-study-card__body">
+                    <div class="case-study-card__logo">
+                        {% if study.Content.CaseStudy.OrganizationLogo.Paths.first != blank %}
+                            <img src="{{ study.Content.CaseStudy.OrganizationLogo.Paths.first | asset_url }}" alt="{{ study | display_text | escape }}" loading="lazy" />
+                        {% else %}
+                            {{ study | display_text | slice: 0, 2 }}
+                        {% endif %}
+                    </div>
+                    <span class="industry-pill">{{ study.Content.CaseStudy.Industry.Text | default: 'Digital platform' | t }}</span>
+                    <h3>{{ study | display_text }}</h3>
+                    <p>{{ study.Content.CaseStudy.Summary.Text }}</p>
+                    <p><strong>{{ 'Results' | t }}:</strong> {{ study.Content.CaseStudy.Results.Text }}</p>
+                    {% assign live_url = study.Content.CaseStudy.LiveUrl.Url %}
+                    {% if live_url != blank %}
+                        <a href="{{ live_url }}" target="_blank" rel="noopener">{{ 'View case study' | t }}</a>
+                    {% else %}
+                        <a href="{{ study | display_url }}">{{ 'View case study' | t }}</a>
+                    {% endif %}
+                </div>
+            </article>
+        {% endfor %}
+    </div>
+</section>
