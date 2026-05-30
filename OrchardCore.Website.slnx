@@ -1,0 +1,27 @@
+<Solution>
+  <Folder Name="/.github/" />
+  <Folder Name="/.github/workflows/">
+    <File Path=".github/workflows/ci.yml" />
+    <File Path=".github/workflows/deploy.yml" />
+  </Folder>
+  <Folder Name="/orchardproject.net/">
+    <File Path="orchardproject.net/Readme.md" />
+    <File Path="orchardproject.net/web.config" />
+  </Folder>
+  <Folder Name="/PostDeploymentActions/">
+    <File Path="PostDeploymentActions/Readme.md" />
+    <File Path="PostDeploymentActions/RemoveAppOffline.ps1" />
+  </Folder>
+  <Folder Name="/Solution Items/">
+    <File Path="NuGet.config" />
+    <File Path="PostDeploymentActions/Readme.md" />
+    <File Path="PostDeploymentActions/RemoveAppOffline.ps1" />
+    <File Path="README.md" />
+    <File Path="Reset-Local.ps1" />
+  </Folder>
+  <Folder Name="/Themes/">
+    <Project Path="Themes/Canopy/Canopy.csproj" />
+    <Project Path="Themes/OCWS/OCWS.csproj" />
+  </Folder>
+  <Project Path="OrchardCore.Web/OrchardCore.Web.csproj" />
+</Solution>
