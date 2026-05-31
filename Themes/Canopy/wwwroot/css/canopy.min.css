@@ -860,22 +860,28 @@ hr {
   color: #0f766e;
 }
 
-.comparison-yes,
-.comparison-no {
+.comparison-mark {
   align-items: center;
   display: inline-flex;
   font-weight: 700;
   gap: var(--space-2);
 }
 
-.comparison-yes::before {
+.comparison-yes::before,
+.comparison-true::before {
   color: var(--color-success);
   content: "✓";
 }
 
-.comparison-no::before {
+.comparison-no::before,
+.comparison-false::before {
   color: var(--color-danger);
   content: "✕";
+}
+
+.comparison-partial::before {
+  color: var(--color-warning);
+  content: "≈";
 }
 
 .faq-list {

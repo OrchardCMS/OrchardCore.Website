@@ -19,13 +19,19 @@
             </thead>
             <tbody>
                 {% for row in rows %}
+                    {% assign cr = row.Content.ComparisonRow %}
                     <tr>
                         <th scope="row">{{ row | display_text }}</th>
-                        <td><span class="{% if row.Content.ComparisonRow.OrchardCore.Value %}comparison-yes{% else %}comparison-no{% endif %}">{{ row.Content.ComparisonRow.OrchardCoreText.Text | default: row.Content.ComparisonRow.OrchardCore.Value }}</span></td>
-                        <td><span class="{% if row.Content.ComparisonRow.Umbraco.Value %}comparison-yes{% else %}comparison-no{% endif %}">{{ row.Content.ComparisonRow.UmbracoText.Text | default: row.Content.ComparisonRow.Umbraco.Value }}</span></td>
-                        <td><span class="{% if row.Content.ComparisonRow.Abp.Value %}comparison-yes{% else %}comparison-no{% endif %}">{{ row.Content.ComparisonRow.AbpText.Text | default: row.Content.ComparisonRow.Abp.Value }}</span></td>
-                        <td><span class="{% if row.Content.ComparisonRow.Sitecore.Value %}comparison-yes{% else %}comparison-no{% endif %}">{{ row.Content.ComparisonRow.SitecoreText.Text | default: row.Content.ComparisonRow.Sitecore.Value }}</span></td>
-                        <td><span class="{% if row.Content.ComparisonRow.Kentico.Value %}comparison-yes{% else %}comparison-no{% endif %}">{{ row.Content.ComparisonRow.KenticoText.Text | default: row.Content.ComparisonRow.Kentico.Value }}</span></td>
+                        {% assign oc_text = cr.OrchardCoreText.Text | default: cr.OrchardCore.Value %}
+                        <td><span class="comparison-mark comparison-{{ oc_text | downcase }}">{{ oc_text }}</span></td>
+                        {% assign um_text = cr.UmbracoText.Text | default: cr.Umbraco.Value %}
+                        <td><span class="comparison-mark comparison-{{ um_text | downcase }}">{{ um_text }}</span></td>
+                        {% assign abp_text = cr.AbpText.Text | default: cr.Abp.Value %}
+                        <td><span class="comparison-mark comparison-{{ abp_text | downcase }}">{{ abp_text }}</span></td>
+                        {% assign sc_text = cr.SitecoreText.Text | default: cr.Sitecore.Value %}
+                        <td><span class="comparison-mark comparison-{{ sc_text | downcase }}">{{ sc_text }}</span></td>
+                        {% assign ke_text = cr.KenticoText.Text | default: cr.Kentico.Value %}
+                        <td><span class="comparison-mark comparison-{{ ke_text | downcase }}">{{ ke_text }}</span></td>
                     </tr>
                 {% endfor %}
             </tbody>
