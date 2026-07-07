@@ -1,0 +1,286 @@
+{
+  "name": "TheOrchardCoreTheme.Model.Core",
+  "displayName": "Orchard Core Website - Content Model",
+  "description": "Enables the features and defines the shared building blocks used across every block: the BlockPart, the BlockActionsPart, and the CallToAction type. ReplaceContentDefinition is idempotent (safe to re-run).",
+  "author": "Orchard Core",
+  "version": "1.0.0",
+  "issetuprecipe": false,
+  "categories": [
+    "theme"
+  ],
+  "steps": [
+    {
+      "name": "feature",
+      "enable": [
+        "OrchardCore.Contents",
+        "OrchardCore.ContentTypes",
+        "OrchardCore.ContentFields",
+        "OrchardCore.Flows",
+        "OrchardCore.Title",
+        "OrchardCore.Autoroute",
+        "OrchardCore.Html",
+        "OrchardCore.Media",
+        "OrchardCore.Seo",
+        "OrchardCore.Liquid",
+        "OrchardCore.Menu",
+        "OrchardCore.Widgets",
+        "OrchardCore.Layers",
+        "OrchardCore.Templates",
+        "OrchardCore.Workflows",
+        "OrchardCore.Workflows.Timers",
+        "OrchardCore.Workflows.Http",
+        "OrchardCore.Shortcodes",
+        "OrchardCore.Shortcodes.Templates"
+      ]
+    },
+    {
+      "name": "ReplaceContentDefinition",
+      "ContentTypes": [
+        {
+          "Name": "CallToAction",
+          "DisplayName": "Call To Action",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Stereotype": ""
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "CallToAction",
+              "Name": "CallToAction",
+              "Settings": {}
+            },
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                },
+                "TitlePartSettings": {
+                  "Options": 2,
+                  "Pattern": "{{ Model.ContentItem.Content.CallToAction.Link.Text }}",
+                  "RenderTitle": false
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "ContentParts": [
+        {
+          "Name": "BlockPart",
+          "Settings": {
+            "ContentPartSettings": {
+              "Attachable": true,
+              "Description": "Shared band and anchor settings for every block."
+            }
+          },
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "TextField",
+              "Name": "Theme",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Theme",
+                  "Editor": "ThemeSwatch",
+                  "Position": "0"
+                },
+                "TextFieldPredefinedListEditorSettings": {
+                  "Editor": "Dropdown",
+                  "DefaultValue": "White",
+                  "Options": [
+                    {
+                      "name": "White",
+                      "value": "White"
+                    },
+                    {
+                      "name": "Cream",
+                      "value": "Cream"
+                    },
+                    {
+                      "name": "Rule",
+                      "value": "Rule"
+                    },
+                    {
+                      "name": "Dark",
+                      "value": "Dark"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "AnchorId",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Anchor id",
+                  "Position": "1"
+                },
+                "TextFieldSettings": {
+                  "Hint": "Optional id for in-page navigation, e.g. why, community, schedule."
+                }
+              }
+            },
+            {
+              "FieldName": "BooleanField",
+              "Name": "ShowInNav",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Show in main navigation",
+                  "Position": "2"
+                },
+                "BooleanFieldSettings": {
+                  "Label": "Show this section in the header navigation",
+                  "DefaultValue": false
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "NavText",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Navigation text",
+                  "Position": "3"
+                },
+                "TextFieldSettings": {
+                  "Hint": "The label shown in the header navigation. Requires an Anchor id and 'Show in main navigation'."
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "CallToAction",
+          "Settings": {},
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "LinkField",
+              "Name": "Link",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Link",
+                  "Position": "0"
+                },
+                "LinkFieldSettings": {
+                  "LinkTextMode": "Optional",
+                  "HintLinkText": "The button label.",
+                  "UrlPlaceholder": "https://example.com"
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "Variant",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Button style",
+                  "Editor": "ButtonStyle",
+                  "Position": "1"
+                },
+                "TextFieldPredefinedListEditorSettings": {
+                  "Editor": "Dropdown",
+                  "DefaultValue": "Primary",
+                  "Options": [
+                    {
+                      "name": "Primary",
+                      "value": "Primary"
+                    },
+                    {
+                      "name": "Secondary",
+                      "value": "Secondary"
+                    },
+                    {
+                      "name": "Ghost",
+                      "value": "Ghost"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "BlockActionsPart",
+          "Settings": {
+            "ContentPartSettings": {
+              "Attachable": true,
+              "Description": "Optional closing line shown beside the block's call-to-action buttons. Pair with a CallToActions BagPart for the buttons."
+            }
+          },
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "TextField",
+              "Name": "Heading",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Heading",
+                  "Position": "0"
+                }
+              }
+            },
+            {
+              "FieldName": "HtmlField",
+              "Name": "Text",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Text",
+                  "Editor": "Trumbowyg",
+                  "Position": "1"
+                },
+                "HtmlFieldTrumbowygEditorSettings": {
+                  "Options": "{ \"btns\": [[\"strong\", \"em\"], [\"link\"], [\"insertShortcode\"], [\"removeformat\"]], \"removeformatPasted\": true }",
+                  "InsertMediaWithUrl": false
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "BlockIntro",
+          "Settings": {
+            "ContentPartSettings": {
+              "Attachable": true,
+              "Description": "Optional heading + lead shown at the top of a section block."
+            }
+          },
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "TextField",
+              "Name": "Title",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Title",
+                  "Position": "0"
+                },
+                "TextFieldSettings": {
+                  "Hint": "Optional. Leave blank to not render."
+                }
+              }
+            },
+            {
+              "FieldName": "HtmlField",
+              "Name": "Lead",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Lead",
+                  "Editor": "Trumbowyg",
+                  "Position": "1"
+                },
+                "HtmlFieldTrumbowygEditorSettings": {
+                  "Options": "{ \"btns\": [[\"strong\", \"em\"], [\"link\"], [\"insertShortcode\"], [\"removeformat\"]], \"removeformatPasted\": true }",
+                  "InsertMediaWithUrl": false
+                },
+                "HtmlFieldSettings": {
+                  "Hint": "Optional. Leave blank to not render."
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

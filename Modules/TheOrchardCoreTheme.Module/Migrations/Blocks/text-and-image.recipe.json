@@ -1,0 +1,146 @@
+{
+  "name": "TheOrchardCoreTheme.Model.TextAndImage",
+  "displayName": "Orchard Core Website - Content Model",
+  "description": "A generic two-column Text and Image block: a title, rich body, and buttons on one side, a photo on the other, with an editor option for which side the image sits (left or right).",
+  "author": "Orchard Core",
+  "version": "1.0.0",
+  "issetuprecipe": false,
+  "categories": [
+    "theme"
+  ],
+  "steps": [
+    {
+      "name": "ReplaceContentDefinition",
+      "ContentTypes": [
+        {
+          "Name": "TextAndImage",
+          "DisplayName": "Text and Image",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Stereotype": "Block",
+              "Category": "Content",
+              "ThumbnailPath": "~/TheOrchardCoreTheme/block-thumbnails/TextAndImage.png?v=2",
+              "Description": "Copy beside an image, with the image on the left or right."
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "BlockPart",
+              "Name": "BlockPart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
+              }
+            },
+            {
+              "PartName": "TextAndImage",
+              "Name": "TextAndImage",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                }
+              }
+            },
+            {
+              "PartName": "BagPart",
+              "Name": "CallToActions",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "DisplayName": "Call To Actions",
+                  "Description": "The buttons shown under the copy (e.g. Book a room / View on map).",
+                  "Position": "2"
+                },
+                "BagPartSettings": {
+                  "ContainedContentTypes": [
+                    "CallToAction"
+                  ],
+                  "CollapseContainedItems": true
+                }
+              }
+            },
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                },
+                "TitlePartSettings": {
+                  "Options": 0,
+                  "RenderTitle": false
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "ContentParts": [
+        {
+          "Name": "TextAndImage",
+          "Settings": {
+            "ContentPartSettings": {
+              "Description": "Fields for the Text and Image block: the body copy, the photo, and which side the photo sits. The title is the item's Title."
+            }
+          },
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "HtmlField",
+              "Name": "Body",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Body",
+                  "Editor": "Trumbowyg",
+                  "Position": "0"
+                },
+                "HtmlFieldTrumbowygEditorSettings": {
+                  "Options": "{ \"btns\": [[\"strong\", \"em\"], [\"link\"], [\"unorderedList\"], [\"removeformat\"]], \"removeformatPasted\": true }",
+                  "InsertMediaWithUrl": false
+                },
+                "HtmlFieldSettings": {
+                  "Hint": "The copy shown next to the image."
+                }
+              }
+            },
+            {
+              "FieldName": "MediaField",
+              "Name": "Image",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Image",
+                  "Editor": "Gallery",
+                  "Position": "1"
+                },
+                "MediaFieldSettings": {
+                  "Multiple": false,
+                  "AllowMediaText": true,
+                  "AllowAnchors": true,
+                  "Hint": "The photo shown beside the copy. Set a focal point so the 4:3 crop stays well composed."
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "ImageSide",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Image side",
+                  "Editor": "PredefinedList",
+                  "Position": "2"
+                },
+                "TextFieldPredefinedListEditorSettings": {
+                  "Editor": "Dropdown",
+                  "DefaultValue": "Right",
+                  "Options": [
+                    { "name": "Right", "value": "Right" },
+                    { "name": "Left", "value": "Left" }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

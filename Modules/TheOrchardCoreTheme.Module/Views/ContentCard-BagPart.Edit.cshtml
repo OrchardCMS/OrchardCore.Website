@@ -1,0 +1,87 @@
+@using OrchardCore.ContentManagement
+@using OrchardCore.ContentManagement.Metadata.Models
+@using OrchardCore.Localization
+@using OrchardCore.Flows.Models
+@using OrchardCore.Localization.Data
+@inject OrchardCore.ContentManagement.Metadata.IContentDefinitionManager ContentDefinitionManager
+@inject IDataLocalizer D
+
+@*
+    Overrides the core OrchardCore.Flows ContentCard-BagPart.Edit template (kept in sync with it) to do
+    one thing: show a small badge (filled with the block's band theme colours — White/Cream/Rule/Dark —
+    and naming it) before the delete button in the always-visible card header. Blocks in the LandingPage
+    Sections bag are collapsed by default, so this lets an editor see the bands (and check they
+    alternate) without expanding each card. The colours mirror TextField-ThemeSwatch.Edit.cshtml.
+*@
+@{
+    ContentItem contentItem = Model.ContentItem;
+    var contentTypeDefinition = await ContentDefinitionManager.GetTypeDefinitionAsync(contentItem.ContentType);
+    var contentTypeDisplayText = D[contentTypeDefinition.DisplayName, "Content Types"];
+
+    var parentTypeDefinition = await ContentDefinitionManager.GetTypeDefinitionAsync((string)Model.ParentContentType);
+    var collectionDefinition = parentTypeDefinition?.Parts?.FirstOrDefault(x => x.Name == (string)Model.CollectionPartName);
+    var bagPartSettings = collectionDefinition?.GetSettings<BagPartSettings>();
+
+    var collapsed = !Model.Inline && bagPartSettings?.CollapseContainedItems == true;
+
+    if (!ViewContext.ModelState.IsValid && ViewContext.ModelState.Keys.Any(key => key.StartsWith(Model.PrefixValue, StringComparison.OrdinalIgnoreCase)))
+    {
+        collapsed = false;
+    }
+
+    // The block's band theme (null on non-block items — then the header keeps its default look).
+    string? themeValue = (string?)Model.ContentItem.Content.BlockPart?.Theme?.Text;
+    var themeSwatches = new Dictionary<string, (string Bg, string Fg)>(StringComparer.OrdinalIgnoreCase)
+    {
+        ["White"] = ("#ffffff", "#08361a"),
+        ["Cream"] = ("#f5f8f6", "#08361a"),
+        ["Rule"]  = ("#e2e8e3", "#08361a"),
+        ["Dark"]  = ("#08361a", "#ffffff"),
+    };
+
+    string? bandBg = null, bandFg = null;
+    if (!string.IsNullOrEmpty(themeValue))
+    {
+        var sw = themeSwatches.TryGetValue(themeValue, out var s) ? s : (Bg: "#e5e7eb", Fg: "#374151");
+        bandBg = sw.Bg;
+        bandFg = sw.Fg;
+    }
+}
+
+<div class="widget widget-editor card@(collapsed ? " collapsed" : string.Empty)" data-content-type="@Model.ContentItem.ContentType">
+    <div class="widget-editor-header card-header py-1 ps-2 pe-1 text-muted d-flex align-items-center gap-2">
+        @if (Model.CanMove)
+        {
+            <div class="widget-editor-handle"><i class="fa-solid fa-up-down-left-right" aria-hidden="true"></i></div>
+        }
+        <button type="button" class="btn btn-outline-secondary btn-sm widget-editor-btn-toggle widget-editor-btn-collapse"><i class="fa-solid fa-angle-down" aria-hidden="true"></i></button>
+        <button type="button" class="btn btn-outline-secondary btn-sm widget-editor-btn-toggle widget-editor-btn-expand"><i class="fa-solid fa-angle-@(Orchard.CultureDir() == LanguageDirection.LTR ? "right" : "left")" aria-hidden="true"></i></button>
+        <span class="me-auto">@T["{0} <span class=\"hint dashed\">{1}</span>", contentItem.DisplayText, contentTypeDisplayText]</span>
+        @if (!string.IsNullOrEmpty(themeValue) || Model.CanDelete)
+        {
+            <div class="d-flex align-items-center gap-2">
+                @if (!string.IsNullOrEmpty(themeValue))
+                {
+                    <span class="badge rounded-1 fw-normal" style="background:@bandBg; color:@bandFg; border:1px solid rgba(0,0,0,.2);" title="@T["Band theme"]">@themeValue</span>
+                }
+                @if (Model.CanDelete)
+                {
+                    <div class="btn-group btn-group-sm" role="group">
+                        @* We don't render an Insert button as the container type is not known here *@
+                        <button type="button" class="btn btn-danger widget-delete" data-title="@T["Delete"]" data-message="@T["Are you sure you want to remove this item?"]"><i class="fa-solid fa-trash" aria-hidden="true"></i></button>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+    <div class="widget-editor-body card-body">
+        <div class="w-100">
+            @if (Model.ContentEditor != null)
+            {
+                @await DisplayAsync(Model.ContentEditor)
+            }
+        </div>
+    </div>
+
+    @* We don't render a footer *@
+</div>

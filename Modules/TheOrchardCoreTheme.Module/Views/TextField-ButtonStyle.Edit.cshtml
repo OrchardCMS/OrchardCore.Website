@@ -1,0 +1,61 @@
+@model OrchardCore.ContentFields.ViewModels.EditTextFieldViewModel
+@{
+    var listSettings = Model.PartFieldDefinition.GetSettings<TextFieldPredefinedListEditorSettings>();
+    var textSettings = Model.PartFieldDefinition.GetSettings<TextFieldSettings>();
+    var options = listSettings?.Options ?? Array.Empty<ListValueOption>();
+    var current = string.IsNullOrEmpty(Model.Text) ? listSettings?.DefaultValue : Model.Text;
+    var groupName = Html.NameFor(m => m.Text);
+    var baseId = Html.IdFor(m => m.Text);
+
+    // Mini button preview style per variant (mirrors the frontend Button shape).
+    var styles = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+    {
+        ["Primary"]   = "background:#15803d; color:#ffffff;",
+        ["Secondary"] = "background:#d8eede; color:#0d4f25;",
+        ["Ghost"]     = "background:transparent; color:#11672f; text-decoration:underline; text-underline-offset:2px;",
+    };
+}
+
+@*
+    Visual button-style picker for a TextField (set the field Editor to "ButtonStyle"). Renders the
+    field's PredefinedList options as mini button previews, as a radio group bound to Text.
+*@
+<div class="mb-3" id="@(baseId)_FieldWrapper">
+    <label class="form-label">@Model.PartFieldDefinition.DisplayName()</label>
+    <div class="btnsw">
+        @foreach (var opt in options)
+        {
+            var optId = $"{baseId}_{opt.Value}";
+            var style = styles.TryGetValue(opt.Value ?? string.Empty, out var s) ? s : "background:#e5e7eb; color:#374151;";
+            <div class="btnsw__item">
+                <input class="btnsw__input" type="radio" id="@optId" name="@groupName" value="@opt.Value" checked="@(string.Equals(opt.Value, current, StringComparison.OrdinalIgnoreCase))" />
+                <label class="btnsw__label" for="@optId">
+                    <span class="btnsw__preview" style="@style">Button</span>
+                    <span class="btnsw__name">@opt.Name</span>
+                </label>
+            </div>
+        }
+    </div>
+    <span asp-validation-for="Text"></span>
+    @if (!string.IsNullOrEmpty(textSettings?.Hint))
+    {
+        <span class="hint">@textSettings.Hint</span>
+    }
+</div>
+
+<style>
+    .btnsw { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: .25rem; }
+    .btnsw__input { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+    .btnsw__label { display: flex; flex-direction: column; align-items: center; gap: .45rem; cursor: pointer; margin: 0; }
+    .btnsw__preview {
+        display: flex; align-items: center; justify-content: center;
+        min-width: 92px; padding: .5rem 1rem; border-radius: .375rem;
+        font-weight: 600; font-size: .85rem; line-height: 1;
+        box-shadow: inset 0 0 0 1px rgba(8, 54, 26, .12);
+        transition: box-shadow .15s ease;
+    }
+    .btnsw__name { font-size: .8rem; color: #6b7280; }
+    .btnsw__input:checked + .btnsw__label .btnsw__preview { box-shadow: inset 0 0 0 1px rgba(8, 54, 26, .12), 0 0 0 2px #fff, 0 0 0 4px #1c9148; }
+    .btnsw__input:checked + .btnsw__label .btnsw__name { color: #111827; font-weight: 600; }
+    .btnsw__input:focus-visible + .btnsw__label .btnsw__preview { outline: 2px solid #1c9148; outline-offset: 3px; }
+</style>

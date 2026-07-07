@@ -1,0 +1,184 @@
+{
+  "name": "TheOrchardCoreTheme.Model.EventPromo",
+  "displayName": "Orchard Core Website - Content Model",
+  "description": "The Event Promo block: a date-poster call-to-action (e.g. the Orchard Harvest conference).",
+  "author": "Orchard Core",
+  "version": "1.0.0",
+  "issetuprecipe": false,
+  "categories": [
+    "theme"
+  ],
+  "steps": [
+    {
+      "name": "ReplaceContentDefinition",
+      "ContentTypes": [
+        {
+          "Name": "EventPromo",
+          "DisplayName": "Event Promo",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Stereotype": "Block",
+              "Category": "Content",
+              "ThumbnailPath": "~/TheOrchardCoreTheme/block-thumbnails/EventPromo.png?v=2",
+              "Description": "A compact event call-to-action with a date poster."
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "BlockPart",
+              "Name": "BlockPart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
+              }
+            },
+            {
+              "PartName": "EventPromo",
+              "Name": "EventPromo",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                }
+              }
+            },
+            {
+              "PartName": "BagPart",
+              "Name": "CallToActions",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "DisplayName": "Call To Actions",
+                  "Description": "The promo's buttons (e.g. Get a ticket / View details).",
+                  "Position": "2"
+                },
+                "BagPartSettings": {
+                  "ContainedContentTypes": [
+                    "CallToAction"
+                  ],
+                  "CollapseContainedItems": true
+                }
+              }
+            },
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                },
+                "TitlePartSettings": {
+                  "Options": 2,
+                  "Pattern": "{{ Model.ContentItem.Content.EventPromo.Heading.Text }}",
+                  "RenderTitle": false
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "ContentParts": [
+        {
+          "Name": "EventPromo",
+          "Settings": {
+            "ContentPartSettings": {
+              "Description": "Fields for the Event Promo block: copy plus the date poster (month, day range, year, place, image)."
+            }
+          },
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "TextField",
+              "Name": "Heading",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Heading",
+                  "Position": "0"
+                }
+              }
+            },
+            {
+              "FieldName": "HtmlField",
+              "Name": "Body",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Body",
+                  "Editor": "Trumbowyg",
+                  "Position": "1"
+                },
+                "HtmlFieldTrumbowygEditorSettings": {
+                  "Options": "{ \"btns\": [[\"strong\", \"em\"], [\"link\"], [\"insertShortcode\"], [\"removeformat\"]], \"removeformatPasted\": true }",
+                  "InsertMediaWithUrl": false
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "EventMonth",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Event month",
+                  "Position": "2"
+                },
+                "TextFieldSettings": {
+                  "Hint": "e.g. September. Shown above the day range on the poster."
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "EventDays",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Event days",
+                  "Position": "3"
+                },
+                "TextFieldSettings": {
+                  "Hint": "e.g. 10–11. The large number on the poster."
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "EventYear",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Event year",
+                  "Position": "4"
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "EventPlace",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Event place",
+                  "Position": "5"
+                },
+                "TextFieldSettings": {
+                  "Hint": "e.g. Vancouver, Canada."
+                }
+              }
+            },
+            {
+              "FieldName": "MediaField",
+              "Name": "PosterImage",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Poster image",
+                  "Editor": "Gallery",
+                  "Position": "6"
+                },
+                "MediaFieldSettings": {
+                  "Multiple": false,
+                  "AllowMediaText": false,
+                  "AllowAnchors": false,
+                  "Hint": "Optional background image for the date poster (shown under a green gradient)."
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
