@@ -365,145 +365,6 @@
               },
               {
                 "ContentItemId": "[js:uuid()]",
-                "ContentType": "LogoStrip",
-                "DisplayText": "Used by",
-                "Latest": true,
-                "Published": true,
-                "BlockPart": {
-                  "Theme": {
-                    "Text": "Rule"
-                  },
-                  "AnchorId": {
-                    "Text": ""
-                  }
-                },
-                "LogoStrip": {
-                  "Label": {
-                    "Text": "Used by"
-                  }
-                },
-                "Logos": {
-                  "ContentItems": [
-                    {
-                      "ContentItemId": "[js:uuid()]",
-                      "ContentType": "Logo",
-                      "DisplayText": "Sony",
-                      "Latest": true,
-                      "Published": true,
-                      "TitlePart": {
-                        "Title": "Sony"
-                      },
-                      "Logo": {
-                        "LightImage": {
-                          "Paths": [
-                            "logos/sony.svg"
-                          ]
-                        },
-                        "DarkImage": {
-                          "Paths": []
-                        },
-                        "Url": {
-                          "Text": ""
-                        }
-                      }
-                    },
-                    {
-                      "ContentItemId": "[js:uuid()]",
-                      "ContentType": "Logo",
-                      "DisplayText": "Smithsonian",
-                      "Latest": true,
-                      "Published": true,
-                      "TitlePart": {
-                        "Title": "Smithsonian"
-                      },
-                      "Logo": {
-                        "LightImage": {
-                          "Paths": [
-                            "logos/smithsonian-colour.svg"
-                          ]
-                        },
-                        "DarkImage": {
-                          "Paths": []
-                        },
-                        "Url": {
-                          "Text": ""
-                        }
-                      }
-                    },
-                    {
-                      "ContentItemId": "[js:uuid()]",
-                      "ContentType": "Logo",
-                      "DisplayText": "Starbucks",
-                      "Latest": true,
-                      "Published": true,
-                      "TitlePart": {
-                        "Title": "Starbucks"
-                      },
-                      "Logo": {
-                        "LightImage": {
-                          "Paths": [
-                            "logos/starbucks-emblem.png"
-                          ]
-                        },
-                        "DarkImage": {
-                          "Paths": []
-                        },
-                        "Url": {
-                          "Text": ""
-                        }
-                      }
-                    },
-                    {
-                      "ContentItemId": "[js:uuid()]",
-                      "ContentType": "Logo",
-                      "DisplayText": "Daimler Truck",
-                      "Latest": true,
-                      "Published": true,
-                      "TitlePart": {
-                        "Title": "Daimler Truck"
-                      },
-                      "Logo": {
-                        "LightImage": {
-                          "Paths": [
-                            "logos/daimler-truck.png"
-                          ]
-                        },
-                        "DarkImage": {
-                          "Paths": []
-                        },
-                        "Url": {
-                          "Text": ""
-                        }
-                      }
-                    },
-                    {
-                      "ContentItemId": "[js:uuid()]",
-                      "ContentType": "Logo",
-                      "DisplayText": "Santa Monica",
-                      "Latest": true,
-                      "Published": true,
-                      "TitlePart": {
-                        "Title": "Santa Monica"
-                      },
-                      "Logo": {
-                        "LightImage": {
-                          "Paths": [
-                            "logos/santa-monica.svg"
-                          ]
-                        },
-                        "DarkImage": {
-                          "Paths": []
-                        },
-                        "Url": {
-                          "Text": ""
-                        }
-                      }
-                    }
-                  ]
-                }
-              },
-              {
-                "ContentItemId": "[js:uuid()]",
                 "ContentType": "Statistics",
                 "DisplayText": "Why choose Orchard Core?",
                 "Latest": true,
@@ -3799,7 +3660,7 @@
               {
                 "ContentItemId": "[js:uuid()]",
                 "ContentType": "Gallery",
-                "DisplayText": "Last year at Orchard Harvest.",
+                "DisplayText": "Last year in Prague.",
                 "Latest": true,
                 "Published": true,
                 "BlockPart": {
@@ -3812,10 +3673,10 @@
                 },
                 "BlockIntro": {
                   "Title": {
-                    "Text": "Last year at Orchard Harvest."
+                    "Text": "Last year in Prague."
                   },
                   "Lead": {
-                    "Html": "<p>A feel for the last event: two days of talks and time with the community. (Demo of the Gallery block — relocate to the Orchard Harvest event page.)</p>"
+                    "Html": "<p>Last year's Orchard Harvest brought the community to Prague for two days of talks and time between sessions. A look back at the highlights.</p>"
                   }
                 },
                 "Gallery": {
@@ -4209,7 +4070,7 @@
                       },
                       "FaqItem": {
                         "Answer": {
-                          "Html": "<p>On 10 and 11 September 2026 in Vancouver, Canada. The exact venue will be announced soon; see the venue section (link #venue) for travel and where to stay.</p>"
+                          "Html": "<p>On 10 and 11 September 2026 in Vancouver, Canada. The exact venue will be announced soon; see the <a href=\"#venue\">venue section</a> for travel and where to stay.</p>"
                         }
                       }
                     },

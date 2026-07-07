@@ -472,13 +472,20 @@ html.dark .feat-shot.has-dark .feat-img--dark { display: block; }
   .code-flag    { color: var(--code-flag); }                        /* flag / member */
 
   /* Logo strip ("Used by" / sponsors). Each logo can supply a light and a dark image; the dark
-     one shows on a dark band or in dark mode. A logo with no dark image has its light image
-     inverted so dark artwork stays legible on a dark surface. Linked logos dim on hover. */
+     one shows on a dark band or in dark mode. No dark variants are supplied, so on any dark
+     surface (dark mode, or a Dark-themed band) each logo is flattened to a single uniform light
+     monochrome — brightness(0) drops the brand colours to black, invert(.9) lifts the silhouette
+     to a soft off-white (calmer and more consistent than stark #fff against the muted palette).
+     A shared opacity keeps every logo the same visual weight so the row reads as one set.
+     Linked logos brighten to full strength on hover. */
   .logo-strip a img { transition: opacity .2s ease; }
   .logo-strip a:hover img { opacity: .7; }
   .logo-strip__dark { display: none; }
   .theme-dark .logo-strip__light.has-dark, html.dark .logo-strip__light.has-dark { display: none; }
   .theme-dark .logo-strip__dark, html.dark .logo-strip__dark { display: inline-block; }
-  .theme-dark .logo-strip__light:not(.has-dark), html.dark .logo-strip__light:not(.has-dark) { filter: brightness(0) invert(1); opacity: .85; }
+  .theme-dark .logo-strip__light:not(.has-dark),
+  html.dark .logo-strip__light:not(.has-dark) { filter: brightness(0) invert(.9); opacity: .8; }
+  .theme-dark .logo-strip a:hover .logo-strip__light:not(.has-dark),
+  html.dark .logo-strip a:hover .logo-strip__light:not(.has-dark) { opacity: 1; }
 
 }

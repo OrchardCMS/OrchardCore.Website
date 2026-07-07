@@ -23,7 +23,7 @@
     {%- if questions.size > 0 -%}
       <div class="mx-auto mt-12 max-w-4xl space-y-3">
         {%- for faq in questions -%}
-          <details class="group rounded-xl bg-white px-6 theme-white:bg-cream theme-dark:bg-white/5">
+          <details class="group rounded-xl bg-cream-deep px-6 theme-cream:bg-white theme-dark:bg-white/5">
             <summary class="flex cursor-pointer list-none items-center justify-between gap-6 py-5 [&::-webkit-details-marker]:hidden focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-700">
               <h3 class="text-base text-green-900 theme-dark:text-white">{{ faq.DisplayText }}</h3>
               <svg class="h-5 w-5 shrink-0 text-green-600 transition-transform duration-300 group-open:rotate-180 theme-dark:text-green-100/80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
