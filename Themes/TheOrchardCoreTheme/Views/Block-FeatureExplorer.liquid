@@ -1,0 +1,99 @@
+{%- comment -%}
+  Feature Explorer. Heading + lead, then an explorer of features.
+  - Desktop (lg+): a tab rail + panel stage. A small theme.js handler (`[data-feature-explorer]`)
+    toggles `.is-active` on the clicked tab and `hidden` on the matching panel; the tab look lives in
+    the `.feat-tab` component class (@apply). Without JS the first panel stays shown.
+  - Mobile (<lg): a native <details> accordion (exclusive via the shared name), no JS.
+  Each panel/details carries a light + optional dark screenshot; site.css swaps them on `html.dark`.
+  Band/anchor + theme come from the Block part.
+{%- endcomment -%}
+{%- assign intro = Model.ContentItem.Content.BlockIntro -%}
+{%- assign section = Model.ContentItem.Content.BlockPart -%}
+{%- assign themeName = section.Theme.Text | default: "White" | downcase -%}
+{%- assign anchor = section.AnchorId.Text -%}
+{%- assign features = Model.ContentItem.Content.Features.ContentItems -%}
+{%- assign blockActions = Model.ContentItem.Content.BlockActionsPart -%}
+{%- assign uid = Model.ContentItem.ContentItemId -%}
+
+<section {% if anchor and anchor != "" %}id="{{ anchor }}"{% endif %} class="theme-{{ themeName }}">
+  <div class="mx-auto max-w-content px-6 band">
+
+    {{ "BlockIntro" | shape_new: title: intro.Title.Text, lead: intro.Lead.Html | shape_render }}
+
+    {%- if features.size > 0 -%}
+
+      {%- comment -%} Desktop (lg+): tab rail + panel stage. A theme.js handler (`[data-feature-explorer]`)
+        toggles `.is-active` on the clicked tab and `hidden` on the matching panel. No radios; the tab
+        look lives in the `.feat-tab` component class (@apply). {%- endcomment -%}
+      <div data-feature-explorer class="mt-12 hidden overflow-hidden rounded-2xl bg-cream lg:grid lg:grid-cols-12 lg:items-start">
+        <div class="space-y-1.5 p-3 lg:col-span-4" role="tablist" aria-label="Features">
+          {%- for feature in features -%}
+            <button type="button" data-feat-tab role="tab" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}" class="feat-tab{% if forloop.first %} is-active{% endif %}">
+              <span class="min-w-0">
+                <span class="feat-name">{{ feature.DisplayText }}</span>
+                <span class="feat-summary">{{ feature.Feature.Summary.Text }}</span>
+              </span>
+            </button>
+          {%- endfor -%}
+        </div>
+        <div class="lg:col-span-8">
+          {%- for feature in features -%}
+            {%- assign light = feature.Feature.Screenshot.Paths.first -%}
+            {%- assign dark = feature.Feature.ScreenshotDark.Paths.first -%}
+            {%- assign alt = feature.Feature.Screenshot.MediaTexts.first | default: feature.DisplayText -%}
+            <div data-feat-panel role="tabpanel" class="p-6 sm:p-8{% unless forloop.first %} hidden{% endunless %}">
+              <h3 class="text-2xl text-green-900 theme-dark:text-white">{{ feature.DisplayText }}</h3>
+              <div class="prose mt-3 max-w-2xl">{{ feature.Feature.Description.Html | raw }}</div>
+              <figure class="feat-shot{% if dark %} has-dark{% endif %} mt-6 overflow-hidden rounded-xl bg-white ring-1 ring-ink/10 theme-dark:bg-white/5 theme-dark:ring-white/10">
+                <div class="flex items-center gap-2 border-b border-rule bg-cream-deep py-2 pl-3 pr-4 theme-dark:border-white/10">
+                  <span class="h-2.5 w-2.5 shrink-0 rounded-full bg-red-400/80"></span>
+                  <span class="h-2.5 w-2.5 shrink-0 rounded-full bg-amber/70"></span>
+                  <span class="h-2.5 w-2.5 shrink-0 rounded-full bg-green-400/80"></span>
+                </div>
+                {%- if light -%}{{ "Image" | shape_new: path: light, alt: alt, width: 1250, height: 760, crop: false, sizes: "(min-width:1024px) 640px, 92vw", class: "feat-img--light block w-full" | shape_render }}{%- endif -%}
+                {%- if dark -%}{{ "Image" | shape_new: path: dark, alt: alt, width: 1250, height: 760, crop: false, sizes: "(min-width:1024px) 640px, 92vw", class: "feat-img--dark hidden w-full" | shape_render }}{%- endif -%}
+              </figure>
+            </div>
+          {%- endfor -%}
+        </div>
+      </div>
+
+      {%- comment -%} Mobile (<lg): native <details> accordion (exclusive via the shared name). {%- endcomment -%}
+      <div class="mt-12 space-y-3 lg:hidden">
+        {%- for feature in features -%}
+          {%- assign light = feature.Feature.Screenshot.Paths.first -%}
+          {%- assign dark = feature.Feature.ScreenshotDark.Paths.first -%}
+          {%- assign alt = feature.Feature.Screenshot.MediaTexts.first | default: feature.DisplayText -%}
+          <details name="featacc-{{ uid }}" class="group overflow-hidden rounded-xl bg-cream"{% if forloop.first %} open{% endif %}>
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-3 px-5 py-4 [&::-webkit-details-marker]:hidden focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-700">
+              <span class="min-w-0">
+                <span class="block font-serif text-base text-green-900 theme-dark:text-white">{{ feature.DisplayText }}</span>
+                <span class="mt-0.5 block text-sm text-ink-soft theme-dark:text-green-100/80">{{ feature.Feature.Summary.Text }}</span>
+              </span>
+              <svg class="h-5 w-5 shrink-0 text-ink-soft transition-transform group-open:rotate-180 theme-dark:text-green-100/80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+            </summary>
+            <div class="px-5 pb-5">
+              <div class="prose prose-sm">{{ feature.Feature.Description.Html | raw }}</div>
+              {%- if light -%}
+                <figure class="feat-shot{% if dark %} has-dark{% endif %} mt-4">
+                  {{ "Image" | shape_new: path: light, alt: alt, width: 1250, height: 760, crop: false, sizes: "(min-width:1024px) 640px, 92vw", class: "feat-img--light block w-full rounded-lg ring-1 ring-ink/10 theme-dark:ring-white/10" | shape_render }}
+                  {%- if dark -%}{{ "Image" | shape_new: path: dark, alt: alt, width: 1250, height: 760, crop: false, sizes: "(min-width:1024px) 640px, 92vw", class: "feat-img--dark hidden w-full rounded-lg ring-1 ring-ink/10 theme-dark:ring-white/10" | shape_render }}{%- endif -%}
+                </figure>
+              {%- endif -%}
+            </div>
+          </details>
+        {%- endfor -%}
+      </div>
+
+    {%- endif -%}
+
+    {%- comment -%} Closing actions row: copy from BlockActionsPart, buttons from the CallToActions bag. {%- endcomment -%}
+    {%- capture actionsHtml -%}
+      {%- for callToAction in Model.ContentItem.Content.CallToActions.ContentItems -%}
+        {{ "Button" | shape_new: url: callToAction.CallToAction.Link.Url, text: callToAction.CallToAction.Link.Text, target: callToAction.CallToAction.Link.Target, variant: callToAction.CallToAction.Variant.Text | shape_render }}
+      {%- endfor -%}
+    {%- endcapture -%}
+    {{ "BlockActions" | shape_new: heading: blockActions.Heading.Text, text: blockActions.Text.Html, actions: actionsHtml, maxWidth: "max-w-none" | shape_render }}
+
+  </div>
+</section>

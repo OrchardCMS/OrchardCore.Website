@@ -1,0 +1,52 @@
+{%- comment -%}
+  Shared schedule row. Invoked as:
+    {{ "ScheduleSession" | shape_new: item: <ScheduleSession content item> | shape_render }}
+  (shape_new PascalCases the arg, so it reads as Model.Item.) Background comes from the Type
+  (Session = white card; Break = tinted, e.g. lunch/registration). Whether the row is an
+  expandable <details> accordion or a plain row depends only on whether it has a Description —
+  so a break with notes (nearby cafés, etc.) expands just like a session, but stays tinted.
+  The presenter photo slot is always reserved (a spacer when absent) so rows line up.
+{%- endcomment -%}
+{%- assign item = Model.Item -%}
+{%- assign session = item.ScheduleSession -%}
+{%- assign type = session.Type.Text | default: "Session" -%}
+{%- assign time = session.Time.Text -%}
+{%- assign title = item.DisplayText -%}
+{%- assign description = session.Description.Html -%}
+{%- assign presenterName = session.PresenterName.Text -%}
+{%- assign presenterRole = session.PresenterRole.Text -%}
+{%- assign photo = session.PresenterPhoto.Paths.first -%}
+{%- assign photoAlt = session.PresenterPhoto.MediaTexts.first | default: presenterName -%}
+{%- assign hasDescription = false -%}{%- if description and description != "" -%}{%- assign hasDescription = true -%}{%- endif -%}
+{%- assign hasPresenter = false -%}{%- if presenterName and presenterName != "" -%}{%- assign hasPresenter = true -%}{%- endif -%}
+{%- assign hasRole = false -%}{%- if presenterRole and presenterRole != "" -%}{%- assign hasRole = true -%}{%- endif -%}
+{%- assign bgClass = "bg-white theme-dark:bg-white/5" -%}
+{%- if type == "Break" -%}{%- assign bgClass = "bg-rule theme-dark:bg-white/10" -%}{%- endif -%}
+
+{%- capture timeCol -%}<span class="w-36 shrink-0 whitespace-nowrap text-sm font-semibold text-green-700 theme-dark:text-accent-bright">{{ time }}</span>{%- endcapture -%}
+{%- capture photoCol -%}{%- if photo -%}{{ "Image" | shape_new: path: photo, alt: photoAlt, width: 80, height: 80, sizes: "40px", class: "h-10 w-10 shrink-0 rounded-lg object-cover bg-cream theme-dark:bg-white/10" | shape_render }}{%- else -%}<span class="h-10 w-10 shrink-0" aria-hidden="true"></span>{%- endif -%}{%- endcapture -%}
+{%- capture titleCol -%}<span class="min-w-0 flex-1"><span class="block font-serif text-green-900 theme-dark:text-white">{{ title }}</span>{%- if hasPresenter -%}<span class="block truncate text-sm text-ink-soft theme-dark:text-green-100/70">{{ presenterName }}{% if hasRole %} &middot; {{ presenterRole }}{% endif %}</span>{%- endif -%}</span>{%- endcapture -%}
+
+{%- if hasDescription -%}
+  <details class="group rounded-lg {{ bgClass }}">
+    <summary class="cursor-pointer list-none px-4 py-3 [&::-webkit-details-marker]:hidden focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-700">
+      <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4">
+        {{ timeCol }}
+        <div class="flex min-w-0 flex-1 items-center gap-4">
+          {{ photoCol }}{{ titleCol }}
+          <svg class="h-5 w-5 shrink-0 text-green-600 transition-transform duration-300 group-open:rotate-180 theme-dark:text-accent-bright" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+      </div>
+    </summary>
+    <div class="prose prose-sm max-w-none pb-4 pl-4 pr-4 sm:pl-[14.5rem]">{{ description | raw }}</div>
+  </details>
+{%- else -%}
+  <div class="rounded-lg {{ bgClass }} px-4 py-3">
+    <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4">
+      {{ timeCol }}
+      <div class="flex min-w-0 flex-1 items-center gap-4">
+        {{ photoCol }}{{ titleCol }}
+      </div>
+    </div>
+  </div>
+{%- endif -%}

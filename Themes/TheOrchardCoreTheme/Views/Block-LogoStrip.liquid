@@ -1,0 +1,45 @@
+{%- comment -%}
+  Logo Strip ("Used by" / Harvest "Sponsored by"). A thin band of logos. An optional leading
+  Label (omitted entirely when blank). Each logo (from the Logos bag) carries a light image, an
+  optional dark image (shown on a dark band or in dark mode; when absent the light image is
+  auto-inverted — see site.css), and an optional Url that makes the logo a link. The logo's
+  title is its name and the image alt text. Band/anchor + theme come from the Block part.
+{%- endcomment -%}
+{%- assign block = Model.ContentItem.Content.LogoStrip -%}
+{%- assign section = Model.ContentItem.Content.BlockPart -%}
+{%- assign themeName = section.Theme.Text | default: "White" | downcase -%}
+{%- assign anchor = section.AnchorId.Text -%}
+{%- assign label = block.Label.Text -%}
+{%- assign size = block.Size.Text | default: "Standard" -%}
+{%- assign logoSize = "h-4 sm:h-5" -%}
+{%- assign rowGap = "sm:gap-x-12 sm:gap-y-6" -%}
+{%- if size == "Large" -%}{%- assign logoSize = "h-8 sm:h-10" -%}{%- assign rowGap = "sm:gap-x-14 sm:gap-y-7" -%}{%- endif -%}
+{%- assign logos = Model.ContentItem.Content.Logos.ContentItems -%}
+
+<section {% if anchor and anchor != "" %}id="{{ anchor }}"{% endif %} class="theme-{{ themeName }} logo-strip">
+  <div class="mx-auto max-w-content px-6 py-12 sm:py-14">
+    <div class="flex flex-col items-center gap-6 sm:flex-row sm:flex-wrap sm:justify-center {{ rowGap }}">
+
+      {%- if label and label != "" -%}
+        <span class="font-serif text-base text-ink-soft theme-dark:text-green-100/80">{{ label }}</span>
+      {%- endif -%}
+
+      {%- for logo in logos -%}
+        {%- assign light = logo.Logo.LightImage.Paths.first -%}
+        {%- assign dark = logo.Logo.DarkImage.Paths.first -%}
+        {%- assign url = logo.Logo.Url.Text -%}
+        {%- assign name = logo.DisplayText -%}
+        {%- capture img -%}
+          {%- if light and light != "" -%}<img src="{{ light | asset_url }}" alt="{{ name }}" loading="lazy" decoding="async" class="logo-strip__light{% if dark and dark != "" %} has-dark{% endif %} {{ logoSize }} w-auto shrink-0 object-contain">{%- endif -%}
+          {%- if dark and dark != "" -%}<img src="{{ dark | asset_url }}" alt="{{ name }}" loading="lazy" decoding="async" class="logo-strip__dark {{ logoSize }} w-auto shrink-0 object-contain">{%- endif -%}
+        {%- endcapture -%}
+        {%- if url and url != "" -%}
+          <a href="{{ url | href }}" aria-label="{{ name }}" class="inline-flex shrink-0 items-center focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-green-700"{% if url contains "://" %} target="_blank" rel="noopener"{% endif %}>{{ img }}</a>
+        {%- else -%}
+          {{ img }}
+        {%- endif -%}
+      {%- endfor -%}
+
+    </div>
+  </div>
+</section>

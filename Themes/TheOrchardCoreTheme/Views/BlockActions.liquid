@@ -1,0 +1,37 @@
+{%- comment -%}
+  Shared closing actions row for blocks that attach BlockActionsPart (+ a CallToActions bag).
+  Invoked with:
+    {{ "BlockActions" | shape_new: heading: ..., text: ..., actions: actionsHtml | shape_render }}
+  - heading / text : the closing copy (from BlockActionsPart). shape_new PascalCases the args, so
+    they are read as Model.Heading / Model.Text.
+  - actions         : pre-rendered button HTML (the caller loops its CallToActions bag through the
+    Button shape and passes the result), so blocks can have as many buttons as they want.
+  - maxWidth        : optional measure class for the row (default "max-w-4xl"). Pass "max-w-none"
+    when the block above is full-width so the actions line up with it.
+  Renders only when there is a heading/text or at least one button.
+{%- endcomment -%}
+{%- assign maxWidth = Model.MaxWidth -%}
+{%- if maxWidth == nil or maxWidth == "" -%}{%- assign maxWidth = "max-w-4xl" -%}{%- endif -%}
+{%- assign actionsTrim = "" -%}
+{%- if Model.Actions -%}{%- assign actionsTrim = Model.Actions | strip -%}{%- endif -%}
+{%- assign hasActions = false -%}
+{%- if actionsTrim != "" -%}{%- assign hasActions = true -%}{%- endif -%}
+{%- assign hasText = false -%}
+{%- if Model.Heading and Model.Heading != "" -%}{%- assign hasText = true -%}{%- endif -%}
+{%- if Model.Text and Model.Text != "" -%}{%- assign hasText = true -%}{%- endif -%}
+
+{%- if hasText or hasActions -%}
+<div class="mx-auto mt-16 grid {{ maxWidth }} gap-8 md:grid-cols-2 md:items-center">
+  <div>
+    {%- if Model.Heading and Model.Heading != "" -%}
+      <h3 class="text-xl text-green-900 theme-dark:text-white">{{ Model.Heading }}</h3>
+    {%- endif -%}
+    {%- if Model.Text and Model.Text != "" -%}
+      <div class="prose mt-3">{{ Model.Text | raw }}</div>
+    {%- endif -%}
+  </div>
+  {%- if hasActions -%}
+    <div class="flex flex-col gap-3 md:ml-auto md:w-fit">{{ Model.Actions | raw }}</div>
+  {%- endif -%}
+</div>
+{%- endif -%}

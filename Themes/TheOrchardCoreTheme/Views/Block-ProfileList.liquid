@@ -1,0 +1,49 @@
+{%- comment -%}
+  Profile List. A compact people grid: an optional heading + lead, then small circular avatars with a
+  name, role, and GitHub/LinkedIn icons laid out horizontally — plus the shared BlockActions closing
+  row. Band/anchor + theme come from the Block part. Reusable for organisers, contributors, etc.
+{%- endcomment -%}
+{%- assign intro = Model.ContentItem.Content.BlockIntro -%}
+{%- assign section = Model.ContentItem.Content.BlockPart -%}
+{%- assign themeName = section.Theme.Text | default: "White" | downcase -%}
+{%- assign anchor = section.AnchorId.Text -%}
+{%- assign profiles = Model.ContentItem.Content.Profiles.ContentItems -%}
+{%- assign blockActions = Model.ContentItem.Content.BlockActionsPart -%}
+
+<section {% if anchor and anchor != "" %}id="{{ anchor }}"{% endif %} class="theme-{{ themeName }}">
+  <div class="mx-auto max-w-content px-6 band">
+
+    {{ "BlockIntro" | shape_new: title: intro.Title.Text, lead: intro.Lead.Html | shape_render }}
+
+    {%- if profiles.size > 0 -%}
+      <ul class="mt-12 grid gap-x-8 gap-y-6 sm:grid-cols-2 lg:grid-cols-3">
+        {%- comment -%} The whole row links to the person's GitHub profile (like the v1 design); the
+          subtitle is their GitHub handle, derived from the URL. Falls back to a non-linked row if no
+          GitHub URL is set. The Role/LinkedIn fields aren't used by this compact layout. {%- endcomment -%}
+        {%- for profile in profiles -%}
+          {%- assign github = profile.Profile.GitHubUrl.Text -%}
+          {%- assign handle = "" -%}
+          {%- if github and github != "" -%}{%- assign handle = github | split: '/' | last -%}{%- endif -%}
+          <li>
+            {%- if github and github != "" -%}<a href="{{ github | href }}" target="_blank" rel="noopener" class="group flex items-center gap-4">{%- else -%}<div class="flex items-center gap-4">{%- endif -%}
+              {{ "ProfileAvatar" | shape_new: item: profile, width: 140, sizes: "70px", class: "h-[70px] w-[70px] shrink-0 rounded-xl object-cover bg-cream theme-dark:bg-white/5" | shape_render }}
+              <span class="min-w-0">
+                <span class="block truncate text-base text-green-900 theme-dark:text-white transition group-hover:text-green-700 theme-dark:group-hover:text-accent-bright">{{ profile.DisplayText }}</span>
+                {%- if handle and handle != "" -%}<span class="block truncate text-sm text-ink-soft theme-dark:text-green-100/70">@{{ handle }}</span>{%- endif -%}
+              </span>
+            {%- if github and github != "" -%}</a>{%- else -%}</div>{%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+
+    {%- comment -%} Closing actions row: copy from BlockActionsPart, buttons from the CallToActions bag. {%- endcomment -%}
+    {%- capture actionsHtml -%}
+      {%- for callToAction in Model.ContentItem.Content.CallToActions.ContentItems -%}
+        {{ "Button" | shape_new: url: callToAction.CallToAction.Link.Url, text: callToAction.CallToAction.Link.Text, target: callToAction.CallToAction.Link.Target, variant: callToAction.CallToAction.Variant.Text | shape_render }}
+      {%- endfor -%}
+    {%- endcapture -%}
+    {{ "BlockActions" | shape_new: heading: blockActions.Heading.Text, text: blockActions.Text.Html, actions: actionsHtml, maxWidth: "max-w-none" | shape_render }}
+
+  </div>
+</section>

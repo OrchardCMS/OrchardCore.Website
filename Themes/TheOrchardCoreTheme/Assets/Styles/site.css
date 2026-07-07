@@ -1,0 +1,484 @@
+@import "tailwindcss"; /* stylelint-disable-line import-notation */
+
+/* Typography plugin (bundled in the standalone CLI): the `prose` classes give
+   HTML-field content correct paragraph/list/heading rhythm. Its colours are
+   re-pointed at the theme tokens further down so it follows dark mode + dark band. */
+@plugin "@tailwindcss/typography"; /* stylelint-disable-line at-rule-no-unknown */
+
+/* Scan templates for the utility classes actually used. Add other sources here
+   (e.g. seeded content recipes) if classes are authored outside the views. */
+@source "../../Views/**/*.{liquid,cshtml}"; /* stylelint-disable-line at-rule-no-unknown */
+
+/* CSS-only tab blocks build their peer classes in a Liquid loop (peer/<name><index>,
+   peer-checked/<name><index>:<util>), so the index is not a literal the scanner can see.
+   Safelist the finite set here so the named-peer variants are generated. Index range covers
+   the largest bag (the feature explorer, up to ~10 tabs). */
+@source inline("peer-checked/m{0,1,2,3}:{block,text-white,border-accent-bright}"); /* stylelint-disable-line at-rule-no-unknown */
+
+/* Dark mode is class-based (a `.dark` class on <html>, set before paint), not the
+   OS preference. This makes any `dark:` utility respond to that class. */
+@custom-variant dark (&:where(.dark, .dark *)); /* stylelint-disable-line at-rule-no-unknown */
+
+/* Block "theme" variants. Every section block carries a `theme-<name>` class for its
+   background choice (White / Cream / Rule / Dark). These variants let templates apply
+   per-theme overrides as utilities, e.g. `text-green-900 theme-dark:text-white` or
+   `bg-green-600 theme-dark:bg-accent-bright` — no per-element branching in Liquid. The
+   variant matches the element itself or any descendant of the themed section. */
+@custom-variant theme-white (&:where(.theme-white, .theme-white *)); /* stylelint-disable-line at-rule-no-unknown */
+@custom-variant theme-cream (&:where(.theme-cream, .theme-cream *)); /* stylelint-disable-line at-rule-no-unknown */
+@custom-variant theme-rule (&:where(.theme-rule, .theme-rule *)); /* stylelint-disable-line at-rule-no-unknown */
+@custom-variant theme-dark (&:where(.theme-dark, .theme-dark *)); /* stylelint-disable-line at-rule-no-unknown */
+
+/* ---------------------------------------------------------------------------
+   SELF-HOSTED FONTS
+   Bitter (headings), Inter (body), JetBrains Mono (code) — the variable woff2s
+   downloaded from Google Fonts and served from wwwroot/fonts, so the page makes
+   no request to fonts.googleapis.com / fonts.gstatic.com. One file per family
+   covers every weight (variable). latin + latin-ext subsets; `swap` shows the
+   fallback immediately then swaps in. The absolute `/TheOrchardCoreTheme/…` path
+   is the theme's static mount (not relative, so the CSS build leaves it as-is).
+   --------------------------------------------------------------------------- */
+@font-face {
+  font-family: "Bitter";
+  font-style: normal;
+  font-weight: 500 700;
+  font-display: swap;
+  src: url("/TheOrchardCoreTheme/fonts/bitter-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Bitter";
+  font-style: normal;
+  font-weight: 500 700;
+  font-display: swap;
+  src: url("/TheOrchardCoreTheme/fonts/bitter-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("/TheOrchardCoreTheme/fonts/inter-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("/TheOrchardCoreTheme/fonts/inter-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-weight: 400 500;
+  font-display: swap;
+  src: url("/TheOrchardCoreTheme/fonts/jetbrains-mono-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-weight: 400 500;
+  font-display: swap;
+  src: url("/TheOrchardCoreTheme/fonts/jetbrains-mono-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* ---------------------------------------------------------------------------
+   DESIGN TOKENS
+   The single source of truth for the brand. These were the inline
+   `tailwind.config` in the v1 mockups; in Tailwind v4 they live here as CSS
+   variables, so `bg-green-600`, `text-ink`, `font-serif`, `max-w-content`, etc.
+   are generated from them. Change a value here and it changes everywhere.
+   --------------------------------------------------------------------------- */
+@theme {
+  /* Brand green ramp (green-600 = primary accent, green-700 = hover). */
+  --color-green-50:  #ECF6EF;
+  --color-green-100: #D8EEDE;
+  --color-green-200: #AFDCBD;
+  --color-green-300: #7DC598;
+  --color-green-400: #3FA468;
+  --color-green-500: #1C9148;
+  --color-green-600: #15803D;
+  --color-green-700: #11672F;
+  --color-green-800: #0D4F25;
+  --color-green-900: #08361A;
+
+  --color-leaf:               #3FA468; /* bright accent (= green-400) */
+  --color-accent-bright:      #2FBF6B; /* primary button on dark bands */
+  --color-accent-bright-hover:#54D488;
+  --color-sage:               #EDF2EE;
+
+  --color-cream:      #F5F8F6; /* green-tinted neutral surface */
+  --color-cream-deep: #EDF2EE;
+
+  --color-ink:      #0F1A14; /* body text */
+  --color-ink-soft: #566058; /* secondary text */
+
+  --color-rule:       #E2E8E3; /* hairlines / thin bands */
+  --color-amber:      #B7791F; /* warning / signal */
+  --color-amber-soft: #FCF3E3;
+
+  --color-code-bg:  #10180F;
+  --color-code-ink: #D4DDD7;
+
+  /* Type families. Bitter (headings), Inter (body), JetBrains Mono (code/labels). */
+  --font-serif: "Bitter", Georgia, serif;
+  --font-sans:  "Inter", system-ui, sans-serif;
+  --font-mono:  "JetBrains Mono", ui-monospace, monospace;
+
+  /* One standard content width for every band, the header, and the footer. */
+  --max-width-content: 1200px;
+}
+
+/* ---------------------------------------------------------------------------
+   NON-TAILWIND TOKENS
+   Values that bypassed the config in the mockups (shadows, glass, rhythm,
+   syntax colours, and the full dark palette). Centralised here as variables so
+   they are easy to change. The dark palette (`--d-*`) is the parallel set of
+   colours the mockups only had as raw hex inside `html.dark` rules.
+   --------------------------------------------------------------------------- */
+:root {
+  /* Sticky-header height; theme.js sets the exact px on menu open so the mobile menu overlay sits
+     directly below the header. This is the fallback before JS runs. */
+  --header-h: 4rem;
+
+  /* Vertical rhythm + small type details. */
+  --space-band: clamp(5rem, 10vw, 9rem);
+  --text-eyebrow: 0.72rem;
+  --tracking-eyebrow: 0.14em;
+  --heading-weight: 600;
+
+  /* Header glass + the shadow inks (were one-off rgb(17,40,31) / rgb(8,54,26)). */
+  --header-glass: rgba(255, 255, 255, 0.88);
+  --header-blur: 8px;
+  --shadow-ink: 17, 40, 31;   /* rgb channels for soft UI shadows */
+  --screen-ink: 8, 54, 26;    /* = green-900, used for the screenshot float */
+
+  --shadow-header:       0 1px 0 rgba(var(--shadow-ink), .04), 0 10px 24px -20px rgba(var(--shadow-ink), .22);
+  --shadow-header-stuck: 0 1px 0 rgba(var(--shadow-ink), .05), 0 14px 34px -20px rgba(var(--shadow-ink), .32);
+  --shadow-soft:         0 30px 40px -24px rgba(var(--shadow-ink), .16), 0 8px 18px -10px rgba(var(--shadow-ink), .08);
+  --shadow-screen:       0 50px 70px -30px rgba(var(--screen-ink), .45), 0 18px 30px -18px rgba(var(--screen-ink), .30);
+
+  /* Code-snippet token colours (authored via the [cmd]/[name]/[comment]/[flag]/[type] shortcode tags). */
+  --code-command: #7FE0A6; /* command / keyword */
+  --code-type:    #74A8FF; /* type */
+  --code-name:    #F5BB55; /* name / value / string */
+  --code-comment: #828E86; /* comment / prompt — 5.3:1 on --color-code-bg (#10180F), clears WCAG AA */
+  --code-flag:    #D4DDD7; /* flag / member */
+
+  /* Live surfaces/text/borders. In light mode these map to the brand tokens;
+     `html.dark` below re-points them to the dark palette, so the same utility
+     classes (bg-white, bg-cream, text-ink, border-rule, ...) follow the theme. */
+  --surface:          #ffffff;
+  --surface-cream:    var(--color-cream);
+  --surface-cream-deep: var(--color-cream-deep);
+  --surface-rule:     var(--color-rule);
+  --body-bg:          #ffffff;
+
+  --tint-green-100:   var(--color-green-100);
+  --tint-green-200:   var(--color-green-200);
+  --tint-green-200-hover: var(--color-green-200);
+
+  --text-base:        var(--color-ink);
+  --text-soft:        var(--color-ink-soft);
+  --text-green-900:   var(--color-green-900);
+  --text-green-800:   var(--color-green-800);
+  --text-green-700:   var(--color-green-700);
+  --border-base:      var(--color-rule);
+
+  /* Header glass + theme-toggle, light defaults. */
+  --header-bg:        var(--header-glass);
+  --header-border:    var(--color-rule);
+  --toggle-track:     #E2E8E3;
+  --toggle-border:    var(--color-rule);
+  --toggle-knob:      #ffffff;
+  --nav-current:      var(--color-green-600);
+}
+
+/* The dark palette. Only the values change here; the variable names (and so
+   every rule that references them) stay the same. */
+html.dark {
+  --body-bg:            #07150D;
+  --surface:            #12291B;
+  --surface-cream:      #0C1E14;
+  --surface-cream-deep: #16331F;
+  --surface-rule:       #08130C;
+
+  --tint-green-100:     #103D23;
+  --tint-green-200:     #0C3119;
+  --tint-green-200-hover:#15512F;
+
+  --text-base:          #E4EFE8;
+  --text-soft:          #9DB2A4;
+  --text-green-900:     #ECF7F0;
+  --text-green-800:     #CFEAD8;
+  --text-green-700:     #86CDA0;
+  --border-base:        #21402E;
+
+  --header-bg:          rgba(7, 21, 13, 0.85);
+  --header-border:      #21402E;
+  --toggle-track:       #15512F;
+  --toggle-border:      #21402E;
+  --toggle-knob:        #08361A;
+  --nav-current:        #54D488;
+
+  --shadow-header:       0 1px 0 rgba(0,0,0,.4), 0 10px 24px -20px rgba(0,0,0,.6);
+  --shadow-header-stuck: 0 1px 0 rgba(0,0,0,.5), 0 14px 34px -20px rgba(0,0,0,.7);
+
+  color-scheme: dark;
+}
+
+/* ---------------------------------------------------------------------------
+   BASE
+   --------------------------------------------------------------------------- */
+@layer base {
+  body {
+    font-family: var(--font-sans);
+    background-color: var(--body-bg);
+    color: var(--text-base);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* `body` prefix raises specificity above Preflight's `h1..h6 { font-weight: inherit }`. */
+  body h1, body h2, body h3, .font-serif {
+    font-family: var(--font-serif);
+    font-weight: var(--heading-weight);
+  }
+  h1, h2, h3 { text-wrap: balance; }
+}
+
+/* ---------------------------------------------------------------------------
+   DARK-MODE SURFACE / TEXT / BORDER REMAPS
+   The v1 markup uses raw utilities (bg-white, bg-cream, text-ink, border-rule).
+   These rules make those utilities follow the dark palette, driven entirely by
+   the `--*` variables above (no literal hex here). Un-layered so they win over
+   Tailwind's utility layer.
+   --------------------------------------------------------------------------- */
+html.dark .bg-white            { background-color: var(--surface); }
+html.dark .bg-cream            { background-color: var(--surface-cream); }
+html.dark .bg-cream-deep       { background-color: var(--surface-cream-deep); }
+html.dark .bg-rule             { background-color: var(--surface-rule); }
+html.dark .hover\:bg-cream:hover { background-color: var(--surface-cream-deep); }
+
+html.dark .bg-green-100        { background-color: var(--tint-green-100); }
+html.dark .bg-green-200        { background-color: var(--tint-green-200); }
+html.dark .hover\:bg-green-200:hover { background-color: var(--tint-green-200-hover); }
+
+html.dark .text-ink           { color: var(--text-base); }
+html.dark .text-ink-soft      { color: var(--text-soft); }
+html.dark .text-green-900     { color: var(--text-green-900); }
+html.dark .text-green-800     { color: var(--text-green-800); }
+html.dark .text-green-700     { color: var(--text-green-700); }
+
+html.dark .border-rule        { border-color: var(--border-base); }
+html.dark .divide-rule > :not([hidden]) ~ :not([hidden]) { border-color: var(--border-base); }
+
+/* ---------------------------------------------------------------------------
+   SECTION BAND BACKGROUNDS
+   Every section block carries a `theme-<name>` class for its background choice
+   (White / Cream / Rule / Dark). The band colour is driven straight off that
+   class here — so templates no longer compute a parallel `bandClass`. These
+   reference the live `--surface*` tokens, so dark mode remaps automatically and
+   the result is identical to the old `bg-white`/`bg-cream`/`bg-rule`/`bg-green-900`.
+   --------------------------------------------------------------------------- */
+.theme-white { background-color: var(--surface); }
+.theme-cream { background-color: var(--surface-cream); }
+.theme-rule  { background-color: var(--surface-rule); }
+.theme-dark  { background-color: var(--color-green-900); }
+
+/* ---------------------------------------------------------------------------
+   TAB BLOCKS
+   The card tabs and the feature explorer are both driven by a small theme.js
+   handler: clicking a tab toggles `.is-active` on it and `hidden` on the matching
+   panel. Their button look lives in `.tab-toggle` / `.feat-tab` component classes
+   (composed from utilities via @apply, in the components layer above) — no radios,
+   no per-index selectors. Only the feature screenshot light/dark swap needs a
+   stylesheet rule (below), since it keys off the site dark-mode class.
+   --------------------------------------------------------------------------- */
+
+/* Feature screenshot light/dark swap (follows site dark mode; light stays when no dark image).
+   Base display is a utility on each img (block / hidden); only the dark-mode swap lives here. */
+html.dark .feat-shot.has-dark .feat-img--light { display: none; }
+html.dark .feat-shot.has-dark .feat-img--dark { display: block; }
+
+/* ---------------------------------------------------------------------------
+   RICH TEXT (prose)
+   HTML-field content is wrapped in `prose` for paragraph/list rhythm. The
+   plugin's default palette is opinionated, so we re-point its colour variables
+   at the theme tokens. Because those tokens already remap under `html.dark`,
+   dark *mode* needs no `prose-invert`; a single `.theme-dark .prose` rule below
+   covers the dark *band* (green-900 surface in either mode). A wrapper `max-w-*`
+   utility already overrides prose's default 65ch measure (it is emitted later in
+   the utilities layer), so we must NOT set max-width here — doing so unlayered
+   would beat the wrapper and let the copy run full-bleed.
+   --------------------------------------------------------------------------- */
+.prose {
+  --tw-prose-body: var(--text-soft);
+  --tw-prose-headings: var(--text-green-900);
+  --tw-prose-links: var(--text-green-700);
+  --tw-prose-bold: var(--text-base);
+  --tw-prose-counters: var(--text-soft);
+  --tw-prose-bullets: var(--color-green-600);
+  --tw-prose-hr: var(--border-base);
+  --tw-prose-quotes: var(--text-base);
+  --tw-prose-quote-borders: var(--border-base);
+  --tw-prose-code: var(--text-base);
+  --tw-prose-pre-bg: var(--color-code-bg);
+  --tw-prose-pre-code: var(--color-code-ink);
+  /* Match the v1 mockups' body rhythm: every design paragraph is `leading-relaxed`
+     (1.625). The typography plugin defaults the body to 1.75 (and 1.778 at prose-lg),
+     which reads looser than the design, so pin the copy line-height to leading-relaxed.
+     Headings/`pre` keep their own line-heights (they set them explicitly). */
+  line-height: 1.625;
+}
+
+/* The size modifiers each set their own, larger base line-height; bring them back to
+   the design's leading-relaxed so leads (prose-lg) and dense copy (prose-sm) match too. */
+.prose-sm,
+.prose-lg,
+.prose-xl {
+  line-height: 1.625;
+}
+
+/* On a dark band the surface is always green-900 (in both modes), so the copy
+   uses the on-dark palette regardless of the mode — mirrors the button /
+   announcement on-dark treatment (accent-bright links, white emphasis). */
+.theme-dark .prose {
+  --tw-prose-body: var(--color-green-100);
+  --tw-prose-headings: #fff;
+  --tw-prose-links: var(--color-accent-bright);
+  --tw-prose-bold: #fff;
+  --tw-prose-counters: var(--color-green-100);
+  --tw-prose-bullets: var(--color-accent-bright);
+  --tw-prose-hr: rgba(255, 255, 255, 0.15);
+  --tw-prose-quotes: #fff;
+  --tw-prose-quote-borders: rgba(255, 255, 255, 0.15);
+}
+
+/* ---------------------------------------------------------------------------
+   COMPONENTS
+   The handful of named classes the mockups define, ported to reference the
+   variables above instead of literals.
+   --------------------------------------------------------------------------- */
+@layer components {
+  /* Warm vertical rhythm: whitespace, not rules, separates the chapters. */
+  .band { padding-block: var(--space-band); }
+
+  /* Smooth in-page anchor scrolling for the header section nav (disabled for reduced-motion users —
+     the smooth rule comes first so the media query wins). Anchor jumps land on the section heading,
+     not the padded band top, with the sticky header cleared above it: the negative margin cancels the
+     .band top padding (--space-band) and leaves ~4.5rem — just over the header height — above the title. */
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+  }
+  main { scroll-margin-top: 5rem; }
+  section[id] { scroll-margin-top: calc(4.5rem - var(--space-band)); }
+
+  /* Scroll-spy: highlight the header nav link for the section currently in view. theme.js toggles
+     `.is-current` (via IntersectionObserver) on the links whose data-spy matches the section id. */
+  .nav-link.is-current { color: var(--color-leaf); }
+  html.dark .nav-link.is-current { color: var(--color-accent-bright-hover); }
+
+  /* Subtle scroll reveal: section content fades + rises as it enters the viewport. Gated behind
+     `html.js` so content is fully visible without JS; theme.js adds `.is-visible` via
+     IntersectionObserver (one-shot). Hooked to `.band`, so the heroes (no `.band`) never hide —
+     protecting the LCP — and the themed background bands stay put while only their content animates.
+     Reduced-motion override comes after (so the media query wins), matching the smooth-scroll rule. */
+  .js .band { opacity: 0; transform: translateY(16px); transition: opacity .6s ease, transform .6s ease; }
+  .js .band.is-visible { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .js .band { opacity: 1; transform: none; transition: none; }
+  }
+
+  /* When two adjacent section blocks share the same background, collapse the big band gap between
+     them so the pair reads as one continuous band — but keep a small, consistent gap (mt-12 = 3rem):
+     the first's bottom padding goes to 0 and the second's top padding becomes 3rem. Per-theme, so a
+     different-coloured neighbour keeps the full band gap. `.band` is the section's direct child. */
+  .theme-white + .theme-white > .band,
+  .theme-cream + .theme-cream > .band,
+  .theme-rule  + .theme-rule  > .band,
+  .theme-dark  + .theme-dark  > .band { padding-top: calc(var(--spacing) * 12); } /* = mt-12 (3rem) */
+  .theme-white:has(+ .theme-white) > .band,
+  .theme-cream:has(+ .theme-cream) > .band,
+  .theme-rule:has(+ .theme-rule)   > .band,
+  .theme-dark:has(+ .theme-dark)   > .band { padding-bottom: 0; }
+
+  /* Card-tab segmented toggle. A theme.js handler toggles `.is-active` on the clicked button; the
+     look is composed from utilities via @apply so it stays tidy and token-driven. The active rule
+     has higher specificity than the base, so it wins within this layer. */
+  .tab-toggle {
+    @apply rounded-md px-4 py-1.5 text-sm font-semibold text-ink-soft transition-colors theme-dark:text-green-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-700;
+  }
+  .tab-toggle.is-active { @apply bg-green-600 text-white; }
+
+  /* Feature-explorer rail tab. White (a dark surface in dark mode); dark green on hover and when
+     active (the theme.js handler toggles `.is-active`). Name + summary recolour with it. Composed
+     from utilities via @apply; the active/hover rules win by specificity within this layer. */
+  .feat-tab {
+    @apply flex w-full cursor-pointer items-center justify-between gap-3 rounded-lg bg-white py-3.5 pl-4 pr-3 text-left transition-colors hover:bg-green-900 dark:hover:bg-green-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-700;
+  }
+  .feat-tab.is-active { @apply bg-green-900 dark:bg-green-700; }
+  .feat-name { @apply block font-serif text-base text-green-900; }
+  .feat-summary { @apply mt-0.5 block text-sm text-ink-soft; }
+  .feat-tab:hover .feat-name, .feat-tab.is-active .feat-name { @apply text-white; }
+  .feat-tab:hover .feat-summary, .feat-tab.is-active .feat-summary { @apply text-green-100; }
+
+  /* Small uppercase mono eyebrow. */
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: var(--text-eyebrow);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-eyebrow);
+  }
+
+  /* The header carries a soft glass background, a bottom border, and a drop
+     shadow so it stays separated from the page even at the top; the shadow
+     deepens slightly on scroll via .is-stuck. */
+  #siteHeader {
+    background: var(--header-bg);
+    backdrop-filter: blur(var(--header-blur));
+    border-bottom: 1px solid var(--header-border);
+    box-shadow: var(--shadow-header);
+  }
+  #siteHeader.is-stuck { box-shadow: var(--shadow-header-stuck); }
+  html.dark #siteHeader img,
+  html.dark #siteHeader .site-logo { filter: brightness(0) invert(1); }
+
+  /* Scroll-spy current link. */
+  .nav-link.is-current { color: var(--nav-current); }
+
+  /* Soft lift for the few framed elements (code panel, screenshots). */
+  .shadow-soft   { box-shadow: var(--shadow-soft); }
+  .shadow-screen { box-shadow: var(--shadow-screen); }
+
+  /* Theme toggle. */
+  #themeToggle { background-color: var(--toggle-track); border-color: var(--toggle-border); }
+  .theme-knob  { background: var(--toggle-knob); transform: translateY(-50%); }
+  html.dark .theme-knob { transform: translate(22px, -50%); }
+
+  /* Code-snippet syntax tokens. Authored in the content via the [cmd]/[name]/[comment]/[flag]/[type]
+     shortcode tags (see automation.recipe.json), which expand to these spans — no JavaScript. Colours
+     come from the reserved `--c-*` tokens; the terminal is always on the dark code surface, so no theme
+     variants are needed. */
+  .code-command { color: var(--code-command); }                     /* command / keyword */
+  .code-type    { color: var(--code-type); }                        /* type */
+  .code-name    { color: var(--code-name); }                        /* name / value / string */
+  .code-comment { color: var(--code-comment); font-style: italic; } /* comment / prompt */
+  .code-flag    { color: var(--code-flag); }                        /* flag / member */
+
+  /* Logo strip ("Used by" / sponsors). Each logo can supply a light and a dark image; the dark
+     one shows on a dark band or in dark mode. A logo with no dark image has its light image
+     inverted so dark artwork stays legible on a dark surface. Linked logos dim on hover. */
+  .logo-strip a img { transition: opacity .2s ease; }
+  .logo-strip a:hover img { opacity: .7; }
+  .logo-strip__dark { display: none; }
+  .theme-dark .logo-strip__light.has-dark, html.dark .logo-strip__light.has-dark { display: none; }
+  .theme-dark .logo-strip__dark, html.dark .logo-strip__dark { display: inline-block; }
+  .theme-dark .logo-strip__light:not(.has-dark), html.dark .logo-strip__light:not(.has-dark) { filter: brightness(0) invert(1); opacity: .85; }
+
+}

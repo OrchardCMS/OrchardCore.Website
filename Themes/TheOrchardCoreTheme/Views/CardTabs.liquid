@@ -1,0 +1,38 @@
+{%- comment -%}
+  Shared tabbed card grid, reusable by any block with a Tabs bag. Invoked with:
+    {{ "CardTabs" | shape_new: tabs: <Tab content items>, uid: <unique id> | shape_render }}
+  (shape_new PascalCases the args, so they are read as Model.Tabs / Model.Uid.) With 2+ tabs it renders
+  a segmented toggle (buttons in a bordered pill) over the card sets; a small handler in theme.js
+  (`[data-card-tabs]`) swaps the active set and toggles the active-button utilities — no tab CSS. With
+  one tab there's just its grid. Cards follow the band via `theme-*:` variants. No top margin of its
+  own — the calling block adds spacing above it when needed (so it sits flush when it's the first thing
+  in a section, e.g. a tabbed grid merged under a Statistics block).
+{%- endcomment -%}
+{%- assign tabs = Model.Tabs -%}
+{%- if tabs and tabs.size > 0 -%}
+  {%- if tabs.size > 1 -%}
+    <div data-card-tabs>
+      <div class="flex justify-center">
+        <div class="inline-flex rounded-lg border border-rule bg-white p-1 theme-dark:border-white/15 theme-dark:bg-white/10" role="tablist" aria-label="Card categories">
+          {%- for tab in tabs -%}
+            <button type="button" data-card-tab role="tab" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}" class="tab-toggle{% if forloop.first %} is-active{% endif %}">{{ tab.Tab.Title.Text }}</button>
+          {%- endfor -%}
+        </div>
+      </div>
+      {%- for tab in tabs -%}
+        <div data-card-tab-set role="tabpanel" class="mx-auto mt-8 grid max-w-4xl gap-5 sm:grid-cols-2 lg:grid-cols-3{% unless forloop.first %} hidden{% endunless %}">
+          {%- for card in tab.Cards.ContentItems -%}
+            {{ "Card" | shape_new: item: card | shape_render }}
+          {%- endfor -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  {%- else -%}
+    {%- assign tab = tabs | first -%}
+    <div class="mx-auto grid max-w-4xl gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {%- for card in tab.Cards.ContentItems -%}
+        {{ "Card" | shape_new: item: card | shape_render }}
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+{%- endif -%}

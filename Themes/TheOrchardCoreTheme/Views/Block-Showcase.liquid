@@ -1,0 +1,51 @@
+{%- comment -%}
+  Showcase. Heading + lead, then a gallery of project image cards. Each card shows the image; on
+  hover/focus a green wash + the project title (+ "View project" when a Url is set) fade in — pure
+  CSS, no JavaScript. A card with a Url is a link (external URLs open in a new tab); without one it's
+  a non-linked tile. Closes with the shared BlockActions row. Band/anchor + theme come from Section.
+{%- endcomment -%}
+{%- assign intro = Model.ContentItem.Content.BlockIntro -%}
+{%- assign section = Model.ContentItem.Content.BlockPart -%}
+{%- assign themeName = section.Theme.Text | default: "White" | downcase -%}
+{%- assign anchor = section.AnchorId.Text -%}
+{%- assign items = Model.ContentItem.Content.Items.ContentItems -%}
+{%- assign blockActions = Model.ContentItem.Content.BlockActionsPart -%}
+
+<section {% if anchor and anchor != "" %}id="{{ anchor }}"{% endif %} class="theme-{{ themeName }}">
+  <div class="mx-auto max-w-content px-6 band">
+
+    {{ "BlockIntro" | shape_new: title: intro.Title.Text, lead: intro.Lead.Html | shape_render }}
+
+    {%- if items.size > 0 -%}
+      <div class="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {%- for item in items -%}
+          {%- assign image = item.ShowcaseItem.Image.Paths.first -%}
+          {%- assign url = item.ShowcaseItem.Url.Text -%}
+          {%- assign hasUrl = false -%}{%- if url and url != "" -%}{%- assign hasUrl = true -%}{%- endif -%}
+          {%- capture cardClass -%}group relative block aspect-[16/10] overflow-hidden rounded-2xl border border-ink/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-700{%- endcapture -%}
+          {%- if hasUrl -%}
+            <a href="{{ url | href }}"{% if url contains "//" %} target="_blank" rel="noopener"{% endif %} class="{{ cardClass }}">
+          {%- else -%}
+            <div class="{{ cardClass }}">
+          {%- endif -%}
+            {%- if image -%}{{ "Image" | shape_new: path: image, alt: item.DisplayText, width: 640, height: 400, sizes: "(min-width:1024px) 380px, (min-width:640px) 46vw, 92vw", class: "h-full w-full object-cover" | shape_render }}{%- endif -%}
+            <span class="absolute inset-0 transition-colors duration-300 group-hover:bg-green-900/90 group-focus-visible:bg-green-900/90" aria-hidden="true"></span>
+            <div class="absolute inset-0 flex flex-col justify-between p-5 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100">
+              <h3 class="text-xl text-white">{{ item.DisplayText }}</h3>
+              {%- if hasUrl -%}<span class="flex items-center gap-1 text-sm font-semibold text-accent-bright">View project <span aria-hidden="true">&rarr;</span></span>{%- endif -%}
+            </div>
+          {%- if hasUrl -%}</a>{%- else -%}</div>{%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- comment -%} Closing actions row: copy from BlockActionsPart, buttons from the CallToActions bag. {%- endcomment -%}
+    {%- capture actionsHtml -%}
+      {%- for callToAction in Model.ContentItem.Content.CallToActions.ContentItems -%}
+        {{ "Button" | shape_new: url: callToAction.CallToAction.Link.Url, text: callToAction.CallToAction.Link.Text, target: callToAction.CallToAction.Link.Target, variant: callToAction.CallToAction.Variant.Text | shape_render }}
+      {%- endfor -%}
+    {%- endcapture -%}
+    {{ "BlockActions" | shape_new: heading: blockActions.Heading.Text, text: blockActions.Text.Html, actions: actionsHtml, maxWidth: "max-w-none" | shape_render }}
+
+  </div>
+</section>

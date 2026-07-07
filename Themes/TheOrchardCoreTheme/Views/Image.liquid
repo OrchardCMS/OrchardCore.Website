@@ -1,0 +1,43 @@
+{%- comment -%}
+  Shared responsive image for media-library images. Invoked as:
+    {{ "Image" | shape_new: path: <mediaPath>, alt: "...", width: 800, height: 600, sizes: "...", class: "..." | shape_render }}
+  (shape_new PascalCases the args → Model.Path, Model.Width, etc.)
+
+  Builds a WebP srcset via OrchardCore's resize_url at 0.5x / 1x / 1.5x / 2x of Width, so the browser
+  picks the best file for the rendered width AND pixel density. Lazy by default; pass eager: true (and
+  priority: "high") for the hero.
+
+  Modes:
+  - Crop (default when Width AND Height given): server-crops to the Width:Height ratio, keeping the
+    focal point (anchor). Emits width/height attributes → no layout shift. Use for fixed-ratio images.
+  - No-crop (Width+Height given, crop: false): resizes to width preserving the source aspect; still
+    emits width/height attrs (pass the image's intrinsic ratio) → no layout shift. Use for screenshots.
+  - Fill (only Width, no Height): resizes to width, no width/height attrs — the caller's fixed-aspect
+    container controls layout; pass position for object-position (e.g. gallery tiles with focal points).
+{%- endcomment -%}
+{%- assign path = Model.Path -%}
+{%- if path and path != "" -%}
+  {%- assign url = path | asset_url -%}
+  {%- assign w = Model.Width | default: 800 -%}
+  {%- assign h = Model.Height -%}
+  {%- assign q = Model.Quality | default: 80 -%}
+  {%- assign sizes = Model.Sizes | default: "100vw" -%}
+  {%- assign loading = "lazy" -%}{%- if Model.Eager -%}{%- assign loading = "eager" -%}{%- endif -%}
+  {%- assign hasDims = false -%}{%- if h and h != "" and h != 0 -%}{%- assign hasDims = true -%}{%- endif -%}
+  {%- assign doCrop = false -%}{%- if hasDims and Model.Crop != false -%}{%- assign doCrop = true -%}{%- endif -%}
+  {%- assign w1 = w | times: 0.5 | round -%}
+  {%- assign w2 = w -%}
+  {%- assign w3 = w | times: 1.5 | round -%}
+  {%- assign w4 = w | times: 2 -%}
+  {%- if doCrop -%}
+    {%- assign h1 = w1 | times: h | divided_by: w -%}
+    {%- assign h3 = w3 | times: h | divided_by: w -%}
+    {%- assign h4 = w4 | times: h | divided_by: w -%}
+    {%- capture srcset -%}{{ url | resize_url: width: w1, height: h1, mode: "crop", anchor: Model.Anchor, quality: q, format: "webp" }} {{ w1 }}w, {{ url | resize_url: width: w2, height: h, mode: "crop", anchor: Model.Anchor, quality: q, format: "webp" }} {{ w2 }}w, {{ url | resize_url: width: w3, height: h3, mode: "crop", anchor: Model.Anchor, quality: q, format: "webp" }} {{ w3 }}w, {{ url | resize_url: width: w4, height: h4, mode: "crop", anchor: Model.Anchor, quality: q, format: "webp" }} {{ w4 }}w{%- endcapture -%}
+    {%- assign src = url | resize_url: width: w2, height: h, mode: "crop", anchor: Model.Anchor, quality: q, format: "webp" -%}
+  {%- else -%}
+    {%- capture srcset -%}{{ url | resize_url: width: w1, mode: "max", quality: q, format: "webp" }} {{ w1 }}w, {{ url | resize_url: width: w2, mode: "max", quality: q, format: "webp" }} {{ w2 }}w, {{ url | resize_url: width: w3, mode: "max", quality: q, format: "webp" }} {{ w3 }}w, {{ url | resize_url: width: w4, mode: "max", quality: q, format: "webp" }} {{ w4 }}w{%- endcapture -%}
+    {%- assign src = url | resize_url: width: w2, mode: "max", quality: q, format: "webp" -%}
+  {%- endif -%}
+  <img src="{{ src }}" srcset="{{ srcset }}" sizes="{{ sizes }}"{% if hasDims %} width="{{ w }}" height="{{ h }}"{% endif %} alt="{{ Model.Alt }}" loading="{{ loading }}" decoding="async"{% if Model.Priority and Model.Priority != "" %} fetchpriority="{{ Model.Priority }}"{% endif %}{% if Model.AriaHidden %} aria-hidden="true"{% endif %}{% if Model.Position and Model.Position != "" %} style="object-position: {{ Model.Position }}"{% endif %} class="{{ Model.Class }}">
+{%- endif -%}

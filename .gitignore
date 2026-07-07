@@ -189,3 +189,7 @@ node_modules/*
 OrchardCore.Web/App_Data/
 OrchardCore.Web/wwwroot/is-cache
 OrchardCore.Web/wwwroot/Default/is-cache
+
+## Tailwind CSS output (generated on build by Lombiq.Tailwind.Targets)
+**/wwwroot/css/site.css
+**/obj/tailwind/

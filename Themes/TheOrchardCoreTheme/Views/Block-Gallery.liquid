@@ -1,0 +1,87 @@
+{%- comment -%}
+  Gallery. An optional heading + lead, then a dense photo grid, then optional attendee quote
+  cards, plus the shared BlockActions closing row. Band/anchor + theme come from the Block part.
+
+  The grid mirrors the v1 #highlights layout: fixed-height rows, object-cover tiles, and every
+  5th tile (1st, 6th, 11th…) promoted to a 2x2 feature via an nth-child variant — so it matches
+  the design for 10 photos yet stays gapless (grid-flow-row-dense) for any number, with NO JS.
+  Each photo's focal point (the media anchor) drives object-position so crops stay well-composed.
+  Generic: reuse for any image gallery, not just the event recap.
+{%- endcomment -%}
+{%- assign intro = Model.ContentItem.Content.BlockIntro -%}
+{%- assign section = Model.ContentItem.Content.BlockPart -%}
+{%- assign themeName = section.Theme.Text | default: "White" | downcase -%}
+{%- assign anchorId = section.AnchorId.Text -%}
+{%- assign images = Model.ContentItem.Content.Gallery.Images -%}
+{%- assign testimonials = Model.ContentItem.Content.Testimonials.ContentItems -%}
+{%- assign blockActions = Model.ContentItem.Content.BlockActionsPart -%}
+
+<section {% if anchorId and anchorId != "" %}id="{{ anchorId }}"{% endif %} class="theme-{{ themeName }}">
+  <div class="mx-auto max-w-content px-6 band">
+
+    {{ "BlockIntro" | shape_new: title: intro.Title.Text, lead: intro.Lead.Html, wrapperWidth: "max-w-3xl" | shape_render }}
+
+    {%- assign count = images.Paths.size -%}
+    {%- if count > 0 -%}
+      {%- comment -%}
+        Adaptive layout by photo count so the grid never has gaps. The full 10-photo set uses the
+        design's dense grid with 2x2 feature tiles; smaller EVEN counts tile cleanly in two rows
+        (2 side by side, 4 = 2x2, 6 = 3x2, 8 = 4x2); any other count (odd, or more than 10) falls
+        back to a simple 3-across stack. Every tile is object-cover, positioned by its media anchor.
+        (The layout classes are written as literals below so Tailwind compiles them.)
+      {%- endcomment -%}
+      {%- if count == 10 -%}
+        {%- assign gridClass = "grid-cols-2 auto-rows-[6.5rem] sm:auto-rows-[7.5rem] md:auto-rows-[9rem] md:grid-cols-4 md:grid-flow-row-dense" -%}
+        {%- assign tileClass = "h-full w-full md:[&:nth-child(5n+1)]:col-span-2 md:[&:nth-child(5n+1)]:row-span-2" -%}
+      {%- else -%}
+        {%- assign mdCols = "md:grid-cols-3" -%}
+        {%- if count == 2 -%}{%- assign mdCols = "md:grid-cols-2" -%}
+        {%- elsif count == 4 -%}{%- assign mdCols = "md:grid-cols-2" -%}
+        {%- elsif count == 6 -%}{%- assign mdCols = "md:grid-cols-3" -%}
+        {%- elsif count == 8 -%}{%- assign mdCols = "md:grid-cols-4" -%}
+        {%- endif -%}
+        {%- assign gridClass = "grid-cols-2 " | append: mdCols -%}
+        {%- assign tileClass = "aspect-[4/3]" -%}
+      {%- endif -%}
+      <div class="mt-12 grid gap-2 {{ gridClass }}" role="group" aria-label="{{ intro.Title.Text | default: 'Photo gallery' }}">
+        {%- for path in images.Paths -%}
+          {%- assign alt = images.MediaTexts[forloop.index0] -%}
+          {%- assign anchor = images.Anchors[forloop.index0] -%}
+          {%- assign posX = 50 -%}{%- assign posY = 50 -%}
+          {%- if anchor -%}{%- assign posX = anchor.X | times: 100 -%}{%- assign posY = anchor.Y | times: 100 -%}{%- endif -%}
+          {%- comment -%} The 2x2 feature tiles (count==10 design, every 5n+1) render at ~50vw, so they need a
+            larger source than the 25vw single tiles — otherwise the big tiles look upscaled. {%- endcomment -%}
+          {%- assign tileW = 640 -%}{%- assign tileSizes = "(min-width:768px) 25vw, 50vw" -%}
+          {%- assign fmod = forloop.index0 | modulo: 5 -%}
+          {%- if count == 10 and fmod == 0 -%}{%- assign tileW = 1280 -%}{%- assign tileSizes = "50vw" -%}{%- endif -%}
+          <button type="button" data-photo data-full="{{ path | asset_url }}" aria-label="View this photo larger" class="group block cursor-zoom-in overflow-hidden rounded-xl transition hover:opacity-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-700 {{ tileClass }}">
+            {%- capture pos -%}{{ posX }}% {{ posY }}%{%- endcapture -%}{{ "Image" | shape_new: path: path, alt: alt, width: tileW, sizes: tileSizes, position: pos, class: "h-full w-full object-cover transition duration-300 group-hover:scale-[1.03]" | shape_render }}
+          </button>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- if testimonials.size > 0 -%}
+      <div class="mt-2 grid gap-2 sm:grid-cols-2">
+        {%- for testimonial in testimonials -%}
+          {%- assign quote = testimonial.Testimonial.Quote.Text -%}
+          {%- assign name = testimonial.Testimonial.Name.Text -%}
+          {%- assign role = testimonial.Testimonial.Role.Text -%}
+          <figure class="flex h-full flex-col rounded-xl bg-green-900 p-6 theme-dark:bg-white/5">
+            <blockquote class="flex-1 leading-relaxed text-green-100/90">&ldquo;{{ quote }}&rdquo;</blockquote>
+            {%- if name and name != "" -%}<figcaption class="mt-4 text-sm"><span class="font-semibold text-white">{{ name }}</span>{% if role and role != "" %}<span class="text-green-100/70">, {{ role }}</span>{% endif %}</figcaption>{%- endif -%}
+          </figure>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- comment -%} Closing actions row: copy from BlockActionsPart, buttons from the CallToActions bag. {%- endcomment -%}
+    {%- capture actionsHtml -%}
+      {%- for callToAction in Model.ContentItem.Content.CallToActions.ContentItems -%}
+        {{ "Button" | shape_new: url: callToAction.CallToAction.Link.Url, text: callToAction.CallToAction.Link.Text, target: callToAction.CallToAction.Link.Target, variant: callToAction.CallToAction.Variant.Text | shape_render }}
+      {%- endfor -%}
+    {%- endcapture -%}
+    {{ "BlockActions" | shape_new: heading: blockActions.Heading.Text, text: blockActions.Text.Html, actions: actionsHtml, maxWidth: "max-w-none" | shape_render }}
+
+  </div>
+</section>

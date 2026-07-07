@@ -1,0 +1,23 @@
+{%- comment -%}
+  Community avatar row. Rendered by the [contributor_avatars] shortcode (in the module's automation
+  recipe), which reads the SiteStatistics singleton's TopContributors JSON (kept fresh from the
+  GitHub API) and passes:
+    contributors — the list of { login, avatar_url, html_url }
+    overflow     — how many more contributors exist beyond the avatars shown (the "+N" badge)
+  (shape_new PascalCases the args, so they are read here as Model.Contributors / Model.Overflow.)
+  Drop [contributor_avatars] into a Card body to show it. `not-prose` keeps the card's prose styling
+  off the avatars.
+{%- endcomment -%}
+{%- assign contributors = Model.Contributors -%}
+{%- if contributors and contributors.size > 0 -%}
+  <div class="not-prose mt-4 flex items-center">
+    {%- for contributor in contributors -%}
+      <a {% if contributor.html_url and contributor.html_url != "" %}href="{{ contributor.html_url }}" target="_blank" rel="noopener" {% endif %}title="{{ contributor.login }}" class="shrink-0{% unless forloop.first %} -ml-2{% endunless %}">
+        <img src="{{ contributor.avatar_url }}?size=40" srcset="{{ contributor.avatar_url }}?size=40 1x, {{ contributor.avatar_url }}?size=80 2x" alt="{{ contributor.login }}" width="40" height="40" loading="lazy" decoding="async" class="block h-10 w-10 rounded-full bg-green-100 object-cover ring-2 ring-cream theme-dark:ring-white/10">
+      </a>
+    {%- endfor -%}
+    {%- if Model.Overflow > 0 -%}
+      <span class="-ml-2 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-green-700 text-xs font-semibold text-white ring-2 ring-cream theme-dark:ring-white/10">+{{ Model.Overflow }}</span>
+    {%- endif -%}
+  </div>
+{%- endif -%}

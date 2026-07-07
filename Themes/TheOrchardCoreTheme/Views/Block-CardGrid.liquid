@@ -1,0 +1,35 @@
+{%- comment -%}
+  Cards Grid. An optional heading + lead, then a flat grid of cards (rendered by the shared Card
+  shape — each card may carry a meta line, a button, and/or contributor avatars), plus the shared
+  BlockActions closing row. Band/anchor + theme come from the Block part.
+{%- endcomment -%}
+{%- assign intro = Model.ContentItem.Content.BlockIntro -%}
+{%- assign section = Model.ContentItem.Content.BlockPart -%}
+{%- assign themeName = section.Theme.Text | default: "White" | downcase -%}
+{%- assign anchor = section.AnchorId.Text -%}
+{%- assign cards = Model.ContentItem.Content.Cards.ContentItems -%}
+{%- assign blockActions = Model.ContentItem.Content.BlockActionsPart -%}
+
+<section {% if anchor and anchor != "" %}id="{{ anchor }}"{% endif %} class="theme-{{ themeName }}">
+  <div class="mx-auto max-w-content px-6 band">
+
+    {{ "BlockIntro" | shape_new: title: intro.Title.Text, lead: intro.Lead.Html | shape_render }}
+
+    {%- if cards.size > 0 -%}
+      <div class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {%- for card in cards -%}
+          {{ "Card" | shape_new: item: card | shape_render }}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- comment -%} Closing actions row: copy from BlockActionsPart, buttons from the CallToActions bag. {%- endcomment -%}
+    {%- capture actionsHtml -%}
+      {%- for callToAction in Model.ContentItem.Content.CallToActions.ContentItems -%}
+        {{ "Button" | shape_new: url: callToAction.CallToAction.Link.Url, text: callToAction.CallToAction.Link.Text, target: callToAction.CallToAction.Link.Target, variant: callToAction.CallToAction.Variant.Text | shape_render }}
+      {%- endfor -%}
+    {%- endcapture -%}
+    {{ "BlockActions" | shape_new: heading: blockActions.Heading.Text, text: blockActions.Text.Html, actions: actionsHtml, maxWidth: "max-w-none" | shape_render }}
+
+  </div>
+</section>

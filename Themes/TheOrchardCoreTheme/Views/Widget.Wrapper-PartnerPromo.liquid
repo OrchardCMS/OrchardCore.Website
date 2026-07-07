@@ -1,0 +1,6 @@
+{%- comment -%}
+  Footer widgets render their own markup — strip the default Layers .widget-container wrapper so the
+  theme's <footer> shell owns the layout. Keyed by content type (not zone) so the zone names can be
+  human-readable ("Footer Top" / "Footer Bottom") without breaking the shape alternate.
+{%- endcomment -%}
+{{ Model.Content | shape_render }}

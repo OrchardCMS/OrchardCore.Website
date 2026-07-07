@@ -1,0 +1,53 @@
+{%- comment -%}
+  Event Promo. A two-column call-to-action: copy + buttons on the left, a date poster on the right
+  (month, day range, year, place over an optional image with a green gradient). Buttons come from the
+  shared CallToActions bag via the Button shape. Band/anchor + theme come from the Block part.
+{%- endcomment -%}
+{%- assign block = Model.ContentItem.Content.EventPromo -%}
+{%- assign section = Model.ContentItem.Content.BlockPart -%}
+{%- assign themeName = section.Theme.Text | default: "White" | downcase -%}
+{%- assign anchor = section.AnchorId.Text -%}
+{%- assign callToActions = Model.ContentItem.Content.CallToActions.ContentItems -%}
+{%- assign poster = block.PosterImage.Paths.first -%}
+
+<section {% if anchor and anchor != "" %}id="{{ anchor }}"{% endif %} class="theme-{{ themeName }}">
+  <div class="mx-auto max-w-content px-6 band">
+    <div class="grid gap-10 lg:grid-cols-2 lg:items-center lg:gap-16">
+
+      {%- comment -%} Copy column. {%- endcomment -%}
+      <div>
+        <h2 class="text-2xl text-green-900 theme-dark:text-white">{{ block.Heading.Text }}</h2>
+        {%- if block.Body.Html and block.Body.Html != "" -%}
+          <div class="prose prose-lg mt-3 max-w-md text-pretty">{{ block.Body.Html | raw }}</div>
+        {%- endif -%}
+        {%- if callToActions.size > 0 -%}
+          <div class="mt-6 flex flex-wrap gap-4">
+            {%- for callToAction in callToActions -%}
+              {{ "Button" | shape_new: url: callToAction.CallToAction.Link.Url, text: callToAction.CallToAction.Link.Text, target: callToAction.CallToAction.Link.Target, variant: callToAction.CallToAction.Variant.Text | shape_render }}
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+      {%- comment -%} Date poster column. {%- endcomment -%}
+      <div class="relative flex aspect-[4/3] flex-col items-center justify-center overflow-hidden rounded-2xl bg-green-900 text-center shadow-soft">
+        {%- if poster -%}
+          {{ "Image" | shape_new: path: poster, alt: "", ariaHidden: true, width: 800, height: 600, sizes: "(min-width:1024px) 480px, 90vw", class: "pointer-events-none absolute inset-0 h-full w-full select-none object-cover" | shape_render }}
+          <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-green-900 via-green-900/35 to-transparent" aria-hidden="true"></div>
+        {%- endif -%}
+        <div class="relative z-10">
+          {%- if block.EventMonth.Text and block.EventMonth.Text != "" -%}
+            <span class="block font-serif text-xl text-leaf">{{ block.EventMonth.Text }}</span>
+          {%- endif -%}
+          {%- if block.EventDays.Text and block.EventDays.Text != "" -%}
+            <span class="block font-serif text-7xl leading-none text-white sm:text-8xl">{{ block.EventDays.Text }}</span>
+          {%- endif -%}
+          {%- if block.EventYear.Text and block.EventYear.Text != "" or block.EventPlace.Text and block.EventPlace.Text != "" -%}
+            <span class="mt-3 block text-sm font-semibold text-white">{{ block.EventYear.Text }}{% if block.EventYear.Text and block.EventYear.Text != "" and block.EventPlace.Text and block.EventPlace.Text != "" %} &middot; {% endif %}{{ block.EventPlace.Text }}</span>
+          {%- endif -%}
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>

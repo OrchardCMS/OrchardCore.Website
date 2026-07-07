@@ -1,0 +1,54 @@
+{%- comment -%}
+  Text and Image. A generic two-column feature: the title (the item's TitlePart/DisplayText), rich
+  body, and buttons on one side; a photo (a 4:3 crop, positioned by its focal-point anchor) on the
+  other. The editor picks which side the image sits via ImageSide (Left/Right, default Right); the
+  swap is lg-only so mobile always stacks the text first. Band/anchor + theme come from the Block part.
+{%- endcomment -%}
+{%- assign block = Model.ContentItem.Content.TextAndImage -%}
+{%- assign section = Model.ContentItem.Content.BlockPart -%}
+{%- assign themeName = section.Theme.Text | default: "White" | downcase -%}
+{%- assign anchorId = section.AnchorId.Text -%}
+{%- assign title = Model.ContentItem.DisplayText -%}
+{%- assign body = block.Body.Html -%}
+{%- assign callToActions = Model.ContentItem.Content.CallToActions.ContentItems -%}
+{%- assign image = block.Image.Paths.first -%}
+{%- assign alt = block.Image.MediaTexts.first | default: "" -%}
+{%- assign anchor = block.Image.Anchors.first -%}
+{%- assign posX = 50 -%}{%- assign posY = 50 -%}
+{%- if anchor -%}{%- assign posX = anchor.X | times: 100 -%}{%- assign posY = anchor.Y | times: 100 -%}{%- endif -%}
+{%- assign imageSide = block.ImageSide.Text | default: "Right" -%}
+{%- assign textOrder = "" -%}{%- assign imgOrder = "" -%}
+{%- if imageSide == "Left" -%}{%- assign textOrder = "lg:order-last" -%}{%- assign imgOrder = "lg:order-first" -%}{%- endif -%}
+{%- assign gridCols = "" -%}
+{%- if image -%}{%- assign gridCols = "lg:grid-cols-2" -%}{%- endif -%}
+
+<section {% if anchorId and anchorId != "" %}id="{{ anchorId }}"{% endif %} class="theme-{{ themeName }}">
+  <div class="mx-auto max-w-content px-6 band">
+    <div class="grid gap-10 lg:items-center lg:gap-16 {{ gridCols }}">
+
+      {%- comment -%} Copy column: title, body, inline buttons. {%- endcomment -%}
+      <div class="{{ textOrder }}">
+        {%- if title and title != "" -%}
+          <h2 class="text-[clamp(2rem,4.5vw,3.25rem)] leading-[1.1] tracking-tight text-green-900 theme-dark:text-white">{{ title }}</h2>
+        {%- endif -%}
+        {%- if body and body != "" -%}
+          <div class="prose prose-lg mt-6 text-pretty">{{ body | raw }}</div>
+        {%- endif -%}
+        {%- if callToActions.size > 0 -%}
+          <div class="mt-8 flex flex-wrap gap-4">
+            {%- for callToAction in callToActions -%}
+              {{ "Button" | shape_new: url: callToAction.CallToAction.Link.Url, text: callToAction.CallToAction.Link.Text, target: callToAction.CallToAction.Link.Target, variant: callToAction.CallToAction.Variant.Text | shape_render }}
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+      {%- comment -%} Image column: 4:3 crop, server-cropped to its focal point (anchor). {%- endcomment -%}
+      {%- if image -%}
+        {%- capture imgClasses -%}aspect-[4/3] w-full rounded-2xl object-cover shadow-soft {{ imgOrder }}{%- endcapture -%}
+        {{ "Image" | shape_new: path: image, anchor: anchor, alt: alt, width: 800, height: 600, sizes: "(min-width:1024px) 560px, 92vw", class: imgClasses | shape_render }}
+      {%- endif -%}
+
+    </div>
+  </div>
+</section>

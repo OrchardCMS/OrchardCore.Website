@@ -22,8 +22,10 @@
     <PackageReference Include="OrchardCore.Logging.NLog" Version="3.0.0" />
   </ItemGroup>
 
+  <!-- Reference the theme and its companion module so they are discovered and loadable during local development -->
   <ItemGroup>
-    <ProjectReference Include="..\Themes\OCWS\OCWS.csproj" />
+    <ProjectReference Include="..\Themes\TheOrchardCoreTheme\TheOrchardCoreTheme.csproj" />
+    <ProjectReference Include="..\Modules\TheOrchardCoreTheme.Module\TheOrchardCoreTheme.Module.csproj" />
   </ItemGroup>
 
 </Project>
