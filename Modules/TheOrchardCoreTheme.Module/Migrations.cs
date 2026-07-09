@@ -24,7 +24,7 @@ public sealed class Migrations : DataMigration
         // the features and defines the shared Section / BlockActionsPart / CallToAction that the blocks
         // reference. The rest are order-independent (ReplaceContentDefinition just stores defs, and
         // LandingPage contains blocks by stereotype): the LandingPage container (ContentTypes), the
-        // section blocks (Blocks), then the site chrome (Site). Then the seed content and automation.
+        // section blocks (Blocks), then the site chrome (Theme). Then the seed content and automation.
         await _recipeMigrator.ExecuteAsync("Shapes/core.recipe.json", this);
         await _recipeMigrator.ExecuteAsync("ContentTypes/landing-page.recipe.json", this);
         await _recipeMigrator.ExecuteAsync("Blocks/hero-text.recipe.json", this);
@@ -43,9 +43,9 @@ public sealed class Migrations : DataMigration
         await _recipeMigrator.ExecuteAsync("Blocks/schedule.recipe.json", this);
         await _recipeMigrator.ExecuteAsync("Blocks/gallery.recipe.json", this);
         await _recipeMigrator.ExecuteAsync("Blocks/text-and-image.recipe.json", this);
-        await _recipeMigrator.ExecuteAsync("Site/site-statistics.recipe.json", this);
-        await _recipeMigrator.ExecuteAsync("Site/site-footer.recipe.json", this);
-        await _recipeMigrator.ExecuteAsync("Site/site-header.recipe.json", this);
+        await _recipeMigrator.ExecuteAsync("Theme/site-statistics.recipe.json", this);
+        await _recipeMigrator.ExecuteAsync("Theme/site-footer.recipe.json", this);
+        await _recipeMigrator.ExecuteAsync("Theme/site-header.recipe.json", this);
 
         await _recipeMigrator.ExecuteAsync("content.recipe.json", this);
         await _recipeMigrator.ExecuteAsync("automation.recipe.json", this);

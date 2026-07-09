@@ -1,0 +1,226 @@
+{
+  "name": "TheOrchardCoreTheme.Model.SiteStatistics",
+  "displayName": "Orchard Core Website - Content Model",
+  "description": "The SiteStatistics singleton, refreshed by the daily workflows and read by the stats shortcodes. The SiteStatistics part also carries a TopContributors JSON array (login/avatar_url/html_url), written by the Daily Top Contributors workflow from the GitHub API and rendered by the [contributor_avatars] shortcode.",
+  "author": "Orchard Core",
+  "version": "1.0.0",
+  "issetuprecipe": false,
+  "categories": [
+    "theme"
+  ],
+  "steps": [
+    {
+      "name": "ReplaceContentDefinition",
+      "ContentTypes": [
+        {
+          "Name": "SiteStatistics",
+          "DisplayName": "Site Statistics",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Creatable": false,
+              "Listable": false,
+              "Draftable": false,
+              "Versionable": true,
+              "Securable": true
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                },
+                "TitlePartSettings": {
+                  "Options": 0,
+                  "RenderTitle": true
+                }
+              }
+            },
+            {
+              "PartName": "SiteStatistics",
+              "Name": "SiteStatistics",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "StatisticsRefresh",
+          "DisplayName": "Statistics refresh",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Creatable": false,
+              "Listable": false,
+              "Draftable": false,
+              "Versionable": true,
+              "Securable": true
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": { "Position": "0" },
+                "TitlePartSettings": { "Options": 0, "RenderTitle": true }
+              }
+            },
+            {
+              "PartName": "StatisticsRefresh",
+              "Name": "StatisticsRefresh",
+              "Settings": {
+                "ContentTypePartSettings": { "Position": "1" }
+              }
+            }
+          ]
+        }
+      ],
+      "ContentParts": [
+        {
+          "Name": "StatisticsRefresh",
+          "Settings": {
+            "ContentPartSettings": {
+              "Description": "A 'publish to refresh' trigger. Publishing a StatisticsRefresh item fires the GitHub fetch workflows, which update the SiteStatistics figures immediately (rather than waiting for the timers)."
+            }
+          },
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "HtmlField",
+              "Name": "Instructions",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Instructions",
+                  "Editor": "Trumbowyg",
+                  "Position": "0"
+                },
+                "HtmlFieldTrumbowygEditorSettings": {
+                  "Options": "{ \"btns\": [[\"strong\", \"em\"]], \"removeformatPasted\": true }",
+                  "InsertMediaWithUrl": false
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "SiteStatistics",
+          "Settings": {
+            "ContentPartSettings": {
+              "Description": "Live site statistics, refreshed by background workflows. One field per figure."
+            }
+          },
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "NumericField",
+              "Name": "NugetDownloads",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "NuGet downloads",
+                  "Position": "0"
+                },
+                "NumericFieldSettings": {
+                  "Hint": "Total downloads of OrchardCore.Application.Cms.Targets; updated daily by a workflow."
+                }
+              }
+            },
+            {
+              "FieldName": "NumericField",
+              "Name": "GithubStars",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "GitHub stars",
+                  "Position": "1"
+                },
+                "NumericFieldSettings": {
+                  "Hint": "Stargazers of OrchardCMS/OrchardCore; updated daily by a workflow."
+                }
+              }
+            },
+            {
+              "FieldName": "NumericField",
+              "Name": "Contributors",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Contributors",
+                  "Position": "2"
+                },
+                "NumericFieldSettings": {
+                  "Hint": "Contributor count for OrchardCMS/OrchardCore; updated daily by a workflow."
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "LastCommit",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Last commit",
+                  "Position": "3"
+                },
+                "TextFieldSettings": {
+                  "Hint": "The latest commit's UTC ISO timestamp for OrchardCMS/OrchardCore; updated hourly by a workflow. The [last_commit] shortcode renders it as a localised 'X ago' via Orchard Core's TimeSpan shape, recomputed on each page load."
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "LastCommitMessage",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Last commit message",
+                  "Position": "3.1"
+                },
+                "TextFieldSettings": {
+                  "Hint": "The subject line of the latest commit; updated hourly by the same workflow. Rendered by the [last_commit_message] shortcode."
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "LastCommitUrl",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Last commit URL",
+                  "Position": "3.2"
+                },
+                "TextFieldSettings": {
+                  "Hint": "The GitHub URL of the latest commit (its html_url); updated hourly. The Statistics block links the commit-message chip to it."
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "LatestRelease",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Latest release",
+                  "Position": "4"
+                },
+                "TextFieldSettings": {
+                  "Hint": "The latest release version for OrchardCMS/OrchardCore; updated daily by a workflow."
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "LatestReleaseDate",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Latest release date",
+                  "Position": "4.1"
+                },
+                "TextFieldSettings": {
+                  "Hint": "The latest release's publish date (UTC ISO); updated daily by the same workflow. The [latest_release_date] shortcode renders it in the visitor's culture via Orchard Core's DateTime shape."
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
