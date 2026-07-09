@@ -16,7 +16,7 @@ The `deploy` GitHub Actions workflow deploys the app automatically. Any commit t
 
 ## Getting access to Azure resources
 
-The website runs under an Azure subscription sponsored by .NET Foundation. To work with the website's code ad deploy it, you don't need to access the Azure resources. Should you need to for some reason, do the following.
+The website runs under an Azure subscription sponsored by .NET Foundation. To work with the website's code and deploy it, you don't need to access the Azure resources. Should you need to for some reason, do the following.
 
 Create an issue to ask for access, elaborating why you need it. Once you get it, the first time you'll need to start by using [this direct link](https://portal.azure.com/#@dotnetfoundation.org/resource/subscriptions/997e7c30-fd83-4b3d-bcf5-492e194f9b98/resourceGroups/orchardsites/overview) to access our resource group. You'll be prompted to register to the .NET Foundation Entra ID tenant. After that, you'll be able to access the resource group directly from the Azure portal too, by switching directories.
 
