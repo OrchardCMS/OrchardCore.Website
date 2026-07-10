@@ -1,8 +1,0 @@
-{%- comment -%}
-  A LandingPage is just a stack of section blocks. Render the Sections bag at the
-  Detail display type; each contained block renders through its Block-<Type> template,
-  which supplies its own full-width band. No page chrome here (that is the layout).
-{%- endcomment -%}
-{%- for block in Model.ContentItem.Content.Sections.ContentItems -%}
-  {{ block | shape_build_display: "Detail" | shape_render }}
-{%- endfor -%}

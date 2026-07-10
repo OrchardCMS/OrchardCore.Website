@@ -1,9 +1,0 @@
-{%- comment -%}
-  Social links widget (Widget stereotype, rendered in the site-wide 'Header' zone). Reuses the shared
-  SocialLinks shape to emit an icon link per URL that is set. Light styling (the header is not a
-  theme-dark band). The flex container is the widget's; the shape emits just the <a> icons.
-{%- endcomment -%}
-{%- assign social = Model.ContentItem.Content.SocialLinks -%}
-<div class="hidden items-center gap-1 sm:flex">
-  {{ "SocialLinks" | shape_new: github: social.GitHubUrl.Text, discord: social.DiscordUrl.Text, youtube: social.YouTubeUrl.Text, name: Site.SiteName | shape_render }}
-</div>

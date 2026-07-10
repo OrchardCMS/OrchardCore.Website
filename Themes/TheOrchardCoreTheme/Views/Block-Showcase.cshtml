@@ -1,0 +1,80 @@
+@using Microsoft.AspNetCore.Html
+@*
+    Showcase. Heading + lead, then a gallery of project image cards. Each card shows the image; on
+    hover/focus a green wash + the project title (+ "View project" when a Url is set) fade in — pure
+    CSS, no JavaScript. A card with a Url is a link (external URLs open in a new tab); without one it's
+    a non-linked tile. Closes with the shared BlockActions row. Band/anchor + theme come from Section.
+*@
+@{
+    var item = (ContentItem)Model.ContentItem;
+    var intro = item.Get<ContentPart>("BlockIntro");
+    var section = item.Get<ContentPart>("BlockPart");
+    var theme = section?.Get<TextField>("Theme")?.Text;
+    var themeName = (string.IsNullOrEmpty(theme) ? "White" : theme).ToLowerInvariant();
+    var anchor = section?.Get<TextField>("AnchorId")?.Text;
+    var items = item.Get<BagPart>("Items")?.ContentItems ?? [];
+    var blockActions = item.Get<ContentPart>("BlockActionsPart");
+
+    const string cardClass = "group relative block aspect-[16/10] overflow-hidden rounded-2xl border border-ink/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-700";
+
+    // Closing actions row: copy from BlockActionsPart, buttons from the CallToActions bag.
+    var actionsHtml = new HtmlContentBuilder();
+    foreach (var cta in item.Get<BagPart>("CallToActions")?.ContentItems ?? [])
+    {
+        var callToAction = cta.Get<ContentPart>("CallToAction");
+        var link = callToAction?.Get<LinkField>("Link");
+        actionsHtml.AppendHtml(await DisplayAsync(await New.Button(Url: link?.Url, Text: link?.Text, Target: link?.Target, Variant: callToAction?.Get<TextField>("Variant")?.Text)));
+    }
+}
+<section id="@(string.IsNullOrEmpty(anchor) ? null : anchor)" class="theme-@themeName">
+    <div class="mx-auto max-w-content px-6 band">
+
+        @await DisplayAsync(await New.BlockIntro(Title: intro?.Get<TextField>("Title")?.Text, Lead: intro?.Get<HtmlField>("Lead")?.Html))
+
+        @if (items.Count > 0)
+        {
+            <div class="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                @foreach (var showcaseItem in items)
+                {
+                    var showcase = showcaseItem.Get<ContentPart>("ShowcaseItem");
+                    var image = showcase?.Get<MediaField>("Image")?.Paths?.FirstOrDefault();
+                    var url = showcase?.Get<TextField>("Url")?.Text;
+                    var hasUrl = !string.IsNullOrEmpty(url);
+                    var isExternal = hasUrl && url!.Contains("//");
+
+                    @* The overlay + caption are identical for both variants; only the wrapper differs. *@
+                    if (hasUrl)
+                    {
+                        <a href="@Url.Content(url)" target="@(isExternal ? "_blank" : null)" rel="@(isExternal ? "noopener" : null)" class="@cardClass">
+                            @if (image is not null)
+                            {
+                                @await DisplayAsync(await New.Image(Path: image, Alt: showcaseItem.DisplayText, Width: 640, Height: 400, Sizes: "(min-width:1024px) 380px, (min-width:640px) 46vw, 92vw", Class: "h-full w-full object-cover"))
+                            }
+                            <span class="absolute inset-0 transition-colors duration-300 group-hover:bg-green-900/90 group-focus-visible:bg-green-900/90" aria-hidden="true"></span>
+                            <div class="absolute inset-0 flex flex-col justify-between p-5 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100">
+                                <h3 class="text-xl text-white">@showcaseItem.DisplayText</h3>
+                                <span class="flex items-center gap-1 text-sm font-semibold text-accent-bright">View project <span aria-hidden="true">&rarr;</span></span>
+                            </div>
+                        </a>
+                    }
+                    else
+                    {
+                        <div class="@cardClass">
+                            @if (image is not null)
+                            {
+                                @await DisplayAsync(await New.Image(Path: image, Alt: showcaseItem.DisplayText, Width: 640, Height: 400, Sizes: "(min-width:1024px) 380px, (min-width:640px) 46vw, 92vw", Class: "h-full w-full object-cover"))
+                            }
+                            <span class="absolute inset-0 transition-colors duration-300 group-hover:bg-green-900/90 group-focus-visible:bg-green-900/90" aria-hidden="true"></span>
+                            <div class="absolute inset-0 flex flex-col justify-between p-5 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100">
+                                <h3 class="text-xl text-white">@showcaseItem.DisplayText</h3>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        }
+
+        @await DisplayAsync(await New.BlockActions(Heading: blockActions?.Get<TextField>("Heading")?.Text, Text: blockActions?.Get<HtmlField>("Text")?.Html, Actions: actionsHtml, MaxWidth: "max-w-none"))
+
+    </div>
+</section>

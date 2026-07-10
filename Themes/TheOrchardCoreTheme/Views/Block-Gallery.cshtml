@@ -1,0 +1,116 @@
+@using System.Globalization
+@using Microsoft.AspNetCore.Html
+@*
+    Gallery. An optional heading + lead, then a dense photo grid, then optional attendee quote
+    cards, plus the shared BlockActions closing row. Band/anchor + theme come from the Block part.
+
+    The grid mirrors the v1 #highlights layout: fixed-height rows, object-cover tiles, and every
+    5th tile (1st, 6th, 11th…) promoted to a 2x2 feature via an nth-child variant — so it matches
+    the design for 10 photos yet stays gapless (grid-flow-row-dense) for any number, with NO JS.
+    Each photo's focal point (the media anchor) drives object-position so crops stay well-composed.
+    Generic: reuse for any image gallery, not just the event recap.
+*@
+@{
+    var item = (ContentItem)Model.ContentItem;
+    var intro = item.Get<ContentPart>("BlockIntro");
+    var section = item.Get<ContentPart>("BlockPart");
+    var theme = section?.Get<TextField>("Theme")?.Text;
+    var themeName = (string.IsNullOrEmpty(theme) ? "White" : theme).ToLowerInvariant();
+    var anchorId = section?.Get<TextField>("AnchorId")?.Text;
+    var images = item.Get<ContentPart>("Gallery")?.Get<MediaField>("Images");
+    var paths = images?.Paths ?? [];
+    var mediaTexts = images?.MediaTexts ?? [];
+    var anchors = images?.GetAnchors() ?? [];
+    var testimonials = item.Get<BagPart>("Testimonials")?.ContentItems ?? [];
+    var blockActions = item.Get<ContentPart>("BlockActionsPart");
+    var count = paths.Length;
+    var introTitle = intro?.Get<TextField>("Title")?.Text;
+
+    // Closing actions row: copy from BlockActionsPart, buttons from the CallToActions bag.
+    var actionsHtml = new HtmlContentBuilder();
+    foreach (var cta in item.Get<BagPart>("CallToActions")?.ContentItems ?? [])
+    {
+        var callToAction = cta.Get<ContentPart>("CallToAction");
+        var link = callToAction?.Get<LinkField>("Link");
+        actionsHtml.AppendHtml(await DisplayAsync(await New.Button(Url: link?.Url, Text: link?.Text, Target: link?.Target, Variant: callToAction?.Get<TextField>("Variant")?.Text)));
+    }
+
+    // Adaptive layout by photo count so the grid never has gaps. The full 10-photo set uses the
+    // design's dense grid with 2x2 feature tiles; smaller EVEN counts tile cleanly in two rows
+    // (2 side by side, 4 = 2x2, 6 = 3x2, 8 = 4x2); any other count (odd, or more than 10) falls
+    // back to a simple 3-across stack. Every tile is object-cover, positioned by its media anchor.
+    // (The layout classes are written as literals below so Tailwind compiles them.)
+    string gridClass, tileClass;
+    if (count == 10)
+    {
+        gridClass = "grid-cols-2 auto-rows-[6.5rem] sm:auto-rows-[7.5rem] md:auto-rows-[9rem] md:grid-cols-4 md:grid-flow-row-dense";
+        tileClass = "h-full w-full md:[&:nth-child(5n+1)]:col-span-2 md:[&:nth-child(5n+1)]:row-span-2";
+    }
+    else
+    {
+        var mdCols = count switch
+        {
+            2 or 4 => "md:grid-cols-2",
+            6 => "md:grid-cols-3",
+            8 => "md:grid-cols-4",
+            _ => "md:grid-cols-3",
+        };
+        gridClass = "grid-cols-2 " + mdCols;
+        tileClass = "aspect-[4/3]";
+    }
+}
+<section id="@(string.IsNullOrEmpty(anchorId) ? null : anchorId)" class="theme-@themeName">
+    <div class="mx-auto max-w-content px-6 band">
+
+        @await DisplayAsync(await New.BlockIntro(Title: introTitle, Lead: intro?.Get<HtmlField>("Lead")?.Html, WrapperWidth: "max-w-3xl"))
+
+        @if (count > 0)
+        {
+            <div class="mt-12 grid gap-2 @gridClass" role="group" aria-label="@(string.IsNullOrEmpty(introTitle) ? "Photo gallery" : introTitle)">
+                @for (var i = 0; i < count; i++)
+                {
+                    var path = paths[i];
+                    var alt = i < mediaTexts.Length ? mediaTexts[i] : null;
+                    var anchor = i < anchors.Length ? anchors[i] : null;
+                    var posX = (anchor?.X ?? 0.5f) * 100;
+                    var posY = (anchor?.Y ?? 0.5f) * 100;
+                    var pos = string.Create(CultureInfo.InvariantCulture, $"{posX:0.###}% {posY:0.###}%");
+
+                    // The 2x2 feature tiles (count==10 design, every 5n+1) render at ~50vw, so they need a
+                    // larger source than the 25vw single tiles — otherwise the big tiles look upscaled.
+                    var isFeature = count == 10 && i % 5 == 0;
+                    var tileW = isFeature ? 1280 : 640;
+                    var tileSizes = isFeature ? "50vw" : "(min-width:768px) 25vw, 50vw";
+
+                    <button type="button" data-photo data-full="@Orchard.AssetUrl(path)" aria-label="View this photo larger" class="group block cursor-zoom-in overflow-hidden rounded-xl transition hover:opacity-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-700 @tileClass">
+                        @await DisplayAsync(await New.Image(Path: path, Alt: alt, Width: tileW, Sizes: tileSizes, Position: pos, Class: "h-full w-full object-cover transition duration-300 group-hover:scale-[1.03]"))
+                    </button>
+                }
+            </div>
+        }
+
+        @if (testimonials.Count > 0)
+        {
+            <div class="mt-2 grid gap-2 sm:grid-cols-2">
+                @foreach (var testimonialItem in testimonials)
+                {
+                    var testimonial = testimonialItem.Get<ContentPart>("Testimonial");
+                    var quote = testimonial?.Get<TextField>("Quote")?.Text;
+                    var name = testimonial?.Get<TextField>("Name")?.Text;
+                    var role = testimonial?.Get<TextField>("Role")?.Text;
+                    <figure class="flex h-full flex-col rounded-xl bg-green-900 p-6 theme-dark:bg-white/5">
+                        <blockquote class="flex-1 leading-relaxed text-green-100/90">&ldquo;@quote&rdquo;</blockquote>
+                        @if (!string.IsNullOrEmpty(name))
+                        {
+                            <figcaption class="mt-4 text-sm"><span class="font-semibold text-white">@name</span>@if (!string.IsNullOrEmpty(role))
+                            {<span class="text-green-100/70">, @role</span>}</figcaption>
+                        }
+                    </figure>
+                }
+            </div>
+        }
+
+        @await DisplayAsync(await New.BlockActions(Heading: blockActions?.Get<TextField>("Heading")?.Text, Text: blockActions?.Get<HtmlField>("Text")?.Html, Actions: actionsHtml, MaxWidth: "max-w-none"))
+
+    </div>
+</section>

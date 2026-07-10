@@ -1,0 +1,40 @@
+@*
+    Shared profile avatar. Invoked as:
+      @await DisplayAsync(await New.ProfileAvatar(Item: <profile>, Class: "<img classes>", Width: 240, Sizes: "..."))
+    Renders the person's uploaded Photo as a responsive square (via the Image shape). If no photo is
+    set but a GitHub URL is, it falls back to that user's GitHub avatar (github.com/<handle>.png) at
+    the right ?size= for 1x/2x. Alt text is the media text if set, else the item title (the name).
+    Width is the 1x display px.
+*@
+@{
+    var profile = (ContentItem)Model.Item;
+    var profilePart = profile.Get<ContentPart>("Profile");
+    var photoField = profilePart?.Get<MediaField>("Photo");
+    var photo = photoField?.Paths?.FirstOrDefault();
+    var alt = photoField?.MediaTexts?.FirstOrDefault();
+    if (string.IsNullOrEmpty(alt))
+    {
+        alt = profile.DisplayText;
+    }
+
+    var width = (int?)Model.Width ?? 200;
+    string sizes = Model.Sizes ?? "200px";
+}
+@if (!string.IsNullOrEmpty(photo))
+{
+    @await DisplayAsync(await New.Image(Path: photo, Alt: alt, Width: width, Height: width, Sizes: sizes, Class: (string)Model.Class))
+}
+else
+{
+    var githubUrl = profilePart?.Get<TextField>("GitHubUrl")?.Text;
+    if (!string.IsNullOrEmpty(githubUrl))
+    {
+        var handle = githubUrl.TrimEnd('/').Split('/').Last();
+        if (!string.IsNullOrEmpty(handle))
+        {
+            var baseUrl = $"https://github.com/{handle}.png";
+            var x2 = width * 2;
+            <img src="@(baseUrl)?size=@width" srcset="@(baseUrl)?size=@width 1x, @(baseUrl)?size=@x2 2x" width="@width" height="@width" alt="@alt" loading="lazy" decoding="async" class="@Model.Class">
+        }
+    }
+}

@@ -1,0 +1,44 @@
+@using Microsoft.AspNetCore.Html
+@*
+    Cards Grid. An optional heading + lead, then a flat grid of cards (rendered by the shared Card
+    shape — each card may carry a meta line, a button, and/or contributor avatars), plus the shared
+    BlockActions closing row. Band/anchor + theme come from the Block part.
+*@
+@{
+    var item = (ContentItem)Model.ContentItem;
+    var intro = item.Get<ContentPart>("BlockIntro");
+    var section = item.Get<ContentPart>("BlockPart");
+    var theme = section?.Get<TextField>("Theme")?.Text;
+    var themeName = (string.IsNullOrEmpty(theme) ? "White" : theme).ToLowerInvariant();
+    var anchor = section?.Get<TextField>("AnchorId")?.Text;
+    var cards = item.Get<BagPart>("Cards")?.ContentItems ?? [];
+    var blockActions = item.Get<ContentPart>("BlockActionsPart");
+
+    // Closing actions row: copy from BlockActionsPart, buttons from the CallToActions bag.
+    var actionsHtml = new HtmlContentBuilder();
+    foreach (var cta in item.Get<BagPart>("CallToActions")?.ContentItems ?? [])
+    {
+        var callToAction = cta.Get<ContentPart>("CallToAction");
+        var link = callToAction?.Get<LinkField>("Link");
+        actionsHtml.AppendHtml(await DisplayAsync(await New.Button(Url: link?.Url, Text: link?.Text, Target: link?.Target, Variant: callToAction?.Get<TextField>("Variant")?.Text)));
+    }
+}
+<section id="@(string.IsNullOrEmpty(anchor) ? null : anchor)" class="theme-@themeName">
+    <div class="mx-auto max-w-content px-6 band">
+
+        @await DisplayAsync(await New.BlockIntro(Title: intro?.Get<TextField>("Title")?.Text, Lead: intro?.Get<HtmlField>("Lead")?.Html))
+
+        @if (cards.Count > 0)
+        {
+            <div class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                @foreach (var card in cards)
+                {
+                    @await DisplayAsync(await New.Card(Item: card))
+                }
+            </div>
+        }
+
+        @await DisplayAsync(await New.BlockActions(Heading: blockActions?.Get<TextField>("Heading")?.Text, Text: blockActions?.Get<HtmlField>("Text")?.Html, Actions: actionsHtml, MaxWidth: "max-w-none"))
+
+    </div>
+</section>

@@ -1,0 +1,30 @@
+@*
+    One link column (Widget, a cell of the 'Footer Bottom' zone). The heading is the item title (editable
+    TitlePart); the links are the Link bag, in order. Add more of these widgets to a culture layer to grow
+    the footer.
+*@
+@{
+    var item = (ContentItem)Model.ContentItem;
+    var heading = item.DisplayText;
+    var links = item.Get<BagPart>("Links")?.ContentItems ?? [];
+}
+<div>
+    @if (!string.IsNullOrEmpty(heading))
+    {
+        <h2 class="text-base text-white">@heading</h2>
+    }
+    @if (links.Count > 0)
+    {
+        <ul class="mt-4 space-y-3 text-sm text-green-100/80">
+            @foreach (var linkItem in links)
+            {
+                var link = linkItem.Get<ContentPart>("Link")?.Get<LinkField>("Link");
+                if (!string.IsNullOrEmpty(link?.Url))
+                {
+                    var hasTarget = !string.IsNullOrEmpty(link.Target);
+                    <li><a class="hover:text-white" href="@Url.Content(link.Url)" target="@(hasTarget ? link.Target : null)" rel="@(hasTarget ? "noopener" : null)">@link.Text</a></li>
+                }
+            }
+        </ul>
+    }
+</div>

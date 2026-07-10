@@ -1,0 +1,75 @@
+@using Microsoft.AspNetCore.Html
+@*
+    Comparison Table. Heading + lead, then a static table: a row-label column + one column per
+    ComparisonColumn (mark one Highlighted for the green treatment), and one ComparisonRow per row
+    whose Cells line up with the columns by order (cell i -> column i). Horizontal scroll on mobile,
+    no JavaScript. Closes with the shared BlockActions row. Band/anchor + theme come from the Section.
+    Cell/header colours are token-backed utilities that the html.dark remaps adapt for dark mode.
+*@
+@{
+    var item = (ContentItem)Model.ContentItem;
+    var intro = item.Get<ContentPart>("BlockIntro");
+    var section = item.Get<ContentPart>("BlockPart");
+    var theme = section?.Get<TextField>("Theme")?.Text;
+    var themeName = (string.IsNullOrEmpty(theme) ? "White" : theme).ToLowerInvariant();
+    var anchor = section?.Get<TextField>("AnchorId")?.Text;
+    var columns = item.Get<BagPart>("Columns")?.ContentItems ?? [];
+    var rows = item.Get<BagPart>("Rows")?.ContentItems ?? [];
+    var blockActions = item.Get<ContentPart>("BlockActionsPart");
+
+    static bool IsHighlighted(ContentItem column) =>
+        column.Get<ContentPart>("ComparisonColumn")?.Get<TextField>("Highlighted")?.Text == "Yes";
+
+    // Closing actions row: copy from BlockActionsPart, buttons from the CallToActions bag.
+    var actionsHtml = new HtmlContentBuilder();
+    foreach (var cta in item.Get<BagPart>("CallToActions")?.ContentItems ?? [])
+    {
+        var callToAction = cta.Get<ContentPart>("CallToAction");
+        var link = callToAction?.Get<LinkField>("Link");
+        actionsHtml.AppendHtml(await DisplayAsync(await New.Button(Url: link?.Url, Text: link?.Text, Target: link?.Target, Variant: callToAction?.Get<TextField>("Variant")?.Text)));
+    }
+}
+<section id="@(string.IsNullOrEmpty(anchor) ? null : anchor)" class="theme-@themeName">
+    <div class="mx-auto max-w-content px-6 band">
+
+        @await DisplayAsync(await New.BlockIntro(Title: intro?.Get<TextField>("Title")?.Text, Lead: intro?.Get<HtmlField>("Lead")?.Html))
+
+        @if (columns.Count > 0 && rows.Count > 0)
+        {
+            <div class="mt-12 overflow-x-auto">
+                <table class="w-full min-w-[680px] table-fixed border-separate border-spacing-x-0 border-spacing-y-0.5 text-left align-top text-sm">
+                    <thead>
+                        <tr>
+                            <th scope="col" class="w-1/5 p-5"><span class="sr-only">Feature</span></th>
+                            @foreach (var column in columns)
+                            {
+                                <th scope="col" class="p-5 font-serif text-base text-green-900@(IsHighlighted(column) ? " rounded-t-xl bg-green-100" : "")">@column.DisplayText</th>
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (var rowIndex = 0; rowIndex < rows.Count; rowIndex++)
+                        {
+                            var row = rows[rowIndex];
+                            var isLastRow = rowIndex == rows.Count - 1;
+                            var cells = row.Get<BagPart>("Cells")?.ContentItems ?? [];
+                            <tr>
+                                <th scope="row" class="rounded-l-xl bg-white p-5 font-semibold text-green-900">@row.DisplayText</th>
+                                @for (var columnIndex = 0; columnIndex < columns.Count; columnIndex++)
+                                {
+                                    var highlighted = IsHighlighted(columns[columnIndex]);
+                                    var cell = columnIndex < cells.Count ? cells[columnIndex] : null;
+                                    var isLastColumn = columnIndex == columns.Count - 1;
+                                    <td class="p-5 leading-relaxed@(highlighted ? " bg-green-200 text-green-900" + (isLastRow ? " rounded-b-xl" : "") : " bg-white text-ink-soft")@(isLastColumn ? " rounded-r-xl" : "")">@(cell?.DisplayText)</td>
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+
+        @await DisplayAsync(await New.BlockActions(Heading: blockActions?.Get<TextField>("Heading")?.Text, Text: blockActions?.Get<HtmlField>("Text")?.Html, Actions: actionsHtml, MaxWidth: "max-w-none"))
+
+    </div>
+</section>

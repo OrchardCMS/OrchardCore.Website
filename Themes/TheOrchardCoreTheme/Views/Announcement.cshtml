@@ -1,0 +1,36 @@
+@*
+    Announcement banner shape, shared by the hero blocks. Invoked with:
+      @await DisplayAsync(await New.Announcement(Url: ..., Text: ..., Badge: ..., Message: ...))
+    - Url     : the link target; the whole banner renders only when this is set
+    - Text    : the link label (e.g. "See details")
+    - Badge   : the badge chip text (e.g. "Event")
+    - Message : the message between the badge and the link
+    The colours adapt to the block theme automatically via `theme-dark:` overrides (the
+    banner sits inside a `.theme-<name>` section). Each of badge / message / text renders
+    only when present.
+*@
+@{
+    string? url = Model.Url;
+    string? text = Model.Text;
+    string? badge = Model.Badge;
+    string? message = Model.Message;
+}
+@if (!string.IsNullOrEmpty(url))
+{
+    <a href="@Url.Content(url)" class="group mb-7 inline-flex flex-wrap items-center gap-x-2.5 gap-y-1 rounded-md border py-1 pl-1.5 pr-3.5 text-sm font-medium transition focus-visible:outline-2 focus-visible:outline-offset-2 border-rule bg-cream text-green-900 hover:border-green-600 focus-visible:outline-green-700 theme-dark:border-white/15 theme-dark:bg-white/5 theme-dark:text-green-100 theme-dark:hover:border-white/30 theme-dark:hover:bg-white/10 theme-dark:focus-visible:outline-accent-bright">
+        @if (!string.IsNullOrEmpty(badge))
+        {
+            <span class="rounded-sm px-2 py-0.5 text-xs font-semibold uppercase tracking-wide bg-green-600 text-white theme-dark:bg-accent-bright theme-dark:text-green-900">@badge</span>
+        }
+        @if (!string.IsNullOrEmpty(message))
+        {
+            <span>@message</span>
+        }
+        @if (!string.IsNullOrEmpty(text))
+        {
+            @* The whole chip is the link, so on the narrowest screens the explicit
+               label is redundant and only causes an orphaned wrap line — hide it below sm. *@
+            <span class="hidden font-semibold underline underline-offset-2 text-green-700 decoration-green-700/30 group-hover:decoration-green-700 theme-dark:text-accent-bright theme-dark:decoration-accent-bright/40 theme-dark:group-hover:decoration-accent-bright sm:inline">@text</span>
+        }
+    </a>
+}

@@ -1,0 +1,11 @@
+@*
+    Social links widget (Widget stereotype, rendered in the site-wide 'Header' zone). Reuses the shared
+    SocialLinks shape to emit an icon link per URL that is set. Light styling (the header is not a
+    theme-dark band). The flex container is the widget's; the shape emits just the <a> icons.
+*@
+@{
+    var social = ((ContentItem)Model.ContentItem).Get<ContentPart>("SocialLinks");
+}
+<div class="hidden items-center gap-1 sm:flex">
+    @await DisplayAsync(await New.SocialLinks(Github: social?.Get<TextField>("GitHubUrl")?.Text, Discord: social?.Get<TextField>("DiscordUrl")?.Text, Youtube: social?.Get<TextField>("YouTubeUrl")?.Text, Name: Site.SiteName))
+</div>

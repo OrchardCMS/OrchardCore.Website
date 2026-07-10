@@ -1,0 +1,70 @@
+@*
+    Logo Strip ("Used by" / Harvest "Sponsored by"). A thin band of logos. An optional leading
+    Label (omitted entirely when blank). Each logo (from the Logos bag) carries a light image, an
+    optional dark image (shown on a dark band or in dark mode; when absent the light image is
+    auto-inverted — see site.css), and an optional Url that makes the logo a link. The logo's
+    title is its name and the image alt text. Band/anchor + theme come from the Block part.
+*@
+@{
+    var item = (ContentItem)Model.ContentItem;
+    var block = item.Get<ContentPart>("LogoStrip");
+    var section = item.Get<ContentPart>("BlockPart");
+    var theme = section?.Get<TextField>("Theme")?.Text;
+    var themeName = (string.IsNullOrEmpty(theme) ? "White" : theme).ToLowerInvariant();
+    var anchor = section?.Get<TextField>("AnchorId")?.Text;
+    var label = block?.Get<TextField>("Label")?.Text;
+    var sizeValue = block?.Get<TextField>("Size")?.Text;
+    var size = string.IsNullOrEmpty(sizeValue) ? "Standard" : sizeValue;
+    var logoSize = size == "Large" ? "h-8 sm:h-10" : "h-4 sm:h-5";
+    var rowGap = size == "Large" ? "sm:gap-x-14 sm:gap-y-7" : "sm:gap-x-12 sm:gap-y-6";
+    var logos = item.Get<BagPart>("Logos")?.ContentItems ?? [];
+}
+<section id="@(string.IsNullOrEmpty(anchor) ? null : anchor)" class="theme-@themeName logo-strip">
+    <div class="mx-auto max-w-content px-6 py-12 sm:py-14">
+        <div class="flex flex-col items-center gap-6 sm:flex-row sm:flex-wrap sm:justify-center @rowGap">
+
+            @if (!string.IsNullOrEmpty(label))
+            {
+                <span class="font-serif text-base text-ink-soft theme-dark:text-green-100/80">@label</span>
+            }
+
+            @foreach (var logoItem in logos)
+            {
+                var logo = logoItem.Get<ContentPart>("Logo");
+                var light = logo?.Get<MediaField>("LightImage")?.Paths?.FirstOrDefault();
+                var dark = logo?.Get<MediaField>("DarkImage")?.Paths?.FirstOrDefault();
+                var url = logo?.Get<TextField>("Url")?.Text;
+                var name = logoItem.DisplayText;
+                var hasDark = !string.IsNullOrEmpty(dark);
+                var hasUrl = !string.IsNullOrEmpty(url);
+                var isExternal = hasUrl && url!.Contains("://");
+
+                if (hasUrl)
+                {
+                    <a href="@Url.Content(url)" aria-label="@name" class="inline-flex shrink-0 items-center focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-green-700" target="@(isExternal ? "_blank" : null)" rel="@(isExternal ? "noopener" : null)">
+                        @if (!string.IsNullOrEmpty(light))
+                        {
+                            <img src="@Orchard.AssetUrl(light)" alt="@name" loading="lazy" decoding="async" class="logo-strip__light@(hasDark ? " has-dark" : "") @logoSize w-auto shrink-0 object-contain">
+                        }
+                        @if (hasDark)
+                        {
+                            <img src="@Orchard.AssetUrl(dark)" alt="@name" loading="lazy" decoding="async" class="logo-strip__dark @logoSize w-auto shrink-0 object-contain">
+                        }
+                    </a>
+                }
+                else
+                {
+                    if (!string.IsNullOrEmpty(light))
+                    {
+                        <img src="@Orchard.AssetUrl(light)" alt="@name" loading="lazy" decoding="async" class="logo-strip__light@(hasDark ? " has-dark" : "") @logoSize w-auto shrink-0 object-contain">
+                    }
+                    if (hasDark)
+                    {
+                        <img src="@Orchard.AssetUrl(dark)" alt="@name" loading="lazy" decoding="async" class="logo-strip__dark @logoSize w-auto shrink-0 object-contain">
+                    }
+                }
+            }
+
+        </div>
+    </div>
+</section>

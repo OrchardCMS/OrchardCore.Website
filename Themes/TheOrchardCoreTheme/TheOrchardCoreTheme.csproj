@@ -21,6 +21,10 @@
     <PackageReference Include="OrchardCore.ContentManagement" Version="3.0.0" />
     <PackageReference Include="OrchardCore.DisplayManagement" Version="3.0.0" />
     <PackageReference Include="OrchardCore.ResourceManagement" Version="3.0.0" />
+    <PackageReference Include="OrchardCore.Media" Version="3.0.0" />
+    <PackageReference Include="OrchardCore.Shortcodes.Abstractions" Version="3.0.0" />
+    <PackageReference Include="OrchardCore.ContentFields.Core" Version="3.0.0" />
+    <PackageReference Include="OrchardCore.Flows.Core" Version="3.0.0" />
   </ItemGroup>
 
 </Project>

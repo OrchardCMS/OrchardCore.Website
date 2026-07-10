@@ -1,0 +1,63 @@
+@using Microsoft.AspNetCore.Html
+@*
+    Profile Cards. An optional heading + lead, then a grid of large square photo cards — each a person's
+    photo (or GitHub avatar), name, role, and GitHub/LinkedIn icon links — plus the shared BlockActions
+    closing row. Band/anchor + theme come from the Block part. Reusable for speakers, team, etc.
+*@
+@{
+    var item = (ContentItem)Model.ContentItem;
+    var intro = item.Get<ContentPart>("BlockIntro");
+    var section = item.Get<ContentPart>("BlockPart");
+    var theme = section?.Get<TextField>("Theme")?.Text;
+    var themeName = (string.IsNullOrEmpty(theme) ? "White" : theme).ToLowerInvariant();
+    var anchor = section?.Get<TextField>("AnchorId")?.Text;
+    var profiles = item.Get<BagPart>("Profiles")?.ContentItems ?? [];
+    var blockActions = item.Get<ContentPart>("BlockActionsPart");
+
+    // Closing actions row: copy from BlockActionsPart, buttons from the CallToActions bag.
+    var actionsHtml = new HtmlContentBuilder();
+    foreach (var cta in item.Get<BagPart>("CallToActions")?.ContentItems ?? [])
+    {
+        var callToAction = cta.Get<ContentPart>("CallToAction");
+        var link = callToAction?.Get<LinkField>("Link");
+        actionsHtml.AppendHtml(await DisplayAsync(await New.Button(Url: link?.Url, Text: link?.Text, Target: link?.Target, Variant: callToAction?.Get<TextField>("Variant")?.Text)));
+    }
+}
+<section id="@(string.IsNullOrEmpty(anchor) ? null : anchor)" class="theme-@themeName">
+    <div class="mx-auto max-w-content px-6 band">
+
+        @await DisplayAsync(await New.BlockIntro(Title: intro?.Get<TextField>("Title")?.Text, Lead: intro?.Get<HtmlField>("Lead")?.Html))
+
+        @if (profiles.Count > 0)
+        {
+            <div class="mt-12 grid grid-cols-2 gap-x-5 gap-y-10 sm:grid-cols-3 lg:grid-cols-5">
+                @foreach (var profile in profiles)
+                {
+                    var profilePart = profile.Get<ContentPart>("Profile");
+                    var role = profilePart?.Get<TextField>("Role")?.Text;
+                    var github = profilePart?.Get<TextField>("GitHubUrl")?.Text;
+                    var linkedin = profilePart?.Get<TextField>("LinkedInUrl")?.Text;
+                    var hasSocial = !string.IsNullOrEmpty(github) || !string.IsNullOrEmpty(linkedin);
+
+                    @* Full-height flex column so the social row (mt-auto) sits at the bottom and the
+                       icons align across cards regardless of how many lines the role wraps to. *@
+                    <div class="flex h-full flex-col text-center">
+                        @await DisplayAsync(await New.ProfileAvatar(Item: profile, Width: 240, Sizes: "(min-width:1024px) 210px, (min-width:640px) 30vw, 45vw", Class: "aspect-square w-full rounded-xl object-cover bg-cream theme-dark:bg-white/5"))
+                        <h3 class="mt-4 text-lg text-green-900 theme-dark:text-white">@profile.DisplayText</h3>
+                        @if (!string.IsNullOrEmpty(role))
+                        {
+                            <p class="mt-1 text-sm leading-relaxed text-balance text-ink-soft theme-dark:text-green-100/70">@role</p>
+                        }
+                        @if (hasSocial)
+                        {
+                            <div class="mt-auto pt-3 flex items-center justify-center gap-1">@await DisplayAsync(await New.SocialLinks(Github: github, Linkedin: linkedin, Name: profile.DisplayText))</div>
+                        }
+                    </div>
+                }
+            </div>
+        }
+
+        @await DisplayAsync(await New.BlockActions(Heading: blockActions?.Get<TextField>("Heading")?.Text, Text: blockActions?.Get<HtmlField>("Text")?.Html, Actions: actionsHtml, MaxWidth: "max-w-none"))
+
+    </div>
+</section>
