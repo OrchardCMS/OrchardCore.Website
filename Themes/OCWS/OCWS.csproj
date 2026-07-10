@@ -8,18 +8,18 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="OrchardCore.ContentManagement" Version="1.8.3" />
-		<PackageReference Include="OrchardCore.DisplayManagement" Version="1.8.3" />
-		<PackageReference Include="OrchardCore.ResourceManagement.Abstractions" Version="1.8.3" />
-		<PackageReference Include="OrchardCore.ResourceManagement" Version="1.8.3" />
-		<PackageReference Include="OrchardCore.Theme.Targets" Version="1.8.3" />
-		<PackageReference Include="OrchardCore.Flows" Version="1.8.3" />
-		<PackageReference Include="OrchardCore.Notifications" Version="1.8.3" />
-		<PackageReference Include="OrchardCore.Themes" Version="1.8.3" />
-		<PackageReference Include="OrchardCore.Admin.Abstractions" Version="1.8.3" />
-		<PackageReference Include="OrchardCore.Users.Abstractions" Version="1.8.3" />
-		<PackageReference Include="OrchardCore.Users" Version="1.8.3" />
-		<PackageReference Include="OrchardCore.Menu" Version="1.8.3" />
+		<PackageReference Include="OrchardCore.ContentManagement" Version="2.2.1" />
+		<PackageReference Include="OrchardCore.DisplayManagement" Version="2.2.1" />
+		<PackageReference Include="OrchardCore.ResourceManagement.Abstractions" Version="2.2.1" />
+		<PackageReference Include="OrchardCore.ResourceManagement" Version="2.2.1" />
+		<PackageReference Include="OrchardCore.Theme.Targets" Version="2.2.1" />
+		<PackageReference Include="OrchardCore.Flows" Version="2.2.1" />
+		<PackageReference Include="OrchardCore.Notifications" Version="2.2.1" />
+		<PackageReference Include="OrchardCore.Themes" Version="2.2.1" />
+		<PackageReference Include="OrchardCore.Admin.Abstractions" Version="2.2.1" />
+		<PackageReference Include="OrchardCore.Users.Abstractions" Version="2.2.1" />
+		<PackageReference Include="OrchardCore.Users" Version="2.2.1" />
+		<PackageReference Include="OrchardCore.Menu" Version="2.2.1" />
 	</ItemGroup>
 	
 </Project>
