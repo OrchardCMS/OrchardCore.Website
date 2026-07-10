@@ -1,7 +1,7 @@
 {
   "name": "TheOrchardCoreTheme.Model.SiteFooter",
   "displayName": "Orchard Core Website - Content Model",
-  "description": "The composable, per-culture site footer built from Widgets placed via Layers. Three widget types — PartnerPromo (heading, intro, CTA, partner logos), Brand (tagline + social URLs) and LinkColumn (a link column) — plus the Partner and Link bag items. Widgets are seeded twice (en + fr) onto English/French culture layers; the theme renders them in the 'Footer Top' and 'Footer Bottom' zones.",
+  "description": "The composable, per-culture site footer built from Widgets placed via Layers. Three widget types - PartnerPromo (heading, intro, CTA, partner logos), Brand (tagline + social URLs) and LinkColumn (a link column) - plus the Partner and Link bag items. Widgets are seeded twice (en + fr) onto English/French culture layers; the theme renders them in the 'Footer Top' and 'Footer Bottom' zones.",
   "author": "Orchard Core",
   "version": "1.0.0",
   "issetuprecipe": false,

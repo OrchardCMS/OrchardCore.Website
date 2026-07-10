@@ -470,7 +470,7 @@
               {
                 "ContentItemId": "[js:uuid()]",
                 "ContentType": "CardGridTabbed",
-                "DisplayText": "Why choose Orchard Core? — cards",
+                "DisplayText": "Why choose Orchard Core? - cards",
                 "Latest": true,
                 "Published": true,
                 "BlockPart": {
@@ -750,7 +750,7 @@
                   ]
                 },
                 "TitlePart": {
-                  "Title": "Why choose Orchard Core? — cards"
+                  "Title": "Why choose Orchard Core? - cards"
                 }
               },
               {
@@ -2230,7 +2230,7 @@
             ]
           },
           "SeoMetaPart": {
-            "PageTitle": "Orchard Core – Open-source .NET CMS & application framework",
+            "PageTitle": "Orchard Core - Open-source .NET CMS & application framework",
             "Render": true,
             "MetaDescription": "The open source .NET CMS and application framework. Community-owned, with everything you need built in: content, localization and multi-tenancy.",
             "MetaKeywords": null,
@@ -2254,7 +2254,7 @@
               ]
             },
             "OpenGraphType": "website",
-            "OpenGraphTitle": "Orchard Core — The open-source .NET CMS & application framework",
+            "OpenGraphTitle": "Orchard Core - The open-source .NET CMS & application framework",
             "OpenGraphDescription": "The open source .NET CMS and application framework. Community-owned, with everything you need built in: content, localization and multi-tenancy.",
             "TwitterImage": {
               "Paths": [
@@ -2264,7 +2264,7 @@
                 "Orchard Core"
               ]
             },
-            "TwitterTitle": "Orchard Core — The open-source .NET CMS & application framework",
+            "TwitterTitle": "Orchard Core - The open-source .NET CMS & application framework",
             "TwitterDescription": "The open source .NET CMS and application framework. Community-owned, with everything you need built in: content, localization and multi-tenancy.",
             "TwitterCard": "summary_large_image",
             "TwitterCreator": null,
@@ -2440,7 +2440,7 @@
               {
                 "ContentItemId": "[js:uuid()]",
                 "ContentType": "CardGridTabbed",
-                "DisplayText": "Why choose Orchard Core? — cards",
+                "DisplayText": "Why choose Orchard Core? - cards",
                 "Latest": true,
                 "Published": true,
                 "BlockPart": {
@@ -2682,7 +2682,7 @@
                   }
                 },
                 "TitlePart": {
-                  "Title": "Why choose Orchard Core? — cards"
+                  "Title": "Why choose Orchard Core? - cards"
                 },
                 "BlockIntro": {
                   "Title": {
@@ -3212,7 +3212,7 @@
                                 "Text": "Session"
                               },
                               "Description": {
-                                "Html": "<p>Orchard Core gives developers a clean, modular foundation for building real business applications—not just CMS sites. This talk shows practical patterns for structuring custom modules, handling complex business needs, and integrating external services in scalable, maintainable ways.</p>"
+                                "Html": "<p>Orchard Core gives developers a clean, modular foundation for building real business applications - not just CMS sites. This talk shows practical patterns for structuring custom modules, handling complex business needs, and integrating external services in scalable, maintainable ways.</p>"
                               },
                               "PresenterName": {
                                 "Text": "Niraj Soni"
@@ -3451,7 +3451,7 @@
                                 "Text": "Session"
                               },
                               "Description": {
-                                "Html": "<p>We built an SEO Analysis Module for Orchard Core that brings actionable insights directly into your CMS dashboard. In this session we'll show how it analyzes published content items for common SEO signals — meta titles, descriptions and more — and surfaces the results through a live dashboard with aggregated health scores across your content library and per-item drill-downs that tell editors exactly what needs fixing and why.</p>"
+                                "Html": "<p>We built an SEO Analysis Module for Orchard Core that brings actionable insights directly into your CMS dashboard. In this session we'll show how it analyzes published content items for common SEO signals - meta titles, descriptions and more - and surfaces the results through a live dashboard with aggregated health scores across your content library and per-item drill-downs that tell editors exactly what needs fixing and why.</p>"
                               },
                               "PresenterName": {
                                 "Text": "Patrik Navratil"
@@ -3633,7 +3633,7 @@
                 },
                 "TextAndImage": {
                   "Body": {
-                    "Html": "<p>The venue is still being finalised. Orchard Harvest 2026 will be held in Vancouver, Canada — we’ll announce the exact venue, along with travel and accommodation details, soon.</p>"
+                    "Html": "<p>The venue is still being finalised. Orchard Harvest 2026 will be held in Vancouver, Canada - we’ll announce the exact venue, along with travel and accommodation details, soon.</p>"
                   },
                   "Image": {
                     "Paths": [
@@ -4173,7 +4173,7 @@
             ]
           },
           "SeoMetaPart": {
-            "PageTitle": "Orchard Harvest 2026 – The Orchard Core Conference",
+            "PageTitle": "Orchard Harvest 2026 - The Orchard Core Conference",
             "Render": true,
             "MetaDescription": "The annual conference for the Orchard Core community. Two days of technical talks and time with the maintainers, in Vancouver on 10–11 September 2026.",
             "MetaKeywords": null,
@@ -4185,29 +4185,29 @@
                 "og/orchard-harvest-social.png"
               ],
               "MediaTexts": [
-                "Orchard Harvest 2026 — 10–11 September 2026, Vancouver, Canada"
+                "Orchard Harvest 2026 - 10–11 September 2026, Vancouver, Canada"
               ]
             },
             "OpenGraphType": "website",
-            "OpenGraphTitle": "Orchard Harvest 2026 — The Orchard Core Conference",
+            "OpenGraphTitle": "Orchard Harvest 2026 - The Orchard Core Conference",
             "OpenGraphDescription": "The annual conference for the Orchard Core community. Two days of technical talks and time with the maintainers, in Vancouver on 10–11 September 2026.",
             "OpenGraphImage": {
               "Paths": [
                 "og/orchard-harvest-social.png"
               ],
               "MediaTexts": [
-                "Orchard Harvest 2026 — 10–11 September 2026, Vancouver, Canada"
+                "Orchard Harvest 2026 - 10–11 September 2026, Vancouver, Canada"
               ]
             },
             "TwitterCard": "summary_large_image",
-            "TwitterTitle": "Orchard Harvest 2026 — The Orchard Core Conference",
+            "TwitterTitle": "Orchard Harvest 2026 - The Orchard Core Conference",
             "TwitterDescription": "The annual conference for the Orchard Core community. Two days of technical talks and time with the maintainers, in Vancouver on 10–11 September 2026.",
             "TwitterImage": {
               "Paths": [
                 "og/orchard-harvest-social.png"
               ],
               "MediaTexts": [
-                "Orchard Harvest 2026 — 10–11 September 2026, Vancouver, Canada"
+                "Orchard Harvest 2026 - 10–11 September 2026, Vancouver, Canada"
               ]
             },
             "TwitterSite": "@OrchardCore",
@@ -4288,7 +4288,7 @@
           },
           "StatisticsRefresh": {
             "Instructions": {
-              "Html": "<p>Click <strong>Publish</strong> to fetch the latest GitHub figures now — NuGet downloads, stars, contributors, last commit and latest release — and update the site statistics straight away, instead of waiting for the scheduled refresh.</p>"
+              "Html": "<p>Click <strong>Publish</strong> to fetch the latest GitHub figures now - NuGet downloads, stars, contributors, last commit and latest release - and update the site statistics straight away, instead of waiting for the scheduled refresh.</p>"
             }
           }
         },

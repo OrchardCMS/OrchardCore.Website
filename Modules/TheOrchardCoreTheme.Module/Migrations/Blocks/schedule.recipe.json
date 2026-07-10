@@ -48,7 +48,7 @@
               "Settings": {
                 "ContentTypePartSettings": {
                   "DisplayName": "Groups",
-                  "Description": "Each group is a day, track, or section — a heading (and optional subheading) plus its sessions. Add one group with no heading for a flat, ungrouped schedule.",
+                  "Description": "Each group is a day, track, or section - a heading (and optional subheading) plus its sessions. Add one group with no heading for a flat, ungrouped schedule.",
                   "Position": "2"
                 },
                 "BagPartSettings": {

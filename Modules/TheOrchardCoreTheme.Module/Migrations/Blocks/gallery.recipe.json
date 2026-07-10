@@ -191,7 +191,7 @@
                 },
                 "TextFieldSettings": {
                   "Editor": "TextArea",
-                  "Hint": "The quote itself. No need to add quotation marks — they are added automatically."
+                  "Hint": "The quote itself. No need to add quotation marks - they are added automatically."
                 }
               }
             },

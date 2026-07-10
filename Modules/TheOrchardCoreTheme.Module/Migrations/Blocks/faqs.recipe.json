@@ -1,7 +1,7 @@
 {
   "name": "TheOrchardCoreTheme.Model.Faqs",
   "displayName": "Orchard Core Website - Content Model",
-  "description": "The FAQs block and its FaqItem items (question = item title, answer = HTML). The block template renders a CSS-only <details> accordion and emits schema.org FAQPage JSON-LD for AI/search discoverability — built-in only, no custom driver.",
+  "description": "The FAQs block and its FaqItem items (question = item title, answer = HTML). The block template renders a CSS-only <details> accordion and emits schema.org FAQPage JSON-LD for AI/search discoverability - built-in only, no custom driver.",
   "author": "Orchard Core",
   "version": "1.0.0",
   "issetuprecipe": false,

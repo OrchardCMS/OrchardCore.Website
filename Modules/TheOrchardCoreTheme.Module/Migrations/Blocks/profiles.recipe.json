@@ -1,7 +1,7 @@
 {
   "name": "TheOrchardCoreTheme.Model.Profiles",
   "displayName": "Orchard Core Website - Content Model",
-  "description": "Two people/profile blocks that share one Profile item type: ProfileCards (rich square photo-card grid) and ProfileList (compact circular-avatar grid). The Profile image is an uploaded MediaField, or — when blank and a GitHub URL is set — the GitHub avatar (github.com/<handle>.png). Generic and reusable (speakers, organisers, team, contributors).",
+  "description": "Two people/profile blocks that share one Profile item type: ProfileCards (rich square photo-card grid) and ProfileList (compact circular-avatar grid). The Profile image is an uploaded MediaField, or - when blank and a GitHub URL is set - the GitHub avatar (github.com/<handle>.png). Generic and reusable (speakers, organisers, team, contributors).",
   "author": "Orchard Core",
   "version": "1.0.0",
   "issetuprecipe": false,
