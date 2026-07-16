@@ -4024,7 +4024,7 @@
                     "Text": "Common questions."
                   },
                   "Lead": {
-                    "Html": "<p>Short answers to what people ask most. Can't find yours? Email contact@orchardcore.net.</p>"
+                    "Html": "<p>Short answers to what people ask most. Can't find yours? Email <a href=\"mailto:contact@orchardcore.net\">contact@orchardcore.net</a>.</p>"
                   }
                 },
                 "Questions": {
