@@ -2826,6 +2826,26 @@
                       "TitlePart": {
                         "Title": "Get the one-pager"
                       }
+                    },
+                    {
+                      "ContentItemId": "[js:uuid()]",
+                      "ContentType": "CallToAction",
+                      "DisplayText": "Get tickets",
+                      "Latest": true,
+                      "Published": true,
+                      "CallToAction": {
+                        "Link": {
+                          "Url": "https://www.tickettailor.com/events/lombiqtechnologiesltd/2247098",
+                          "Text": "Get tickets",
+                          "Target": ""
+                        },
+                        "Variant": {
+                          "Text": "Primary"
+                        }
+                      },
+                      "TitlePart": {
+                        "Title": "Get tickets"
+                      }
                     }
                   ]
                 },
@@ -3829,6 +3849,38 @@
                             }
                           }
                         ]
+                      }
+                    }
+                  ]
+                },
+                "BlockActionsPart": {
+                  "Heading": {
+                    "Text": "Like the look of it?"
+                  },
+                  "Text": {
+                    "Html": "<p>One ticket covers both days, including lunch, breaks and the evening social.</p>"
+                  }
+                },
+                "CallToActions": {
+                  "ContentItems": [
+                    {
+                      "ContentItemId": "[js:uuid()]",
+                      "ContentType": "CallToAction",
+                      "DisplayText": "Get tickets",
+                      "Latest": true,
+                      "Published": true,
+                      "CallToAction": {
+                        "Link": {
+                          "Url": "https://www.tickettailor.com/events/lombiqtechnologiesltd/2247098",
+                          "Text": "Get tickets",
+                          "Target": ""
+                        },
+                        "Variant": {
+                          "Text": "Primary"
+                        }
+                      },
+                      "TitlePart": {
+                        "Title": "Get tickets"
                       }
                     }
                   ]
