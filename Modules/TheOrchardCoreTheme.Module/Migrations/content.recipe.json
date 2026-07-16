@@ -2440,7 +2440,7 @@
               {
                 "ContentItemId": "[js:uuid()]",
                 "ContentType": "CardGridTabbed",
-                "DisplayText": "Why choose Orchard Core? - cards",
+                "DisplayText": "Why come to Orchard Harvest - cards",
                 "Latest": true,
                 "Published": true,
                 "BlockPart": {
@@ -2673,16 +2673,8 @@
                     }
                   ]
                 },
-                "BlockActionsPart": {
-                  "Heading": {
-                    "Text": "Take a closer look."
-                  },
-                  "Text": {
-                    "Html": "<p>Meet the community that builds Orchard Core, or browse the sites already running on it.</p>"
-                  }
-                },
                 "TitlePart": {
-                  "Title": "Why choose Orchard Core? - cards"
+                  "Title": "Why come to Orchard Harvest - cards"
                 },
                 "BlockIntro": {
                   "Title": {
