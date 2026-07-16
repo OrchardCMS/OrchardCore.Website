@@ -303,7 +303,7 @@
                 },
                 "HeroText": {
                   "Lead": {
-                    "Html": "<p>Orchard Core is a complete CMS for your editors and an application framework for your developers. Content, users and roles, media, search, and workflows are built in. Free, open source and community led.</p>"
+                    "Html": "<p>Orchard Core is a complete CMS for your editors and an application framework for your developers. Content, users and roles, media, search, and workflows are built in. Free, open-source and community led.</p>"
                   },
                   "AnnouncementBadge": {
                     "Text": "Event"
@@ -392,7 +392,7 @@
                     "Text": "Why choose Orchard Core?"
                   },
                   "Lead": {
-                    "Html": "<p>Orchard Core is both a complete CMS and an application framework. It is open source and community-led, with more than fifteen years behind it. Here are a few of the reasons teams choose it.</p>"
+                    "Html": "<p>Orchard Core is both a complete CMS and an application framework. It is open-source and community-led, with more than fifteen years behind it. Here are a few of the reasons teams choose it.</p>"
                   }
                 },
                 "Stats": {
@@ -671,9 +671,9 @@
                             "ContentType": "Card",
                             "Latest": true,
                             "Published": true,
-                            "DisplayText": "Free and open source",
+                            "DisplayText": "Free and open-source",
                             "TitlePart": {
-                              "Title": "Free and open source"
+                              "Title": "Free and open-source"
                             },
                             "Card": {
                               "Body": {
@@ -2161,7 +2161,7 @@
                       },
                       "FaqItem": {
                         "Answer": {
-                          "Html": "<p>Yes. It is open source under the BSD-3-Clause license, with no license fees and no per-seat or per-site costs. You also get the full source code.</p>"
+                          "Html": "<p>Yes. It is open-source under the BSD-3-Clause license, with no license fees and no per-seat or per-site costs. You also get the full source code.</p>"
                         }
                       }
                     },
@@ -2236,7 +2236,7 @@
           "SeoMetaPart": {
             "PageTitle": "Orchard Core - Open-source .NET CMS & application framework",
             "Render": true,
-            "MetaDescription": "The open source .NET CMS and application framework. Community-owned, with everything you need built in: content, localization and multi-tenancy.",
+            "MetaDescription": "The open-source .NET CMS and application framework. Community-owned, with everything you need built in: content, localization and multi-tenancy.",
             "MetaKeywords": null,
             "Canonical": null,
             "MetaRobots": "index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1",
@@ -2259,7 +2259,7 @@
             },
             "OpenGraphType": "website",
             "OpenGraphTitle": "Orchard Core - The open-source .NET CMS & application framework",
-            "OpenGraphDescription": "The open source .NET CMS and application framework. Community-owned, with everything you need built in: content, localization and multi-tenancy.",
+            "OpenGraphDescription": "The open-source .NET CMS and application framework. Community-owned, with everything you need built in: content, localization and multi-tenancy.",
             "TwitterImage": {
               "Paths": [
                 "og/orchard-core-social.png"
@@ -2269,7 +2269,7 @@
               ]
             },
             "TwitterTitle": "Orchard Core - The open-source .NET CMS & application framework",
-            "TwitterDescription": "The open source .NET CMS and application framework. Community-owned, with everything you need built in: content, localization and multi-tenancy.",
+            "TwitterDescription": "The open-source .NET CMS and application framework. Community-owned, with everything you need built in: content, localization and multi-tenancy.",
             "TwitterCard": "summary_large_image",
             "TwitterCreator": null,
             "TwitterSite": "@OrchardCore",
