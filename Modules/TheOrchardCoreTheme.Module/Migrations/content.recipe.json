@@ -3065,7 +3065,7 @@
                                 "Text": "Session"
                               },
                               "Description": {
-                                "Html": "<p>Every year, the community votes on who has done the most for Orchard Core and thus who we can bestow the Jean-Thierry Kéchichian Community Award on.</p>"
+                                "Html": "<p>Every year, the community votes on who has done the most for Orchard Core and thus who we can bestow the <a href=\"https://docs.orchardcore.net/en/latest/community/jean-thierry-community-award/\">Jean-Thierry Kéchichian Community Award</a> on.</p>"
                               }
                             }
                           },
