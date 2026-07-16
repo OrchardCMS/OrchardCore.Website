@@ -115,6 +115,10 @@
           "SourcePath": "../wwwroot/assets/speakers/mike-alhayek.jpg"
         },
         {
+          "TargetPath": "harvest/harvest-2026/convince-your-boss-one-pager.webp",
+          "SourcePath": "../wwwroot/assets/harvest/harvest-2026/convince-your-boss-one-pager.webp"
+        },
+        {
           "TargetPath": "harvest/last-year/last-year-1.jpeg",
           "SourcePath": "../wwwroot/assets/harvest/last-year/last-year-1.jpeg"
         },
@@ -2669,6 +2673,38 @@
                       },
                       "TitlePart": {
                         "Title": "For your team"
+                      }
+                    }
+                  ]
+                },
+                "BlockActionsPart": {
+                  "Heading": {
+                    "Text": "Need to convince your boss?"
+                  },
+                  "Text": {
+                    "Html": "<p>The one-pager sums up the case for coming, ready to share with your team.</p>"
+                  }
+                },
+                "CallToActions": {
+                  "ContentItems": [
+                    {
+                      "ContentItemId": "[js:uuid()]",
+                      "ContentType": "CallToAction",
+                      "DisplayText": "Get the one-pager",
+                      "Latest": true,
+                      "Published": true,
+                      "CallToAction": {
+                        "Link": {
+                          "Url": "~/media/harvest/harvest-2026/convince-your-boss-one-pager.webp",
+                          "Text": "Get the one-pager",
+                          "Target": "_blank"
+                        },
+                        "Variant": {
+                          "Text": "Secondary"
+                        }
+                      },
+                      "TitlePart": {
+                        "Title": "Get the one-pager"
                       }
                     }
                   ]
