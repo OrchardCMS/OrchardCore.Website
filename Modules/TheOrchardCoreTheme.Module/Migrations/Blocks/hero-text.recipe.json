@@ -150,7 +150,7 @@
                   "Position": "5"
                 },
                 "TextFieldSettings": {
-                  "Hint": "Optional terminal block shown under the lead. Colour tokens with shortcode tags: [cmd], [name], [comment], [flag], [type]. '#' comment lines and '$ '/'> ' prompts are stripped on copy."
+                  "Hint": "Optional terminal block shown under the lead. Color tokens with shortcode tags: [cmd], [name], [comment], [flag], [type]. '#' comment lines and '$ '/'> ' prompts are stripped on copy."
                 }
               }
             }

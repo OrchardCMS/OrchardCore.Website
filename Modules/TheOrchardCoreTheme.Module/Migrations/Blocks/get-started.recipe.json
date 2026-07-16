@@ -221,7 +221,7 @@
                   "Position": "0"
                 },
                 "TextFieldSettings": {
-                  "Hint": "Terminal commands. Colour tokens with shortcode tags: [cmd], [name], [comment], [flag], [type]. '#' comment lines and '$ '/'> ' prompts are stripped on copy."
+                  "Hint": "Terminal commands. Color tokens with shortcode tags: [cmd], [name], [comment], [flag], [type]. '#' comment lines and '$ '/'> ' prompts are stripped on copy."
                 }
               }
             }

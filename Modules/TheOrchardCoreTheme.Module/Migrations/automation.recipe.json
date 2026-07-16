@@ -1,7 +1,7 @@
 {
   "name": "TheOrchardCoreTheme.Automation",
   "displayName": "Orchard Core Website - Automation",
-  "description": "Shortcode templates: the live-stats tokens ([nuget_downloads]/[github_stars]/[contributors]/[last_commit]/[latest_release]), the [contributor_avatars] row that reads the SiteStatistics singleton's TopContributors JSON, plus the code-colour tokens ([cmd]/[name]/[comment]/[flag]/[type]) that wrap snippet text in the .c-* classes. Also the workflows that refresh the SiteStatistics singleton from the GitHub API: daily for the figures, top-5 contributors and latest release, and hourly for the latest commit timestamp. Built-in activities only.",
+  "description": "Shortcode templates: the live-stats tokens ([nuget_downloads]/[github_stars]/[contributors]/[last_commit]/[latest_release]), the [contributor_avatars] row that reads the SiteStatistics singleton's TopContributors JSON, plus the code-color tokens ([cmd]/[name]/[comment]/[flag]/[type]) that wrap snippet text in the .c-* classes. Also the workflows that refresh the SiteStatistics singleton from the GitHub API: daily for the figures, top-5 contributors and latest release, and hourly for the latest commit timestamp. Built-in activities only.",
   "author": "Orchard Core",
   "version": "1.0.0",
   "issetuprecipe": false,
@@ -124,7 +124,7 @@
         },
         "cmd": {
           "Content": "<span class=\"code-command\">{{ Content }}</span>",
-          "Hint": "Colour a command / keyword in a code snippet (green).",
+          "Hint": "Color a command / keyword in a code snippet (green).",
           "Usage": "[cmd]dotnet[/cmd]",
           "DefaultValue": "[cmd][/cmd]",
           "Categories": [
@@ -133,7 +133,7 @@
         },
         "name": {
           "Content": "<span class=\"code-name\">{{ Content }}</span>",
-          "Hint": "Colour a name / value / string in a code snippet (amber).",
+          "Hint": "Color a name / value / string in a code snippet (amber).",
           "Usage": "[name]MySite[/name]",
           "DefaultValue": "[name][/name]",
           "Categories": [
@@ -142,7 +142,7 @@
         },
         "comment": {
           "Content": "<span class=\"code-comment\">{{ Content }}</span>",
-          "Hint": "Colour a comment or prompt in a code snippet (dim italic).",
+          "Hint": "Color a comment or prompt in a code snippet (dim italic).",
           "Usage": "[comment]# do this[/comment]",
           "DefaultValue": "[comment][/comment]",
           "Categories": [
@@ -151,7 +151,7 @@
         },
         "flag": {
           "Content": "<span class=\"code-flag\">{{ Content }}</span>",
-          "Hint": "Colour a CLI flag in a code snippet (light).",
+          "Hint": "Color a CLI flag in a code snippet (light).",
           "Usage": "[flag]-n[/flag]",
           "DefaultValue": "[flag][/flag]",
           "Categories": [
@@ -160,7 +160,7 @@
         },
         "type": {
           "Content": "<span class=\"code-type\">{{ Content }}</span>",
-          "Hint": "Colour a type in a code snippet (blue).",
+          "Hint": "Color a type in a code snippet (blue).",
           "Usage": "[type]WebApplication[/type]",
           "DefaultValue": "[type][/type]",
           "Categories": [

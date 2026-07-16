@@ -1,7 +1,7 @@
 @import "tailwindcss"; /* stylelint-disable-line import-notation */
 
 /* Typography plugin (bundled in the standalone CLI): the `prose` classes give
-   HTML-field content correct paragraph/list/heading rhythm. Its colours are
+   HTML-field content correct paragraph/list/heading rhythm. Its colors are
    re-pointed at the theme tokens further down so it follows dark mode + dark band. */
 @plugin "@tailwindcss/typography"; /* stylelint-disable-line at-rule-no-unknown */
 
@@ -137,9 +137,9 @@
 /* ---------------------------------------------------------------------------
    NON-TAILWIND TOKENS
    Values that bypassed the config in the mockups (shadows, glass, rhythm,
-   syntax colours, and the full dark palette). Centralised here as variables so
+   syntax colors, and the full dark palette). Centralised here as variables so
    they are easy to change. The dark palette (`--d-*`) is the parallel set of
-   colours the mockups only had as raw hex inside `html.dark` rules.
+   colors the mockups only had as raw hex inside `html.dark` rules.
    --------------------------------------------------------------------------- */
 :root {
   /* Sticky-header height; theme.js sets the exact px on menu open so the mobile menu overlay sits
@@ -163,7 +163,7 @@
   --shadow-soft:         0 30px 40px -24px rgba(var(--shadow-ink), .16), 0 8px 18px -10px rgba(var(--shadow-ink), .08);
   --shadow-screen:       0 50px 70px -30px rgba(var(--screen-ink), .45), 0 18px 30px -18px rgba(var(--screen-ink), .30);
 
-  /* Code-snippet token colours (authored via the [cmd]/[name]/[comment]/[flag]/[type] shortcode tags). */
+  /* Code-snippet token colors (authored via the [cmd]/[name]/[comment]/[flag]/[type] shortcode tags). */
   --code-command: #7FE0A6; /* command / keyword */
   --code-type:    #74A8FF; /* type */
   --code-name:    #F5BB55; /* name / value / string */
@@ -280,7 +280,7 @@ html.dark .divide-rule > :not([hidden]) ~ :not([hidden]) { border-color: var(--b
 /* ---------------------------------------------------------------------------
    SECTION BAND BACKGROUNDS
    Every section block carries a `theme-<name>` class for its background choice
-   (White / Cream / Rule / Dark). The band colour is driven straight off that
+   (White / Cream / Rule / Dark). The band color is driven straight off that
    class here — so templates no longer compute a parallel `bandClass`. These
    reference the live `--surface*` tokens, so dark mode remaps automatically and
    the result is identical to the old `bg-white`/`bg-cream`/`bg-rule`/`bg-green-900`.
@@ -308,7 +308,7 @@ html.dark .feat-shot.has-dark .feat-img--dark { display: block; }
 /* ---------------------------------------------------------------------------
    RICH TEXT (prose)
    HTML-field content is wrapped in `prose` for paragraph/list rhythm. The
-   plugin's default palette is opinionated, so we re-point its colour variables
+   plugin's default palette is opinionated, so we re-point its color variables
    at the theme tokens. Because those tokens already remap under `html.dark`,
    dark *mode* needs no `prose-invert`; a single `.theme-dark .prose` rule below
    covers the dark *band* (green-900 surface in either mode). A wrapper `max-w-*`
@@ -398,7 +398,7 @@ html.dark .feat-shot.has-dark .feat-img--dark { display: block; }
   /* When two adjacent section blocks share the same background, collapse the big band gap between
      them so the pair reads as one continuous band — but keep a small, consistent gap (mt-12 = 3rem):
      the first's bottom padding goes to 0 and the second's top padding becomes 3rem. Per-theme, so a
-     different-coloured neighbour keeps the full band gap. `.band` is the section's direct child. */
+     different-colored neighbour keeps the full band gap. `.band` is the section's direct child. */
   .theme-white + .theme-white > .band,
   .theme-cream + .theme-cream > .band,
   .theme-rule  + .theme-rule  > .band,
@@ -417,7 +417,7 @@ html.dark .feat-shot.has-dark .feat-img--dark { display: block; }
   .tab-toggle.is-active { @apply bg-green-600 text-white; }
 
   /* Feature-explorer rail tab. White (a dark surface in dark mode); dark green on hover and when
-     active (the theme.js handler toggles `.is-active`). Name + summary recolour with it. Composed
+     active (the theme.js handler toggles `.is-active`). Name + summary recolor with it. Composed
      from utilities via @apply; the active/hover rules win by specificity within this layer. */
   .feat-tab {
     @apply flex w-full cursor-pointer items-center justify-between gap-3 rounded-lg bg-white py-3.5 pl-4 pr-3 text-left transition-colors hover:bg-green-900 dark:hover:bg-green-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-700;
@@ -462,7 +462,7 @@ html.dark .feat-shot.has-dark .feat-img--dark { display: block; }
   html.dark .theme-knob { transform: translate(22px, -50%); }
 
   /* Code-snippet syntax tokens. Authored in the content via the [cmd]/[name]/[comment]/[flag]/[type]
-     shortcode tags (see automation.recipe.json), which expand to these spans — no JavaScript. Colours
+     shortcode tags (see automation.recipe.json), which expand to these spans — no JavaScript. Colors
      come from the reserved `--c-*` tokens; the terminal is always on the dark code surface, so no theme
      variants are needed. */
   .code-command { color: var(--code-command); }                     /* command / keyword */
@@ -474,7 +474,7 @@ html.dark .feat-shot.has-dark .feat-img--dark { display: block; }
   /* Logo strip ("Used by" / sponsors). Each logo can supply a light and a dark image; the dark
      one shows on a dark band or in dark mode. No dark variants are supplied, so on any dark
      surface (dark mode, or a Dark-themed band) each logo is flattened to a single uniform light
-     monochrome — brightness(0) drops the brand colours to black, invert(.9) lifts the silhouette
+     monochrome — brightness(0) drops the brand colors to black, invert(.9) lifts the silhouette
      to a soft off-white (calmer and more consistent than stark #fff against the muted palette).
      A shared opacity keeps every logo the same visual weight so the row reads as one set.
      Linked logos brighten to full strength on hover. */

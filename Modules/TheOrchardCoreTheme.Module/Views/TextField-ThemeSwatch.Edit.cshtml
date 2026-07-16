@@ -7,7 +7,7 @@
     var groupName = Html.NameFor(m => m.Text);
     var baseId = Html.IdFor(m => m.Text);
 
-    // Preview colours per theme value (block band backgrounds + readable "Aa" colour).
+    // Preview colors per theme value (block band backgrounds + readable "Aa" color).
     var swatches = new Dictionary<string, (string bg, string fg)>(StringComparer.OrdinalIgnoreCase)
     {
         ["White"] = ("#ffffff", "#08361a"),
@@ -27,11 +27,11 @@
         @foreach (var opt in options)
         {
             var optId = $"{baseId}_{opt.Value}";
-            var colours = swatches.TryGetValue(opt.Value ?? string.Empty, out var c) ? c : (bg: "#e5e7eb", fg: "#374151");
+            var colors = swatches.TryGetValue(opt.Value ?? string.Empty, out var c) ? c : (bg: "#e5e7eb", fg: "#374151");
             <div class="theme-swatch">
                 <input class="theme-swatch__input" type="radio" id="@optId" name="@groupName" value="@opt.Value" checked="@(string.Equals(opt.Value, current, StringComparison.OrdinalIgnoreCase))" />
                 <label class="theme-swatch__label" for="@optId">
-                    <span class="theme-swatch__preview" style="background:@colours.bg; color:@colours.fg;">Aa</span>
+                    <span class="theme-swatch__preview" style="background:@colors.bg; color:@colors.fg;">Aa</span>
                     <span class="theme-swatch__name">@opt.Name</span>
                 </label>
             </div>
