@@ -1405,13 +1405,13 @@
                           {
                             "ContentItemId": "[js:uuid()]",
                             "ContentType": "CallToAction",
-                            "DisplayText": "Join the Discord",
+                            "DisplayText": "Join the Discord server",
                             "Latest": true,
                             "Published": true,
                             "CallToAction": {
                               "Link": {
                                 "Url": "https://orchardcore.net/discord",
-                                "Text": "Join the Discord",
+                                "Text": "Join the Discord server",
                                 "Target": "_blank"
                               },
                               "Variant": {
@@ -1419,7 +1419,7 @@
                               }
                             },
                             "TitlePart": {
-                              "Title": "Join the Discord"
+                              "Title": "Join the Discord server"
                             }
                           }
                         ]
