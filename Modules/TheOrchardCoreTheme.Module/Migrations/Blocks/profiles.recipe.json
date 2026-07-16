@@ -229,7 +229,7 @@
           "Name": "Profile",
           "Settings": {
             "ContentPartSettings": {
-              "Description": "One person: the name is the editable TitlePart (item DisplayText, also the image alt). Holds a role/subtitle, a photo (or a GitHub-avatar fallback), and GitHub/LinkedIn links. Shared by the ProfileCards and ProfileList blocks."
+              "Description": "One person: the name is the editable TitlePart (item DisplayText, also the image alt). Holds a role/subtitle, a photo (or a GitHub-avatar fallback), an optional bio shown in a dialog, and GitHub/LinkedIn links. Shared by the ProfileCards and ProfileList blocks."
             }
           },
           "ContentPartFieldDefinitionRecords": [
@@ -264,13 +264,27 @@
               }
             },
             {
+              "FieldName": "HtmlField",
+              "Name": "Bio",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Bio",
+                  "Editor": "Trumbowyg",
+                  "Position": "2"
+                },
+                "HtmlFieldSettings": {
+                  "Hint": "Optional. A short biography. When set, the card becomes clickable and opens the bio in a dialog."
+                }
+              }
+            },
+            {
               "FieldName": "TextField",
               "Name": "GitHubUrl",
               "Settings": {
                 "ContentPartFieldSettings": {
                   "DisplayName": "GitHub URL",
                   "Editor": "Url",
-                  "Position": "2"
+                  "Position": "3"
                 },
                 "TextFieldSettings": {
                   "Hint": "Optional. The person's GitHub profile, e.g. https://github.com/username. Also used as the avatar when no photo is uploaded."
@@ -284,7 +298,7 @@
                 "ContentPartFieldSettings": {
                   "DisplayName": "LinkedIn URL",
                   "Editor": "Url",
-                  "Position": "3"
+                  "Position": "4"
                 },
                 "TextFieldSettings": {
                   "Hint": "Optional. The person's LinkedIn profile URL."

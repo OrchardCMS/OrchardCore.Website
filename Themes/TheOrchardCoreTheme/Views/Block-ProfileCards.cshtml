@@ -3,6 +3,8 @@
     Profile Cards. An optional heading + lead, then a grid of large square photo cards — each a person's
     photo (or GitHub avatar), name, role, and GitHub/LinkedIn icon links — plus the shared BlockActions
     closing row. Band/anchor + theme come from the Block part. Reusable for speakers, team, etc.
+    A person with a Bio gets a clickable card that opens the shared #profileModal dialog (see Layout +
+    theme.js); the bio travels in a <template> so its markup needs no attribute escaping.
 *@
 @{
     var item = (ContentItem)Model.ContentItem;
@@ -13,6 +15,26 @@
     var anchor = section?.Get<TextField>("AnchorId")?.Text;
     var profiles = item.Get<BagPart>("Profiles")?.ContentItems ?? [];
     var blockActions = item.Get<ContentPart>("BlockActionsPart");
+
+    // The photo/name/role stack is identical whether or not the card is clickable, so it lives here
+    // rather than being duplicated across the two branches below. Clickable cards additionally get a
+    // "Read bio" overlay on the photo (the button is the `group`), so the affordance is visible rather
+    // than relying on the cursor alone. It is aria-hidden: the button's own label already says this.
+    async Task RenderPersonAsync(ContentItem person, string? personRole, bool withBioOverlay = false)
+    {
+        <div class="relative overflow-hidden rounded-xl">
+            @await DisplayAsync(await New.ProfileAvatar(Item: person, Width: 240, Sizes: "(min-width:1024px) 210px, (min-width:640px) 30vw, 45vw", Class: "aspect-square w-full rounded-xl object-cover bg-cream theme-dark:bg-white/5"))
+            @if (withBioOverlay)
+            {
+                <span aria-hidden="true" class="absolute inset-0 flex items-center justify-center bg-green-900/70 text-sm font-semibold text-white opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-focus-visible:opacity-100">Read bio</span>
+            }
+        </div>
+        <h3 class="mt-4 text-lg text-green-900 theme-dark:text-white">@person.DisplayText</h3>
+        if (!string.IsNullOrEmpty(personRole))
+        {
+            <p class="mt-1 text-sm leading-relaxed text-balance text-ink-soft theme-dark:text-green-100/70">@personRole</p>
+        }
+    }
 
     // Closing actions row: copy from BlockActionsPart, buttons from the CallToActions bag.
     var actionsHtml = new HtmlContentBuilder();
@@ -35,6 +57,8 @@
                 {
                     var profilePart = profile.Get<ContentPart>("Profile");
                     var role = profilePart?.Get<TextField>("Role")?.Text;
+                    var bio = profilePart?.Get<HtmlField>("Bio")?.Html;
+                    var hasBio = !string.IsNullOrEmpty(bio);
                     var github = profilePart?.Get<TextField>("GitHubUrl")?.Text;
                     var linkedin = profilePart?.Get<TextField>("LinkedInUrl")?.Text;
                     var hasSocial = !string.IsNullOrEmpty(github) || !string.IsNullOrEmpty(linkedin);
@@ -42,11 +66,21 @@
                     @* Full-height flex column so the social row (mt-auto) sits at the bottom and the
                        icons align across cards regardless of how many lines the role wraps to. *@
                     <div class="flex h-full flex-col text-center">
-                        @await DisplayAsync(await New.ProfileAvatar(Item: profile, Width: 240, Sizes: "(min-width:1024px) 210px, (min-width:640px) 30vw, 45vw", Class: "aspect-square w-full rounded-xl object-cover bg-cream theme-dark:bg-white/5"))
-                        <h3 class="mt-4 text-lg text-green-900 theme-dark:text-white">@profile.DisplayText</h3>
-                        @if (!string.IsNullOrEmpty(role))
+                        @if (hasBio)
                         {
-                            <p class="mt-1 text-sm leading-relaxed text-balance text-ink-soft theme-dark:text-green-100/70">@role</p>
+                            @* The social icons are links, so they stay outside the button — nesting them
+                               would be invalid. aria-label names the button; the inner img/heading are
+                               decorative once it is set. *@
+                            <button type="button" data-profile data-profile-name="@profile.DisplayText" data-profile-role="@role"
+                                    aria-haspopup="dialog" aria-label="Read the bio of @profile.DisplayText"
+                                    class="group cursor-pointer rounded-xl text-center focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-700 theme-dark:focus-visible:outline-white">
+                                @{ await RenderPersonAsync(profile, role, withBioOverlay: true); }
+                            </button>
+                            <template data-profile-bio>@Html.Raw(bio)</template>
+                        }
+                        else
+                        {
+                            await RenderPersonAsync(profile, role);
                         }
                         @if (hasSocial)
                         {

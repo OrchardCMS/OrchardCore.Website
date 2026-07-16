@@ -19,7 +19,8 @@
     var days = hero?.Get<TextField>("EventDays")?.Text;
     var year = hero?.Get<TextField>("EventYear")?.Text;
     var place = hero?.Get<TextField>("EventPlace")?.Text;
-    var hasPoster = !string.IsNullOrEmpty(month) || !string.IsNullOrEmpty(days);
+    // The date card renders off the date fields; the PosterImage is only its optional backdrop.
+    var hasDateCard = !string.IsNullOrEmpty(month) || !string.IsNullOrEmpty(days);
     var hasYear = !string.IsNullOrEmpty(year);
     var hasPlace = !string.IsNullOrEmpty(place);
 }
@@ -51,57 +52,32 @@
                 }
             </div>
 
-            @* Date poster column: a photo poster (the date over the image with a green gradient, same
-               treatment as EventPromo) when a PosterImage is set, otherwise the plain cream date card. *@
-            @if (hasPoster)
+            @* Date poster column: the date over the image with a green gradient, filling the column —
+               matches the v1 event hero (aspect-[4/3], no max-width). With no PosterImage set (e.g. a
+               past event with no venue photo) the same card keeps its ratio on the flat green band. *@
+            @if (hasDateCard)
             {
-                if (poster is not null)
-                {
-                    @* Photo date poster: the date over the image with a green gradient, filling the
-                       column — matches the v1 event hero (aspect-[4/3], no max-width). *@
-                    <div class="relative flex aspect-[4/3] flex-col items-center justify-center overflow-hidden rounded-2xl bg-green-900 text-center shadow-soft">
+                <div class="relative flex aspect-[4/3] flex-col items-center justify-center overflow-hidden rounded-2xl bg-green-900 text-center shadow-soft">
+                    @if (poster is not null)
+                    {
                         @await DisplayAsync(await New.Image(Path: poster, Alt: "", AriaHidden: true, Width: 1000, Height: 750, Sizes: "(min-width:1024px) 45vw, 90vw", Eager: true, Priority: "high", Class: "pointer-events-none absolute inset-0 h-full w-full select-none object-cover"))
                         <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-green-900 via-green-900/35 to-transparent" aria-hidden="true"></div>
-                        <div class="relative z-10 px-6 text-white">
-                            @if (!string.IsNullOrEmpty(month))
-                            {
-                                <span class="block font-serif text-xl">@month</span>
-                            }
-                            @if (!string.IsNullOrEmpty(days))
-                            {
-                                <span class="block font-serif text-6xl leading-none sm:text-7xl">@days</span>
-                            }
-                            @if (hasYear || hasPlace)
-                            {
-                                <span class="mt-3 block text-sm font-semibold">@year@(hasYear && hasPlace ? " · " : "")@place</span>
-                            }
-                        </div>
+                    }
+                    <div class="relative z-10 px-6 text-white">
+                        @if (!string.IsNullOrEmpty(month))
+                        {
+                            <span class="block font-serif text-xl">@month</span>
+                        }
+                        @if (!string.IsNullOrEmpty(days))
+                        {
+                            <span class="block font-serif text-6xl leading-none sm:text-7xl">@days</span>
+                        }
+                        @if (hasYear || hasPlace)
+                        {
+                            <span class="mt-3 block text-sm font-semibold">@year@(hasYear && hasPlace ? " · " : "")@place</span>
+                        }
                     </div>
-                }
-                else
-                {
-                    @* No photo: the compact cream date card (aligned to the end of the column). *@
-                    <div class="lg:justify-self-end">
-                        <div class="mx-auto w-full max-w-xs rounded-2xl border p-8 text-center shadow-soft border-rule bg-cream text-green-900 theme-dark:border-white/15 theme-dark:bg-white/5 theme-dark:text-white">
-                            @if (!string.IsNullOrEmpty(month))
-                            {
-                                <div class="eyebrow text-ink-soft theme-dark:text-green-100/80">@month</div>
-                            }
-                            @if (!string.IsNullOrEmpty(days))
-                            {
-                                <div class="mt-2 font-serif text-6xl font-semibold tracking-tight">@days</div>
-                            }
-                            @if (hasYear)
-                            {
-                                <div class="mt-1 text-lg">@year</div>
-                            }
-                            @if (hasPlace)
-                            {
-                                <div class="mt-3 text-ink-soft theme-dark:text-green-100/80">@place</div>
-                            }
-                        </div>
-                    </div>
-                }
+                </div>
             }
 
         </div>

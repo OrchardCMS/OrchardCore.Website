@@ -205,6 +205,55 @@
     });
   })();
 
+  // --- Profile bios: ProfileCards renders a [data-profile] button for anyone with a bio; it opens the
+  // shared #profileModal singleton (rendered once in the Layout). The bio markup rides along in a
+  // sibling <template>, so it needs no escaping. Close with the backdrop, the button, or Escape.
+  // Cards without a bio are not buttons at all, so this is a progressive enhancement.
+  (function () {
+    var modal = document.getElementById('profileModal');
+    if (!modal) return;
+    var nameEl = document.getElementById('profileModalName');
+    var roleEl = document.getElementById('profileModalRole');
+    var bioEl = document.getElementById('profileModalBio');
+    var photoEl = document.getElementById('profileModalPhoto');
+    var lastFocus = null;
+
+    function openModal(btn) {
+      var name = btn.getAttribute('data-profile-name') || '';
+      var role = btn.getAttribute('data-profile-role') || '';
+      var img = btn.querySelector('img');
+      var tpl = btn.parentNode.querySelector('[data-profile-bio]');
+
+      nameEl.textContent = name;
+      roleEl.textContent = role;
+      roleEl.hidden = !role;
+      photoEl.src = img ? (img.currentSrc || img.src) : '';
+      photoEl.alt = name;
+      bioEl.replaceChildren(tpl ? tpl.content.cloneNode(true) : '');
+
+      lastFocus = btn;
+      modal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeModal() {
+      modal.classList.add('hidden');
+      document.body.style.overflow = '';
+      photoEl.removeAttribute('src');
+      bioEl.replaceChildren();
+      if (lastFocus) { lastFocus.focus(); lastFocus = null; }
+    }
+
+    document.querySelectorAll('[data-profile]').forEach(function (btn) {
+      btn.addEventListener('click', function () { openModal(btn); });
+    });
+    modal.querySelectorAll('[data-profile-close]').forEach(function (el) {
+      el.addEventListener('click', closeModal);
+    });
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape' && !modal.classList.contains('hidden')) closeModal();
+    });
+  })();
+
   // --- Accordions (FAQ, mobile features): a double/triple-click on a <summary> toggles it but
   // also selects the heading text, which looks odd. Suppress selection from multi-clicks only —
   // single clicks still toggle, and deliberate drag-selection (so the text stays copyable) is left
