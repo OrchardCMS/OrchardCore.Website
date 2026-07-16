@@ -4245,6 +4245,9 @@
             "LatestRelease": {
               "Text": "3.0"
             },
+            "LatestReleaseUrl": {
+              "Text": "https://github.com/OrchardCMS/OrchardCore/releases/latest"
+            },
             "LatestReleaseDate": {
               "Text": "2026-06-15T00:00:00Z"
             },

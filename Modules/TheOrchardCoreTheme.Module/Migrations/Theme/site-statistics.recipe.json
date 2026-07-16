@@ -207,6 +207,19 @@
             },
             {
               "FieldName": "TextField",
+              "Name": "LatestReleaseUrl",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Latest release URL",
+                  "Position": "4.05"
+                },
+                "TextFieldSettings": {
+                  "Hint": "The GitHub release-notes URL (its html_url); updated daily. The Statistics block links the version to it."
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
               "Name": "LatestReleaseDate",
               "Settings": {
                 "ContentPartFieldSettings": {

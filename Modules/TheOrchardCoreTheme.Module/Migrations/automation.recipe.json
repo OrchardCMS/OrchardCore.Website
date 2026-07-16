@@ -829,7 +829,7 @@
                   "Skip"
                 ],
                 "Script": {
-                  "Expression": "var data = JSON.parse(lastResult().Body); var tag = data.tag_name || data.name; if (tag) { output('release', tag.replace(/^v/, '')); output('releaseDate', data.published_at || data.created_at || ''); setOutcome('Done'); } else { setOutcome('Skip'); }"
+                  "Expression": "var data = JSON.parse(lastResult().Body); var tag = data.tag_name || data.name; if (tag) { output('release', tag.replace(/^v/, '')); output('releaseUrl', data.html_url || ''); output('releaseDate', data.published_at || data.created_at || ''); setOutcome('Done'); } else { setOutcome('Skip'); }"
                 }
               }
             },
@@ -847,7 +847,7 @@
                   "Expression": "\"ocwebsitesitestatistics00\""
                 },
                 "ContentProperties": {
-                  "Expression": "{ \"SiteStatistics\": { \"LatestRelease\": { \"Text\": \"{{ Workflow.Output[\"release\"] }}\" }, \"LatestReleaseDate\": { \"Text\": \"{{ Workflow.Output[\"releaseDate\"] }}\" } } }"
+                  "Expression": "{ \"SiteStatistics\": { \"LatestRelease\": { \"Text\": \"{{ Workflow.Output[\"release\"] }}\" }, \"LatestReleaseUrl\": { \"Text\": \"{{ Workflow.Output[\"releaseUrl\"] }}\" }, \"LatestReleaseDate\": { \"Text\": \"{{ Workflow.Output[\"releaseDate\"] }}\" } } }"
                 },
                 "Publish": true
               }
