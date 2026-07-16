@@ -4447,6 +4447,159 @@
                 "TitlePart": {
                   "Title": "Common questions."
                 }
+              },
+              {
+                "ContentItemId": "[js:uuid()]",
+                "ContentType": "CardGrid",
+                "DisplayText": "Stay up to date.",
+                "Latest": true,
+                "Published": true,
+                "BlockPart": {
+                  "Theme": {
+                    "Text": "White"
+                  },
+                  "AnchorId": {
+                    "Text": "stay-up-to-date"
+                  },
+                  "ShowInNav": {
+                    "Value": false
+                  },
+                  "NavText": {
+                    "Text": ""
+                  }
+                },
+                "BlockIntro": {
+                  "Title": {
+                    "Text": "Stay up to date."
+                  },
+                  "Lead": {
+                    "Html": "<p>Questions about the conference, or ideas for it? Here is where to ask, and how to hear about updates first.</p>"
+                  }
+                },
+                "Cards": {
+                  "ContentItems": [
+                    {
+                      "ContentItemId": "[js:uuid()]",
+                      "ContentType": "Card",
+                      "DisplayText": "Discussion board",
+                      "Latest": true,
+                      "Published": true,
+                      "TitlePart": {
+                        "Title": "Discussion board"
+                      },
+                      "Card": {
+                        "Body": {
+                          "Html": "<p>Do you have questions about the conference, or ideas for it? Bring them to the discussion board and talk them through with the organizers.</p>"
+                        }
+                      },
+                      "CallToActions": {
+                        "ContentItems": [
+                          {
+                            "ContentItemId": "[js:uuid()]",
+                            "ContentType": "CallToAction",
+                            "DisplayText": "Visit the discussion board",
+                            "Latest": true,
+                            "Published": true,
+                            "CallToAction": {
+                              "Link": {
+                                "Url": "https://github.com/orgs/OrchardCMS/discussions/18889",
+                                "Text": "Visit the discussion board",
+                                "Target": "_blank"
+                              },
+                              "Variant": {
+                                "Text": "Primary"
+                              }
+                            },
+                            "TitlePart": {
+                              "Title": "Visit the discussion board"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "ContentItemId": "[js:uuid()]",
+                      "ContentType": "Card",
+                      "DisplayText": "Newsletter",
+                      "Latest": true,
+                      "Published": true,
+                      "TitlePart": {
+                        "Title": "Newsletter"
+                      },
+                      "Card": {
+                        "Body": {
+                          "Html": "<p>Subscribe to know about updates right away, from speaker announcements to the final schedule.</p>"
+                        }
+                      },
+                      "CallToActions": {
+                        "ContentItems": [
+                          {
+                            "ContentItemId": "[js:uuid()]",
+                            "ContentType": "CallToAction",
+                            "DisplayText": "Subscribe to the newsletter",
+                            "Latest": true,
+                            "Published": true,
+                            "CallToAction": {
+                              "Link": {
+                                "Url": "https://orchardcore.us12.list-manage.com/subscribe?u=32f819a768237590e479c9d0a&id=78345cd227",
+                                "Text": "Subscribe to the newsletter",
+                                "Target": "_blank"
+                              },
+                              "Variant": {
+                                "Text": "Secondary"
+                              }
+                            },
+                            "TitlePart": {
+                              "Title": "Subscribe to the newsletter"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "ContentItemId": "[js:uuid()]",
+                      "ContentType": "Card",
+                      "DisplayText": "Contact the team",
+                      "Latest": true,
+                      "Published": true,
+                      "TitlePart": {
+                        "Title": "Contact the team"
+                      },
+                      "Card": {
+                        "Body": {
+                          "Html": "<p>If you have questions the FAQs do not cover, the organizer team is happy to hear from you directly.</p>"
+                        }
+                      },
+                      "CallToActions": {
+                        "ContentItems": [
+                          {
+                            "ContentItemId": "[js:uuid()]",
+                            "ContentType": "CallToAction",
+                            "DisplayText": "Email the team",
+                            "Latest": true,
+                            "Published": true,
+                            "CallToAction": {
+                              "Link": {
+                                "Url": "mailto:contact@orchardcore.net",
+                                "Text": "Email the team",
+                                "Target": ""
+                              },
+                              "Variant": {
+                                "Text": "Secondary"
+                              }
+                            },
+                            "TitlePart": {
+                              "Title": "Email the team"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                },
+                "TitlePart": {
+                  "Title": "Stay up to date."
+                }
               }
             ]
           },
