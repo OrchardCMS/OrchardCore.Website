@@ -119,48 +119,48 @@
           "SourcePath": "../wwwroot/assets/harvest/harvest-2026/convince-your-boss-one-pager.webp"
         },
         {
-          "TargetPath": "harvest/last-year/last-year-1.jpeg",
-          "SourcePath": "../wwwroot/assets/harvest/last-year/last-year-1.jpeg"
+          "TargetPath": "harvest/harvest-2025/last-year-1.jpeg",
+          "SourcePath": "../wwwroot/assets/harvest/harvest-2025/last-year-1.jpeg"
         },
         {
-          "TargetPath": "harvest/last-year/last-year-2.jpeg",
-          "SourcePath": "../wwwroot/assets/harvest/last-year/last-year-2.jpeg"
+          "TargetPath": "harvest/harvest-2025/last-year-2.jpeg",
+          "SourcePath": "../wwwroot/assets/harvest/harvest-2025/last-year-2.jpeg"
         },
         {
-          "TargetPath": "harvest/last-year/last-year-3.jpeg",
-          "SourcePath": "../wwwroot/assets/harvest/last-year/last-year-3.jpeg"
+          "TargetPath": "harvest/harvest-2025/last-year-3.jpeg",
+          "SourcePath": "../wwwroot/assets/harvest/harvest-2025/last-year-3.jpeg"
         },
         {
-          "TargetPath": "harvest/last-year/last-year-4.jpeg",
-          "SourcePath": "../wwwroot/assets/harvest/last-year/last-year-4.jpeg"
+          "TargetPath": "harvest/harvest-2025/last-year-4.jpeg",
+          "SourcePath": "../wwwroot/assets/harvest/harvest-2025/last-year-4.jpeg"
         },
         {
-          "TargetPath": "harvest/last-year/last-year-5.jpeg",
-          "SourcePath": "../wwwroot/assets/harvest/last-year/last-year-5.jpeg"
+          "TargetPath": "harvest/harvest-2025/last-year-5.jpeg",
+          "SourcePath": "../wwwroot/assets/harvest/harvest-2025/last-year-5.jpeg"
         },
         {
-          "TargetPath": "harvest/last-year/last-year-6.jpeg",
-          "SourcePath": "../wwwroot/assets/harvest/last-year/last-year-6.jpeg"
+          "TargetPath": "harvest/harvest-2025/last-year-6.jpeg",
+          "SourcePath": "../wwwroot/assets/harvest/harvest-2025/last-year-6.jpeg"
         },
         {
-          "TargetPath": "harvest/last-year/last-year-7.jpeg",
-          "SourcePath": "../wwwroot/assets/harvest/last-year/last-year-7.jpeg"
+          "TargetPath": "harvest/harvest-2025/last-year-7.jpeg",
+          "SourcePath": "../wwwroot/assets/harvest/harvest-2025/last-year-7.jpeg"
         },
         {
-          "TargetPath": "harvest/last-year/last-year-8.jpeg",
-          "SourcePath": "../wwwroot/assets/harvest/last-year/last-year-8.jpeg"
+          "TargetPath": "harvest/harvest-2025/last-year-8.jpeg",
+          "SourcePath": "../wwwroot/assets/harvest/harvest-2025/last-year-8.jpeg"
         },
         {
-          "TargetPath": "harvest/last-year/last-year-9.jpeg",
-          "SourcePath": "../wwwroot/assets/harvest/last-year/last-year-9.jpeg"
+          "TargetPath": "harvest/harvest-2025/last-year-9.jpeg",
+          "SourcePath": "../wwwroot/assets/harvest/harvest-2025/last-year-9.jpeg"
         },
         {
-          "TargetPath": "harvest/last-year/last-year-10.jpeg",
-          "SourcePath": "../wwwroot/assets/harvest/last-year/last-year-10.jpeg"
+          "TargetPath": "harvest/harvest-2025/last-year-10.jpeg",
+          "SourcePath": "../wwwroot/assets/harvest/harvest-2025/last-year-10.jpeg"
         },
         {
-          "TargetPath": "harvest/harvest-venue.jpg",
-          "SourcePath": "../wwwroot/assets/harvest/harvest-venue.jpg"
+          "TargetPath": "harvest/harvest-2026/harvest-venue.jpg",
+          "SourcePath": "../wwwroot/assets/harvest/harvest-2026/harvest-venue.jpg"
         },
         {
           "TargetPath": "partners/dotnet-foundation.svg",
@@ -179,40 +179,40 @@
           "SourcePath": "../wwwroot/assets/orchard-core-social.png"
         },
         {
-          "TargetPath": "harvest/speakers/brian-haydin.png",
-          "SourcePath": "../wwwroot/assets/harvest-speakers/brian-haydin.png"
+          "TargetPath": "harvest/harvest-2026/brian-haydin.png",
+          "SourcePath": "../wwwroot/assets/harvest/harvest-2026/brian-haydin.png"
         },
         {
-          "TargetPath": "harvest/speakers/matt-kenney.png",
-          "SourcePath": "../wwwroot/assets/harvest-speakers/matt-kenney.png"
+          "TargetPath": "harvest/harvest-2026/matt-kenney.png",
+          "SourcePath": "../wwwroot/assets/harvest/harvest-2026/matt-kenney.png"
         },
         {
-          "TargetPath": "harvest/speakers/mike-alhayek.jpeg",
-          "SourcePath": "../wwwroot/assets/harvest-speakers/mike-alhayek.jpeg"
+          "TargetPath": "harvest/harvest-2026/mike-alhayek.jpeg",
+          "SourcePath": "../wwwroot/assets/harvest/harvest-2026/mike-alhayek.jpeg"
         },
         {
-          "TargetPath": "harvest/speakers/mostefai-mohammed-amine.jpg",
-          "SourcePath": "../wwwroot/assets/harvest-speakers/mostefai-mohammed-amine.jpg"
+          "TargetPath": "harvest/harvest-2026/mostefai-mohammed-amine.jpg",
+          "SourcePath": "../wwwroot/assets/harvest/harvest-2026/mostefai-mohammed-amine.jpg"
         },
         {
-          "TargetPath": "harvest/speakers/niraj-soni.jpeg",
-          "SourcePath": "../wwwroot/assets/harvest-speakers/niraj-soni.jpeg"
+          "TargetPath": "harvest/harvest-2026/niraj-soni.jpeg",
+          "SourcePath": "../wwwroot/assets/harvest/harvest-2026/niraj-soni.jpeg"
         },
         {
-          "TargetPath": "harvest/speakers/patrik-navratil.png",
-          "SourcePath": "../wwwroot/assets/harvest-speakers/patrik-navratil.png"
+          "TargetPath": "harvest/harvest-2026/patrik-navratil.png",
+          "SourcePath": "../wwwroot/assets/harvest/harvest-2026/patrik-navratil.png"
         },
         {
-          "TargetPath": "harvest/speakers/paul-bull.jpeg",
-          "SourcePath": "../wwwroot/assets/harvest-speakers/paul-bull.jpeg"
+          "TargetPath": "harvest/harvest-2026/paul-bull.jpeg",
+          "SourcePath": "../wwwroot/assets/harvest/harvest-2026/paul-bull.jpeg"
         },
         {
-          "TargetPath": "harvest/speakers/sebastien-ros.webp",
-          "SourcePath": "../wwwroot/assets/harvest-speakers/sebastien-ros.webp"
+          "TargetPath": "harvest/harvest-2026/sebastien-ros.webp",
+          "SourcePath": "../wwwroot/assets/harvest/harvest-2026/sebastien-ros.webp"
         },
         {
-          "TargetPath": "harvest/speakers/zoltan-lehoczky.png",
-          "SourcePath": "../wwwroot/assets/harvest-speakers/zoltan-lehoczky.png"
+          "TargetPath": "harvest/harvest-2026/zoltan-lehoczky.png",
+          "SourcePath": "../wwwroot/assets/harvest/harvest-2026/zoltan-lehoczky.png"
         },
         {
           "TargetPath": "sponsors/lombiq-logo.svg",
@@ -2766,7 +2766,7 @@
                         },
                         "Photo": {
                           "Paths": [
-                            "harvest/speakers/brian-haydin.png"
+                            "harvest/harvest-2026/brian-haydin.png"
                           ],
                           "MediaTexts": [
                             "Brian Haydin"
@@ -2792,7 +2792,7 @@
                         },
                         "Photo": {
                           "Paths": [
-                            "harvest/speakers/matt-kenney.png"
+                            "harvest/harvest-2026/matt-kenney.png"
                           ],
                           "MediaTexts": [
                             "Matt Kenney"
@@ -2818,7 +2818,7 @@
                         },
                         "Photo": {
                           "Paths": [
-                            "harvest/speakers/mike-alhayek.jpeg"
+                            "harvest/harvest-2026/mike-alhayek.jpeg"
                           ],
                           "MediaTexts": [
                             "Mike Alhayek"
@@ -2844,7 +2844,7 @@
                         },
                         "Photo": {
                           "Paths": [
-                            "harvest/speakers/mostefai-mohammed-amine.jpg"
+                            "harvest/harvest-2026/mostefai-mohammed-amine.jpg"
                           ],
                           "MediaTexts": [
                             "Mostefai Mohammed Amine"
@@ -2870,7 +2870,7 @@
                         },
                         "Photo": {
                           "Paths": [
-                            "harvest/speakers/niraj-soni.jpeg"
+                            "harvest/harvest-2026/niraj-soni.jpeg"
                           ],
                           "MediaTexts": [
                             "Niraj Soni"
@@ -2896,7 +2896,7 @@
                         },
                         "Photo": {
                           "Paths": [
-                            "harvest/speakers/patrik-navratil.png"
+                            "harvest/harvest-2026/patrik-navratil.png"
                           ],
                           "MediaTexts": [
                             "Patrik Navratil"
@@ -2922,7 +2922,7 @@
                         },
                         "Photo": {
                           "Paths": [
-                            "harvest/speakers/paul-bull.jpeg"
+                            "harvest/harvest-2026/paul-bull.jpeg"
                           ],
                           "MediaTexts": [
                             "Paul Bull"
@@ -2945,7 +2945,7 @@
                         },
                         "Photo": {
                           "Paths": [
-                            "harvest/speakers/sebastien-ros.webp"
+                            "harvest/harvest-2026/sebastien-ros.webp"
                           ],
                           "MediaTexts": [
                             "Sebastien Ros"
@@ -2971,7 +2971,7 @@
                         },
                         "Photo": {
                           "Paths": [
-                            "harvest/speakers/zoltan-lehoczky.png"
+                            "harvest/harvest-2026/zoltan-lehoczky.png"
                           ],
                           "MediaTexts": [
                             "Zoltán Lehóczky"
@@ -3124,7 +3124,7 @@
                               },
                               "PresenterPhoto": {
                                 "Paths": [
-                                  "harvest/speakers/zoltan-lehoczky.png"
+                                  "harvest/harvest-2026/zoltan-lehoczky.png"
                                 ],
                                 "MediaTexts": [
                                   "Zoltán Lehóczky"
@@ -3159,7 +3159,7 @@
                               },
                               "PresenterPhoto": {
                                 "Paths": [
-                                  "harvest/speakers/mike-alhayek.jpeg"
+                                  "harvest/harvest-2026/mike-alhayek.jpeg"
                                 ],
                                 "MediaTexts": [
                                   "Mike Alhayek"
@@ -3194,7 +3194,7 @@
                               },
                               "PresenterPhoto": {
                                 "Paths": [
-                                  "harvest/speakers/matt-kenney.png"
+                                  "harvest/harvest-2026/matt-kenney.png"
                                 ],
                                 "MediaTexts": [
                                   "Matt Kenney"
@@ -3250,7 +3250,7 @@
                               },
                               "PresenterPhoto": {
                                 "Paths": [
-                                  "harvest/speakers/niraj-soni.jpeg"
+                                  "harvest/harvest-2026/niraj-soni.jpeg"
                                 ],
                                 "MediaTexts": [
                                   "Niraj Soni"
@@ -3285,7 +3285,7 @@
                               },
                               "PresenterPhoto": {
                                 "Paths": [
-                                  "harvest/speakers/mostefai-mohammed-amine.jpg"
+                                  "harvest/harvest-2026/mostefai-mohammed-amine.jpg"
                                 ],
                                 "MediaTexts": [
                                   "Mostefai Mohammed Amine"
@@ -3341,7 +3341,7 @@
                               },
                               "PresenterPhoto": {
                                 "Paths": [
-                                  "harvest/speakers/brian-haydin.png"
+                                  "harvest/harvest-2026/brian-haydin.png"
                                 ],
                                 "MediaTexts": [
                                   "Brian Haydin"
@@ -3419,7 +3419,7 @@
                               },
                               "PresenterPhoto": {
                                 "Paths": [
-                                  "harvest/speakers/zoltan-lehoczky.png"
+                                  "harvest/harvest-2026/zoltan-lehoczky.png"
                                 ],
                                 "MediaTexts": [
                                   "Zoltán Lehóczky"
@@ -3454,7 +3454,7 @@
                               },
                               "PresenterPhoto": {
                                 "Paths": [
-                                  "harvest/speakers/mike-alhayek.jpeg"
+                                  "harvest/harvest-2026/mike-alhayek.jpeg"
                                 ],
                                 "MediaTexts": [
                                   "Mike Alhayek"
@@ -3489,7 +3489,7 @@
                               },
                               "PresenterPhoto": {
                                 "Paths": [
-                                  "harvest/speakers/patrik-navratil.png"
+                                  "harvest/harvest-2026/patrik-navratil.png"
                                 ],
                                 "MediaTexts": [
                                   "Patrik Navratil"
@@ -3545,7 +3545,7 @@
                               },
                               "PresenterPhoto": {
                                 "Paths": [
-                                  "harvest/speakers/paul-bull.jpeg"
+                                  "harvest/harvest-2026/paul-bull.jpeg"
                                 ],
                                 "MediaTexts": [
                                   "Paul Bull"
@@ -3622,7 +3622,7 @@
                               },
                               "PresenterPhoto": {
                                 "Paths": [
-                                  "harvest/speakers/sebastien-ros.webp"
+                                  "harvest/harvest-2026/sebastien-ros.webp"
                                 ],
                                 "MediaTexts": [
                                   "Sebastien Ros"
@@ -3710,16 +3710,16 @@
                 "Gallery": {
                   "Images": {
                     "Paths": [
-                      "harvest/last-year/last-year-1.jpeg",
-                      "harvest/last-year/last-year-2.jpeg",
-                      "harvest/last-year/last-year-3.jpeg",
-                      "harvest/last-year/last-year-4.jpeg",
-                      "harvest/last-year/last-year-5.jpeg",
-                      "harvest/last-year/last-year-6.jpeg",
-                      "harvest/last-year/last-year-7.jpeg",
-                      "harvest/last-year/last-year-8.jpeg",
-                      "harvest/last-year/last-year-9.jpeg",
-                      "harvest/last-year/last-year-10.jpeg"
+                      "harvest/harvest-2025/last-year-1.jpeg",
+                      "harvest/harvest-2025/last-year-2.jpeg",
+                      "harvest/harvest-2025/last-year-3.jpeg",
+                      "harvest/harvest-2025/last-year-4.jpeg",
+                      "harvest/harvest-2025/last-year-5.jpeg",
+                      "harvest/harvest-2025/last-year-6.jpeg",
+                      "harvest/harvest-2025/last-year-7.jpeg",
+                      "harvest/harvest-2025/last-year-8.jpeg",
+                      "harvest/harvest-2025/last-year-9.jpeg",
+                      "harvest/harvest-2025/last-year-10.jpeg"
                     ],
                     "MediaTexts": [
                       "Attendees at last year's Orchard Harvest",
