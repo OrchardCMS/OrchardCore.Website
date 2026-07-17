@@ -47,8 +47,16 @@
     // route value. navLinks stays empty for non-LandingPage pages, so the nav loops render nothing.
     // One nav link per opted-in block, reused by the desktop nav and the mobile menu.
     var navLinks = new List<(string Anchor, string Text)>();
+
+    // The Harvest link below is the one nav item that leaves the page, so it cannot come from a block.
+    // Only Home gets it: navLinks is populated for every LandingPage, including the Harvest pages
+    // themselves. "/" is served by HomeRoute, which supplies the same contentItemId as /home, so Home
+    // matches on both routes.
+    var isHome = false;
     if (Context.Request.RouteValues["contentItemId"] is string contentItemId)
     {
+        isHome = contentItemId == Site.HomeRoute?["contentItemId"] as string;
+
         var current = await ContentManager.GetAsync(contentItemId);
         if (current?.ContentType == "LandingPage")
         {
@@ -106,6 +114,11 @@
           {
             <li><a class="nav-link transition-colors hover:text-leaf focus-visible:outline-2 focus-visible:outline-green-700" href="#@navAnchor" data-spy="@navAnchor">@navText</a></li>
           }
+          @* No data-spy: this link navigates rather than scrolling, so scroll-spy must skip it. *@
+          @if (isHome)
+          {
+            <li><a class="nav-link transition-colors hover:text-leaf focus-visible:outline-2 focus-visible:outline-green-700" href="@Url.Content("~/harvest")">Harvest</a></li>
+          }
         </ul>
       </nav>
     </div>
@@ -140,6 +153,10 @@
     @foreach (var (navAnchor, navText) in navLinks)
     {
       <li><a class="nav-link block py-3" href="#@navAnchor" data-spy="@navAnchor">@navText</a></li>
+    }
+    @if (isHome)
+    {
+      <li><a class="nav-link block py-3" href="@Url.Content("~/harvest")">Harvest</a></li>
     }
   </ul>
 </nav>
