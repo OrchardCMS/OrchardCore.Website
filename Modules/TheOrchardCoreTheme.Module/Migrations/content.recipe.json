@@ -2504,6 +2504,26 @@
                       "TitlePart": {
                         "Title": "See the schedule"
                       }
+                    },
+                    {
+                      "ContentItemId": "[js:uuid()]",
+                      "ContentType": "CallToAction",
+                      "DisplayText": "Stay up to date",
+                      "Latest": true,
+                      "Published": true,
+                      "CallToAction": {
+                        "Link": {
+                          "Url": "#stay-up-to-date",
+                          "Text": "Stay up to date",
+                          "Target": ""
+                        },
+                        "Variant": {
+                          "Text": "Secondary"
+                        }
+                      },
+                      "TitlePart": {
+                        "Title": "Stay up to date"
+                      }
                     }
                   ]
                 },
@@ -2573,6 +2593,12 @@
                   },
                   "AnchorId": {
                     "Text": "why"
+                  },
+                  "ShowInNav": {
+                    "Value": true
+                  },
+                  "NavText": {
+                    "Text": "Overview"
                   }
                 },
                 "Tabs": {
@@ -3932,7 +3958,28 @@
                   }
                 },
                 "CallToActions": {
-                  "ContentItems": []
+                  "ContentItems": [
+                    {
+                      "ContentItemId": "[js:uuid()]",
+                      "ContentType": "CallToAction",
+                      "DisplayText": "Stay up to date",
+                      "Latest": true,
+                      "Published": true,
+                      "CallToAction": {
+                        "Link": {
+                          "Url": "#stay-up-to-date",
+                          "Text": "Stay up to date",
+                          "Target": ""
+                        },
+                        "Variant": {
+                          "Text": "Secondary"
+                        }
+                      },
+                      "TitlePart": {
+                        "Title": "Stay up to date"
+                      }
+                    }
+                  ]
                 }
               },
               {
@@ -4118,12 +4165,6 @@
                   },
                   "AnchorId": {
                     "Text": "organizers"
-                  },
-                  "ShowInNav": {
-                    "Value": true
-                  },
-                  "NavText": {
-                    "Text": "Organizers"
                   }
                 },
                 "BlockIntro": {
@@ -4295,6 +4336,12 @@
                   },
                   "AnchorId": {
                     "Text": "faq"
+                  },
+                  "ShowInNav": {
+                    "Value": true
+                  },
+                  "NavText": {
+                    "Text": "FAQs"
                   }
                 },
                 "BlockIntro": {
