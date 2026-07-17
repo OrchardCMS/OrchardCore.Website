@@ -9027,8 +9027,11 @@
             "GitHubUrl": {
               "Text": "https://github.com/OrchardCMS/OrchardCore"
             },
+            "DocsUrl": {
+              "Text": "https://docs.orchardcore.net/"
+            },
             "DiscordUrl": {
-              "Text": ""
+              "Text": "https://orchardcore.net/discord"
             },
             "YouTubeUrl": {
               "Text": ""

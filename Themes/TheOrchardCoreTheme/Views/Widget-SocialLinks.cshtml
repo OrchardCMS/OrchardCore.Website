@@ -7,5 +7,5 @@
     var social = ((ContentItem)Model.ContentItem).Get<ContentPart>("SocialLinks");
 }
 <div class="hidden items-center gap-1 sm:flex">
-    @await DisplayAsync(await New.SocialLinks(Github: social?.Get<TextField>("GitHubUrl")?.Text, Discord: social?.Get<TextField>("DiscordUrl")?.Text, Youtube: social?.Get<TextField>("YouTubeUrl")?.Text, Name: Site.SiteName))
+    @await DisplayAsync(await New.SocialLinks(Github: social?.Get<TextField>("GitHubUrl")?.Text, Docs: social?.Get<TextField>("DocsUrl")?.Text, Discord: social?.Get<TextField>("DiscordUrl")?.Text, Youtube: social?.Get<TextField>("YouTubeUrl")?.Text, Name: Site.SiteName))
 </div>

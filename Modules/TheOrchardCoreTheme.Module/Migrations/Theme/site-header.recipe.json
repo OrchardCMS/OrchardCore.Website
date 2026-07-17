@@ -1,7 +1,7 @@
 {
   "name": "TheOrchardCoreTheme.Model.SiteHeader",
   "displayName": "Orchard Core Website - Content Model",
-  "description": "Header widget model. A SocialLinks widget (GitHub / Discord / YouTube URLs, rendered through the shared SocialLinks shape) placed via Layers in the site-wide 'Header' zone, so the header's social icons are content-managed. The header's primary navigation is built separately from each LandingPage's opted-in section blocks (BlockPart.ShowInNav / NavText).",
+  "description": "Header widget model. A SocialLinks widget (GitHub / Documentation / Discord / YouTube URLs, rendered through the shared SocialLinks shape) placed via Layers in the site-wide 'Header' zone, so the header's icons are content-managed. The header's primary navigation is built separately from each LandingPage's opted-in section blocks (BlockPart.ShowInNav / NavText).",
   "author": "Orchard Core",
   "version": "1.0.0",
   "issetuprecipe": false,
@@ -18,7 +18,7 @@
           "Settings": {
             "ContentTypeSettings": {
               "Stereotype": "Widget",
-              "Description": "A row of social icon links (GitHub, Discord, YouTube)."
+              "Description": "A row of icon links (GitHub, Documentation, Discord, YouTube)."
             }
           },
           "ContentTypePartDefinitionRecords": [
@@ -72,12 +72,26 @@
             },
             {
               "FieldName": "TextField",
+              "Name": "DocsUrl",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Documentation URL",
+                  "Editor": "Url",
+                  "Position": "1"
+                },
+                "TextFieldSettings": {
+                  "Hint": "Optional. Shows a documentation icon link, next to GitHub, when set."
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
               "Name": "DiscordUrl",
               "Settings": {
                 "ContentPartFieldSettings": {
                   "DisplayName": "Discord URL",
                   "Editor": "Url",
-                  "Position": "1"
+                  "Position": "2"
                 },
                 "TextFieldSettings": {
                   "Hint": "Optional. Shows a Discord icon link when set."
@@ -91,7 +105,7 @@
                 "ContentPartFieldSettings": {
                   "DisplayName": "YouTube URL",
                   "Editor": "Url",
-                  "Position": "2"
+                  "Position": "3"
                 },
                 "TextFieldSettings": {
                   "Hint": "Optional. Shows a YouTube icon link when set."
