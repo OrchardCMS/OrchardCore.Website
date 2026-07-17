@@ -4079,42 +4079,21 @@
                     {
                       "ContentItemId": "[js:uuid()]",
                       "ContentType": "Testimonial",
-                      "DisplayText": "Alex",
+                      "DisplayText": "Nick",
                       "Latest": true,
                       "Published": true,
                       "TitlePart": {
-                        "Title": "Alex"
+                        "Title": "Nick"
                       },
                       "Testimonial": {
                         "Quote": {
-                          "Text": "I came back with things I could use the next week. Seeing how other teams build on Orchard Core was worth the trip on its own."
+                          "Text": "I came away with ideas I could put to work straight away, and with direct relationships with the people who build Orchard Core. Everyone was genuinely friendly - it's rare to get this much time with the community behind a platform you rely on."
                         },
                         "Name": {
-                          "Text": "Alex"
+                          "Text": "Nick"
                         },
                         "Role": {
-                          "Text": ".NET developer"
-                        }
-                      }
-                    },
-                    {
-                      "ContentItemId": "[js:uuid()]",
-                      "ContentType": "Testimonial",
-                      "DisplayText": "Priya",
-                      "Latest": true,
-                      "Published": true,
-                      "TitlePart": {
-                        "Title": "Priya"
-                      },
-                      "Testimonial": {
-                        "Quote": {
-                          "Text": "The best part was talking to the maintainers in person. Questions that had sat in our backlog for months got answered over lunch."
-                        },
-                        "Name": {
-                          "Text": "Priya"
-                        },
-                        "Role": {
-                          "Text": "technical lead"
+                          "Text": "development manager"
                         }
                       }
                     }

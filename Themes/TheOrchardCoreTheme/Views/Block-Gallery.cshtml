@@ -91,7 +91,9 @@
 
         @if (testimonials.Count > 0)
         {
-            <div class="mt-2 grid gap-2 sm:grid-cols-2">
+            @* A lone quote spans the full width; two or more pair up. Without this a single card
+               would sit at half width with an empty column beside it. *@
+            <div class="mt-2 grid gap-2 @(testimonials.Count == 1 ? "" : "sm:grid-cols-2")">
                 @foreach (var testimonialItem in testimonials)
                 {
                     var testimonial = testimonialItem.Get<ContentPart>("Testimonial");
