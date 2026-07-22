@@ -1,0 +1,109 @@
+{
+  "name": "TheOrchardCoreTheme.Model.LandingPage",
+  "displayName": "Orchard Core Website - Content Model",
+  "description": "The LandingPage container type: its Sections bag holds any Block-stereotype section.",
+  "author": "Orchard Core",
+  "version": "1.0.0",
+  "issetuprecipe": false,
+  "categories": [
+    "theme"
+  ],
+  "steps": [
+    {
+      "name": "ReplaceContentDefinition",
+      "ContentTypes": [
+        {
+          "Name": "LandingPage",
+          "DisplayName": "Landing Page",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Creatable": true,
+              "Listable": true,
+              "Draftable": true,
+              "Versionable": true,
+              "Securable": true
+            },
+            "FullTextAspectSettings": {
+              "IncludeFullTextTemplate": false,
+              "IncludeBodyAspect": true,
+              "IncludeDisplayText": true
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "LocalizationPart",
+              "Name": "LocalizationPart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
+              }
+            },
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                },
+                "TitlePartSettings": {
+                  "Options": 0,
+                  "RenderTitle": true
+                }
+              }
+            },
+            {
+              "PartName": "AutoroutePart",
+              "Name": "AutoroutePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                },
+                "AutoroutePartSettings": {
+                  "AllowCustomPath": true,
+                  "Pattern": "{{ ContentItem.DisplayText | slugify }}",
+                  "ShowHomepageOption": true,
+                  "AllowUpdatePath": true
+                }
+              }
+            },
+            {
+              "PartName": "BagPart",
+              "Name": "Sections",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "DisplayName": "Sections",
+                  "Description": "The ordered stack of section blocks that make up the page.",
+                  "Position": "2",
+                  "Editor": "Blocks"
+                },
+                "BagPartSettings": {
+                  "ContainedContentTypes": [],
+                  "ContainedStereotypes": [
+                    "Block"
+                  ],
+                  "DisplayType": "Detail",
+                  "CollapseContainedItems": true
+                },
+                "BagPartBlocksEditorSettings": {
+                  "AddButtonText": "Add a section",
+                  "ModalTitleText": "Add a section block"
+                }
+              }
+            },
+            {
+              "PartName": "SeoMetaPart",
+              "Name": "SeoMetaPart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "3"
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "ContentParts": []
+    }
+  ]
+}

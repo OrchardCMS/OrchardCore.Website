@@ -1,0 +1,61 @@
+@*
+    Shared closing actions row for blocks that attach BlockActionsPart (+ a CallToActions bag).
+    Invoked with:
+      @await DisplayAsync(await New.BlockActions(Heading: ..., Text: ..., Actions: actionsHtml))
+    - Heading / Text : the closing copy (from BlockActionsPart).
+    - Actions        : pre-rendered button HTML (the caller loops its CallToActions bag through the
+      Button shape and passes the result), so blocks can have as many buttons as they want.
+    - MaxWidth       : optional measure class for the row (default "max-w-4xl"). Pass "max-w-none"
+      when the block above is full-width so the actions line up with it.
+    Renders only when there is a heading/text or at least one button.
+*@
+@using System.Text.Encodings.Web
+@using Microsoft.AspNetCore.Html
+@{
+    string maxWidth = Model.MaxWidth;
+    if (string.IsNullOrEmpty(maxWidth))
+    {
+        maxWidth = "max-w-4xl";
+    }
+
+    // Callers pass the pre-rendered buttons as IHtmlContent (or a string); normalize to a string
+    // so empty/whitespace-only content can collapse the actions column.
+    object? actionsValue = Model.Actions;
+    string actions;
+    if (actionsValue is IHtmlContent htmlContent)
+    {
+        using var writer = new StringWriter();
+        htmlContent.WriteTo(writer, HtmlEncoder.Default);
+        actions = writer.ToString();
+    }
+    else
+    {
+        actions = actionsValue as string ?? string.Empty;
+    }
+
+    var actionsTrim = actions.Trim();
+    var hasActions = actionsTrim != string.Empty;
+
+    string heading = Model.Heading;
+    string text = Model.Text;
+    var hasText = !string.IsNullOrEmpty(heading) || !string.IsNullOrEmpty(text);
+}
+@if (hasText || hasActions)
+{
+    <div class="mx-auto mt-16 grid @maxWidth gap-8 md:grid-cols-2 md:items-center">
+        <div>
+            @if (!string.IsNullOrEmpty(heading))
+            {
+                <h3 class="text-xl text-green-900 theme-dark:text-white">@heading</h3>
+            }
+            @if (!string.IsNullOrEmpty(text))
+            {
+                <div class="prose mt-3">@Html.Raw(text)</div>
+            }
+        </div>
+        @if (hasActions)
+        {
+            <div class="flex flex-col gap-3 md:ml-auto md:w-fit">@Html.Raw(actionsTrim)</div>
+        }
+    </div>
+}

@@ -1,0 +1,262 @@
+{
+  "name": "TheOrchardCoreTheme.Model.ComparisonTable",
+  "displayName": "Orchard Core Website - Content Model",
+  "description": "The Comparison Table block and its Column / Row / Cell items.",
+  "author": "Orchard Core",
+  "version": "1.0.0",
+  "issetuprecipe": false,
+  "categories": [
+    "theme"
+  ],
+  "steps": [
+    {
+      "name": "ReplaceContentDefinition",
+      "ContentTypes": [
+        {
+          "Name": "ComparisonTable",
+          "DisplayName": "Comparison Table",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Stereotype": "Block",
+              "Category": "Content",
+              "ThumbnailPath": "~/TheOrchardCoreTheme/block-thumbnails/ComparisonTable.png?v=2",
+              "Description": "Compare options across columns and rows."
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "BlockPart",
+              "Name": "BlockPart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
+              }
+            },
+            {
+              "PartName": "BlockIntro",
+              "Name": "BlockIntro",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                }
+              }
+            },
+            {
+              "PartName": "BagPart",
+              "Name": "Columns",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "DisplayName": "Columns",
+                  "Description": "The product columns, left to right; mark one as Highlighted.",
+                  "Position": "2"
+                },
+                "BagPartSettings": {
+                  "ContainedContentTypes": [
+                    "ComparisonColumn"
+                  ],
+                  "CollapseContainedItems": true
+                }
+              }
+            },
+            {
+              "PartName": "BagPart",
+              "Name": "Rows",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "DisplayName": "Rows",
+                  "Description": "The comparison rows; each has one cell per column, in column order.",
+                  "Position": "3"
+                },
+                "BagPartSettings": {
+                  "ContainedContentTypes": [
+                    "ComparisonRow"
+                  ],
+                  "CollapseContainedItems": true
+                }
+              }
+            },
+            {
+              "PartName": "BlockActionsPart",
+              "Name": "BlockActionsPart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "4"
+                }
+              }
+            },
+            {
+              "PartName": "BagPart",
+              "Name": "CallToActions",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "DisplayName": "Call To Actions",
+                  "Description": "The closing call-to-action buttons shown beneath the table.",
+                  "Position": "5"
+                },
+                "BagPartSettings": {
+                  "ContainedContentTypes": [
+                    "CallToAction"
+                  ],
+                  "CollapseContainedItems": true
+                }
+              }
+            },
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                },
+                "TitlePartSettings": {
+                  "Options": 2,
+                  "Pattern": "{{ Model.ContentItem.Content.BlockIntro.Title.Text }}",
+                  "RenderTitle": false
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "ComparisonColumn",
+          "DisplayName": "Comparison Column",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Stereotype": ""
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "ComparisonColumn",
+              "Name": "ComparisonColumn",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                }
+              }
+            },
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                },
+                "TitlePartSettings": {
+                  "Options": 0,
+                  "RenderTitle": false
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "ComparisonRow",
+          "DisplayName": "Comparison Row",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Stereotype": ""
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "BagPart",
+              "Name": "Cells",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "DisplayName": "Cells",
+                  "Description": "One cell per column, in column order.",
+                  "Position": "1"
+                },
+                "BagPartSettings": {
+                  "ContainedContentTypes": [
+                    "ComparisonCell"
+                  ],
+                  "CollapseContainedItems": true
+                }
+              }
+            },
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                },
+                "TitlePartSettings": {
+                  "Options": 0,
+                  "RenderTitle": false
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "ComparisonCell",
+          "DisplayName": "Comparison Cell",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Stereotype": ""
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                },
+                "TitlePartSettings": {
+                  "Options": 0,
+                  "RenderTitle": false
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "ContentParts": [
+        {
+          "Name": "ComparisonColumn",
+          "Settings": {
+            "ContentPartSettings": {
+              "Description": "A product column; its title is the product name shown in the header."
+            }
+          },
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "TextField",
+              "Name": "Highlighted",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Highlighted",
+                  "Editor": "PredefinedList",
+                  "Position": "0"
+                },
+                "TextFieldPredefinedListEditorSettings": {
+                  "Editor": "Dropdown",
+                  "DefaultValue": "No",
+                  "Options": [
+                    {
+                      "name": "No",
+                      "value": "No"
+                    },
+                    {
+                      "name": "Yes",
+                      "value": "Yes"
+                    }
+                  ]
+                },
+                "TextFieldSettings": {
+                  "Hint": "Highlight this column (the primary product)."
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

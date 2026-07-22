@@ -1,0 +1,229 @@
+{
+  "name": "TheOrchardCoreTheme.Model.Gallery",
+  "displayName": "Orchard Core Website - Content Model",
+  "description": "A generic photo Gallery block: one multiple MediaField (with per-photo focal points) rendered in a dense, dynamic grid, plus an optional Testimonials bag of attendee quote cards shown beneath the photos.",
+  "author": "Orchard Core",
+  "version": "1.0.0",
+  "issetuprecipe": false,
+  "categories": [
+    "theme"
+  ],
+  "steps": [
+    {
+      "name": "ReplaceContentDefinition",
+      "ContentTypes": [
+        {
+          "Name": "Gallery",
+          "DisplayName": "Gallery",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Stereotype": "Block",
+              "Category": "Content",
+              "ThumbnailPath": "~/TheOrchardCoreTheme/block-thumbnails/Gallery.png?v=2",
+              "Description": "A photo gallery with optional attendee quotes."
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "BlockPart",
+              "Name": "BlockPart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
+              }
+            },
+            {
+              "PartName": "BlockIntro",
+              "Name": "BlockIntro",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                }
+              }
+            },
+            {
+              "PartName": "Gallery",
+              "Name": "Gallery",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "2"
+                }
+              }
+            },
+            {
+              "PartName": "BagPart",
+              "Name": "Testimonials",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "DisplayName": "Testimonials",
+                  "Description": "Optional attendee quote cards shown beneath the photos.",
+                  "Position": "3"
+                },
+                "BagPartSettings": {
+                  "ContainedContentTypes": [
+                    "Testimonial"
+                  ],
+                  "CollapseContainedItems": true
+                }
+              }
+            },
+            {
+              "PartName": "BlockActionsPart",
+              "Name": "BlockActionsPart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "4"
+                }
+              }
+            },
+            {
+              "PartName": "BagPart",
+              "Name": "CallToActions",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "DisplayName": "Call To Actions",
+                  "Description": "The closing call-to-action buttons shown beneath the gallery.",
+                  "Position": "5"
+                },
+                "BagPartSettings": {
+                  "ContainedContentTypes": [
+                    "CallToAction"
+                  ],
+                  "CollapseContainedItems": true
+                }
+              }
+            },
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                },
+                "TitlePartSettings": {
+                  "Options": 2,
+                  "Pattern": "{{ Model.ContentItem.Content.BlockIntro.Title.Text }}",
+                  "RenderTitle": false
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "Testimonial",
+          "DisplayName": "Testimonial",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Stereotype": ""
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "Testimonial",
+              "Name": "Testimonial",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                }
+              }
+            },
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                },
+                "TitlePartSettings": {
+                  "Options": 2,
+                  "Pattern": "{{ Model.ContentItem.Content.Testimonial.Name.Text }}",
+                  "RenderTitle": false
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "ContentParts": [
+        {
+          "Name": "Gallery",
+          "Settings": {
+            "ContentPartSettings": {
+              "Description": "Holds the gallery photos as one multiple media field."
+            }
+          },
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "MediaField",
+              "Name": "Images",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Images",
+                  "Editor": "Gallery",
+                  "Position": "0"
+                },
+                "MediaFieldSettings": {
+                  "Multiple": true,
+                  "AllowMediaText": true,
+                  "AllowAnchors": true,
+                  "Hint": "Upload the gallery photos. Drag to reorder; set a focal point on each so it crops cleanly."
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "Testimonial",
+          "Settings": {
+            "ContentPartSettings": {
+              "Description": "One attendee quote: the quote text plus who said it (name and role)."
+            }
+          },
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "TextField",
+              "Name": "Quote",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Quote",
+                  "Position": "0"
+                },
+                "TextFieldSettings": {
+                  "Editor": "TextArea",
+                  "Hint": "The quote itself. No need to add quotation marks - they are added automatically."
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "Name",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Name",
+                  "Position": "1"
+                },
+                "TextFieldSettings": {
+                  "Hint": "Optional. Who said it, e.g. Alex."
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "Role",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Role",
+                  "Position": "2"
+                },
+                "TextFieldSettings": {
+                  "Hint": "Optional. Shown after the name, e.g. .NET developer."
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

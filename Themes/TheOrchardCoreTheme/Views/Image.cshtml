@@ -1,0 +1,63 @@
+@using System.Globalization
+@using OrchardCore.Media.Core.Processing
+@*
+    Shared responsive image for media-library images. Invoked as:
+      @await DisplayAsync(await New.Image(Path: <mediaPath>, Alt: "...", Width: 800, Height: 600, Sizes: "...", Class: "..."))
+
+    Builds a WebP srcset via OrchardCore's AssetUrl at 0.5x / 1x / 1.5x / 2x of Width, so the browser
+    picks the best file for the rendered width AND pixel density. Lazy by default; pass Eager: true (and
+    Priority: "high") for the hero.
+
+    Modes:
+    - Crop (default when Width AND Height given): server-crops to the Width:Height ratio, keeping the
+      focal point (anchor). Emits width/height attributes → no layout shift. Use for fixed-ratio images.
+    - No-crop (Width+Height given, Crop: false): resizes to width preserving the source aspect; still
+      emits width/height attrs (pass the image's intrinsic ratio) → no layout shift. Use for screenshots.
+    - Fill (only Width, no Height): resizes to width, no width/height attrs — the caller's fixed-aspect
+      container controls layout; pass Position for object-position (e.g. gallery tiles with focal points).
+*@
+@{
+    string? path = Model.Path;
+}
+@if (!string.IsNullOrEmpty(path))
+{
+    int w = (int?)Model.Width ?? 800;
+    int? h = (int?)Model.Height;
+    var q = (int?)Model.Quality ?? 80;
+    string sizes = Model.Sizes ?? "100vw";
+    var loading = Model.Eager == true ? "eager" : "lazy";
+    var hasDims = h is > 0;
+    var doCrop = hasDims && Model.Crop != false;
+
+    // Callers pass the media field's typed anchor (focal point).
+    var anchor = (object?)Model.Anchor as Anchor;
+
+    var widths = new[] { (int)Math.Round(w * 0.5), w, (int)Math.Round(w * 1.5), w * 2 };
+
+    string ResizedUrl(int width)
+    {
+        // Preserve the crop ratio at every srcset width (heights scale with the widths).
+        var height = doCrop ? (int?)(width * h!.Value / w) : null;
+        var mode = doCrop ? ResizeMode.Crop : ResizeMode.Max;
+        return Orchard.AssetUrl(path, width: width, height: height, resizeMode: mode, quality: q, format: Format.WebP, anchor: doCrop ? anchor : null);
+    }
+
+    var srcset = string.Join(", ", widths.Select(width => $"{ResizedUrl(width)} {width.ToString(CultureInfo.InvariantCulture)}w"));
+    var src = ResizedUrl(w);
+
+    string? priority = Model.Priority;
+    string? position = Model.Position;
+
+    <img src="@src"
+         srcset="@srcset"
+         sizes="@sizes"
+         width="@(hasDims ? w : null)"
+         height="@(hasDims ? h : null)"
+         alt="@Model.Alt"
+         loading="@loading"
+         decoding="async"
+         fetchpriority="@(string.IsNullOrEmpty(priority) ? null : priority)"
+         aria-hidden="@(Model.AriaHidden == true ? "true" : null)"
+         style="@(string.IsNullOrEmpty(position) ? null : $"object-position: {position}")"
+         class="@Model.Class">
+}

@@ -1,0 +1,197 @@
+{
+  "name": "TheOrchardCoreTheme.Model.CardGrid",
+  "displayName": "Orchard Core Website - Content Model",
+  "description": "The Cards Grid block and the shared Card type (title/body + optional meta and button). The card body runs through shortcodes, so [contributor_avatars] can render the community avatar row.",
+  "author": "Orchard Core",
+  "version": "1.0.0",
+  "issetuprecipe": false,
+  "categories": [
+    "theme"
+  ],
+  "steps": [
+    {
+      "name": "ReplaceContentDefinition",
+      "ContentTypes": [
+        {
+          "Name": "CardGrid",
+          "DisplayName": "Cards Grid",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Stereotype": "Block",
+              "Category": "Content",
+              "ThumbnailPath": "~/TheOrchardCoreTheme/block-thumbnails/CardGrid.png?v=2",
+              "Description": "A responsive grid of simple cards."
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "BlockPart",
+              "Name": "BlockPart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
+              }
+            },
+            {
+              "PartName": "BlockIntro",
+              "Name": "BlockIntro",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                }
+              }
+            },
+            {
+              "PartName": "BagPart",
+              "Name": "Cards",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "DisplayName": "Cards",
+                  "Description": "The cards shown in the grid.",
+                  "Position": "2"
+                },
+                "BagPartSettings": {
+                  "ContainedContentTypes": [
+                    "Card"
+                  ],
+                  "CollapseContainedItems": true
+                }
+              }
+            },
+            {
+              "PartName": "BlockActionsPart",
+              "Name": "BlockActionsPart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "3"
+                }
+              }
+            },
+            {
+              "PartName": "BagPart",
+              "Name": "CallToActions",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "DisplayName": "Call To Actions",
+                  "Description": "The closing call-to-action buttons shown beneath the grid.",
+                  "Position": "4"
+                },
+                "BagPartSettings": {
+                  "ContainedContentTypes": [
+                    "CallToAction"
+                  ],
+                  "CollapseContainedItems": true
+                }
+              }
+            },
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                },
+                "TitlePartSettings": {
+                  "Options": 2,
+                  "Pattern": "{{ Model.ContentItem.Content.BlockIntro.Title.Text }}",
+                  "RenderTitle": false
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "Card",
+          "DisplayName": "Card",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Stereotype": ""
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "Card",
+              "Name": "Card",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                }
+              }
+            },
+            {
+              "PartName": "BagPart",
+              "Name": "CallToActions",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "DisplayName": "Call To Actions",
+                  "Description": "Optional buttons shown at the bottom of the card. Add one or more.",
+                  "Position": "3"
+                },
+                "BagPartSettings": {
+                  "ContainedContentTypes": [
+                    "CallToAction"
+                  ],
+                  "CollapseContainedItems": true
+                }
+              }
+            },
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                },
+                "TitlePartSettings": {
+                  "Options": 0,
+                  "RenderTitle": false
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "ContentParts": [
+        {
+          "Name": "Card",
+          "Settings": {
+            "ContentPartSettings": {
+              "Description": "A card body: the title is the editable TitlePart (which sets the item's DisplayText, rendered as the card heading). Holds an optional meta line, the body, and buttons (CallToActions). Shared across card blocks. The body runs through shortcodes, so e.g. [contributor_avatars] can render the community avatar row."
+            }
+          },
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "TextField",
+              "Name": "Meta",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Meta",
+                  "Position": "0"
+                },
+                "TextFieldSettings": {
+                  "Hint": "Optional small line above the body"
+                }
+              }
+            },
+            {
+              "FieldName": "HtmlField",
+              "Name": "Body",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Body",
+                  "Editor": "Trumbowyg",
+                  "Position": "1"
+                },
+                "HtmlFieldTrumbowygEditorSettings": {
+                  "Options": "{ \"btns\": [[\"strong\", \"em\"], [\"link\"], [\"insertShortcode\"], [\"removeformat\"]], \"removeformatPasted\": true }",
+                  "InsertMediaWithUrl": false
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

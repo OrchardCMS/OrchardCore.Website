@@ -1,0 +1,217 @@
+{
+  "name": "TheOrchardCoreTheme.Model.HeroEvent",
+  "displayName": "Orchard Core Website - Content Model",
+  "description": "The Hero (Event) block.",
+  "author": "Orchard Core",
+  "version": "1.0.0",
+  "issetuprecipe": false,
+  "categories": [
+    "theme"
+  ],
+  "steps": [
+    {
+      "name": "ReplaceContentDefinition",
+      "ContentTypes": [
+        {
+          "Name": "HeroEvent",
+          "DisplayName": "Hero (Event)",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Stereotype": "Block",
+              "Category": "Hero",
+              "ThumbnailPath": "~/TheOrchardCoreTheme/block-thumbnails/HeroEvent.png?v=2",
+              "Description": "Event hero: headline and copy beside a date poster."
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "HeroEvent",
+              "Name": "HeroEvent",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                }
+              }
+            },
+            {
+              "PartName": "BlockPart",
+              "Name": "BlockPart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
+              }
+            },
+            {
+              "PartName": "BagPart",
+              "Name": "CallToActions",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "DisplayName": "Call To Actions",
+                  "Description": "The call-to-action buttons shown in this hero.",
+                  "Position": "2"
+                },
+                "BagPartSettings": {
+                  "ContainedContentTypes": [
+                    "CallToAction"
+                  ],
+                  "CollapseContainedItems": true
+                }
+              }
+            },
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                },
+                "TitlePartSettings": {
+                  "Options": 0,
+                  "RenderTitle": false
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "ContentParts": [
+        {
+          "Name": "HeroEvent",
+          "Settings": {
+            "ContentPartSettings": {
+              "Description": "Fields for the event hero: copy beside a date poster (month, days, year, place)."
+            }
+          },
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "HtmlField",
+              "Name": "Lead",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Lead",
+                  "Editor": "Trumbowyg",
+                  "Position": "1"
+                },
+                "HtmlFieldTrumbowygEditorSettings": {
+                  "Options": "{ \"btns\": [[\"strong\", \"em\"], [\"link\"], [\"insertShortcode\"], [\"removeformat\"]], \"removeformatPasted\": true }",
+                  "InsertMediaWithUrl": false
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "AnnouncementBadge",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Announcement badge",
+                  "Position": "2"
+                },
+                "TextFieldSettings": {
+                  "Hint": "Short badge text, e.g. Event or Release."
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "AnnouncementText",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Announcement text",
+                  "Position": "3"
+                },
+                "TextFieldSettings": {
+                  "Hint": "The message shown between the badge and the link."
+                }
+              }
+            },
+            {
+              "FieldName": "LinkField",
+              "Name": "Announcement",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Announcement link",
+                  "Position": "4"
+                },
+                "LinkFieldSettings": {
+                  "LinkTextMode": "Optional",
+                  "HintLinkText": "Link label, e.g. See details",
+                  "Hint": "The link label (e.g. \"See details\") and its URL. The whole banner shows only when a URL is set."
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "EventMonth",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Event month",
+                  "Position": "4"
+                },
+                "TextFieldSettings": {
+                  "Hint": "e.g. June"
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "EventDays",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Event days",
+                  "Position": "5"
+                },
+                "TextFieldSettings": {
+                  "Hint": "e.g. 17–18"
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "EventYear",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Event year",
+                  "Position": "6"
+                },
+                "TextFieldSettings": {
+                  "Hint": "e.g. 2026"
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "EventPlace",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Event place",
+                  "Position": "7"
+                },
+                "TextFieldSettings": {
+                  "Hint": "e.g. Vancouver, Canada"
+                }
+              }
+            },
+            {
+              "FieldName": "MediaField",
+              "Name": "PosterImage",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Poster image",
+                  "Editor": "Gallery",
+                  "Position": "8"
+                },
+                "MediaFieldSettings": {
+                  "Multiple": false,
+                  "AllowMediaText": true,
+                  "AllowAnchors": false,
+                  "Hint": "Optional background photo for the date poster (shown under a green gradient)."
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

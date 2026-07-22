@@ -1,0 +1,69 @@
+@using Microsoft.AspNetCore.Html
+@*
+    Schedule. An optional heading + lead, then the groups (a day / track / section each) stacked
+    full-width, each with a heading + optional subheading and a list of sessions (rendered by the
+    shared ScheduleSession shape), plus the shared BlockActions closing row. Band/anchor + theme come
+    from the Block part. Generic: reuse for event days, course weeks, roadmap phases, a single agenda.
+*@
+@{
+    var item = (ContentItem)Model.ContentItem;
+    var intro = item.Get<ContentPart>("BlockIntro");
+    var section = item.Get<ContentPart>("BlockPart");
+    var theme = section?.Get<TextField>("Theme")?.Text;
+    var themeName = (string.IsNullOrEmpty(theme) ? "White" : theme).ToLowerInvariant();
+    var anchor = section?.Get<TextField>("AnchorId")?.Text;
+    var groups = item.Get<BagPart>("Groups")?.ContentItems ?? [];
+    var blockActions = item.Get<ContentPart>("BlockActionsPart");
+
+    // Closing actions row: copy from BlockActionsPart, buttons from the CallToActions bag.
+    var actionsHtml = new HtmlContentBuilder();
+    foreach (var cta in item.Get<BagPart>("CallToActions")?.ContentItems ?? [])
+    {
+        var callToAction = cta.Get<ContentPart>("CallToAction");
+        var link = callToAction?.Get<LinkField>("Link");
+        actionsHtml.AppendHtml(await DisplayAsync(await New.Button(Url: link?.Url, Text: link?.Text, Target: link?.Target, Variant: callToAction?.Get<TextField>("Variant")?.Text)));
+    }
+}
+<section id="@(string.IsNullOrEmpty(anchor) ? null : anchor)" class="theme-@themeName">
+    <div class="mx-auto max-w-content px-6 band">
+
+        @await DisplayAsync(await New.BlockIntro(Title: intro?.Get<TextField>("Title")?.Text, Lead: intro?.Get<HtmlField>("Lead")?.Html, WrapperWidth: "mx-auto max-w-4xl"))
+
+        @if (groups.Count > 0)
+        {
+            <div class="mx-auto mt-10 max-w-4xl space-y-12">
+                @foreach (var group in groups)
+                {
+                    var scheduleGroup = group.Get<ContentPart>("ScheduleGroup");
+                    var heading = scheduleGroup?.Get<TextField>("Heading")?.Text;
+                    var subheading = scheduleGroup?.Get<TextField>("Subheading")?.Text;
+                    var sessions = group.Get<BagPart>("Sessions")?.ContentItems ?? [];
+                    <div>
+                        @if (!string.IsNullOrEmpty(heading))
+                        {
+                            <div class="pb-3">
+                                <h3 class="text-2xl text-green-900 theme-dark:text-white">@heading</h3>
+                                @if (!string.IsNullOrEmpty(subheading))
+                                {
+                                    <p class="mt-0.5 text-sm text-ink-soft theme-dark:text-green-100/70">@subheading</p>
+                                }
+                            </div>
+                        }
+                        @if (sessions.Count > 0)
+                        {
+                            <ul class="space-y-1">
+                                @foreach (var sessionItem in sessions)
+                                {
+                                    <li>@await DisplayAsync(await New.ScheduleSession(Item: sessionItem))</li>
+                                }
+                            </ul>
+                        }
+                    </div>
+                }
+            </div>
+        }
+
+        @await DisplayAsync(await New.BlockActions(Heading: blockActions?.Get<TextField>("Heading")?.Text, Text: blockActions?.Get<HtmlField>("Text")?.Html, Actions: actionsHtml, MaxWidth: "mx-auto max-w-4xl"))
+
+    </div>
+</section>

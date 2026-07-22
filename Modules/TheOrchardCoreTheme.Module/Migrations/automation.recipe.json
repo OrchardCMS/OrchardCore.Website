@@ -1,0 +1,901 @@
+{
+  "name": "TheOrchardCoreTheme.Automation",
+  "displayName": "Orchard Core Website - Automation",
+  "description": "Shortcode templates: the live-stats tokens ([nuget_downloads]/[github_stars]/[contributors]/[last_commit]/[latest_release]), the [contributor_avatars] row that reads the SiteStatistics singleton's TopContributors JSON, plus the code-color tokens ([cmd]/[name]/[comment]/[flag]/[type]) that wrap snippet text in the .c-* classes. Also the workflows that refresh the SiteStatistics singleton from the GitHub API: daily for the figures, top-5 contributors and latest release, and hourly for the latest commit timestamp. Built-in activities only.",
+  "author": "Orchard Core",
+  "version": "1.0.0",
+  "issetuprecipe": false,
+  "categories": [
+    "theme"
+  ],
+  "variables": {
+    "workflowTypeId": "[js:uuid()]",
+    "timerId": "[js:uuid()]",
+    "httpId": "[js:uuid()]",
+    "scriptId": "[js:uuid()]",
+    "updateId": "[js:uuid()]",
+    "starsTypeId": "[js:uuid()]",
+    "starsTimerId": "[js:uuid()]",
+    "starsHttpId": "[js:uuid()]",
+    "starsScriptId": "[js:uuid()]",
+    "starsUpdateId": "[js:uuid()]",
+    "contribTypeId": "[js:uuid()]",
+    "contribTimerId": "[js:uuid()]",
+    "contribHttpId": "[js:uuid()]",
+    "contribScriptId": "[js:uuid()]",
+    "contribUpdateId": "[js:uuid()]",
+    "topTypeId": "[js:uuid()]",
+    "topTimerId": "[js:uuid()]",
+    "topHttpId": "[js:uuid()]",
+    "topScriptId": "[js:uuid()]",
+    "topUpdateId": "[js:uuid()]",
+    "commitTypeId": "[js:uuid()]",
+    "commitTimerId": "[js:uuid()]",
+    "commitHttpId": "[js:uuid()]",
+    "commitScriptId": "[js:uuid()]",
+    "commitUpdateId": "[js:uuid()]",
+    "releaseTypeId": "[js:uuid()]",
+    "releaseTimerId": "[js:uuid()]",
+    "releaseHttpId": "[js:uuid()]",
+    "releaseScriptId": "[js:uuid()]",
+    "releaseUpdateId": "[js:uuid()]",
+    "refreshPublish0": "[js:uuid()]",
+    "refreshPublish1": "[js:uuid()]",
+    "refreshPublish2": "[js:uuid()]",
+    "refreshPublish3": "[js:uuid()]",
+    "refreshPublish4": "[js:uuid()]",
+    "refreshPublish5": "[js:uuid()]"
+  },
+  "steps": [
+    {
+      "name": "ShortcodeTemplates",
+      "ShortcodeTemplates": {
+        "nuget_downloads": {
+          "Content": "{%- assign statistics = 'ocwebsitesitestatistics00' | content_item_id -%}{%- assign downloads = statistics.Content.SiteStatistics.NugetDownloads.Value -%}{%- if downloads == nil or downloads == 0 -%}3.3M+{%- elsif downloads >= 1000000 -%}{{ downloads | divided_by: 1000000.0 | round: 1 }}M+{%- elsif downloads >= 1000 -%}{{ downloads | divided_by: 1000.0 | round: 0 }}K+{%- else -%}{{ downloads }}{%- endif -%}",
+          "Hint": "The latest NuGet downloads figure from the SiteStatistics singleton.",
+          "Usage": "[nuget_downloads]",
+          "DefaultValue": "[nuget_downloads]",
+          "Categories": [
+            "Content"
+          ]
+        },
+        "github_stars": {
+          "Content": "{%- assign statistics = 'ocwebsitesitestatistics00' | content_item_id -%}{%- assign stars = statistics.Content.SiteStatistics.GithubStars.Value -%}{%- if stars == nil or stars == 0 -%}8K+{%- elsif stars >= 1000 -%}{{ stars | divided_by: 1000.0 | round: 0 }}K+{%- else -%}{{ stars }}{%- endif -%}",
+          "Hint": "The latest GitHub stars figure from the SiteStatistics singleton.",
+          "Usage": "[github_stars]",
+          "DefaultValue": "[github_stars]",
+          "Categories": [
+            "Content"
+          ]
+        },
+        "contributors": {
+          "Content": "{%- assign statistics = 'ocwebsitesitestatistics00' | content_item_id -%}{%- assign contributorCount = statistics.Content.SiteStatistics.Contributors.Value -%}{%- if contributorCount == nil or contributorCount == 0 -%}300+{%- elsif contributorCount >= 100 -%}{{ contributorCount | divided_by: 100.0 | floor | times: 100 }}+{%- else -%}{{ contributorCount }}{%- endif -%}",
+          "Hint": "The latest contributor count from the SiteStatistics singleton.",
+          "Usage": "[contributors]",
+          "DefaultValue": "[contributors]",
+          "Categories": [
+            "Content"
+          ]
+        },
+        "last_commit": {
+          "Content": "{%- assign statistics = 'ocwebsitesitestatistics00' | content_item_id -%}{%- assign committedAt = statistics.Content.SiteStatistics.LastCommit.Text -%}{%- if committedAt and committedAt != '' -%}{%- assign committedUtc = committedAt | replace: 'Z', '' -%}{{ 'TimeSpan' | shape_new: utc: committedUtc | shape_render }}{%- endif -%}",
+          "Hint": "The latest commit time from the SiteStatistics singleton, rendered through Orchard Core's TimeSpan shape as a localised 'X ago' (the same one the admin uses), recomputed every page load. (The stored value is a UTC timestamp; the 'Z' is stripped so the shape treats it as the UTC instant regardless of server timezone.)",
+          "Usage": "[last_commit]",
+          "DefaultValue": "[last_commit]",
+          "Categories": [
+            "Content"
+          ]
+        },
+        "latest_release": {
+          "Content": "{%- assign statistics = 'ocwebsitesitestatistics00' | content_item_id -%}{%- assign release = statistics.Content.SiteStatistics.LatestRelease.Text -%}{%- if release and release != '' -%}{{ release }}{%- else -%}3.0{%- endif -%}",
+          "Hint": "The latest release version from the SiteStatistics singleton.",
+          "Usage": "[latest_release]",
+          "DefaultValue": "[latest_release]",
+          "Categories": [
+            "Content"
+          ]
+        },
+        "last_commit_message": {
+          "Content": "{%- assign statistics = 'ocwebsitesitestatistics00' | content_item_id -%}{%- assign message = statistics.Content.SiteStatistics.LastCommitMessage.Text -%}{%- if message and message != '' -%}{{ message }}{%- endif -%}",
+          "Hint": "The subject line of the latest commit, from the SiteStatistics singleton.",
+          "Usage": "[last_commit_message]",
+          "DefaultValue": "[last_commit_message]",
+          "Categories": [
+            "Content"
+          ]
+        },
+        "latest_release_date": {
+          "Content": "{%- assign statistics = 'ocwebsitesitestatistics00' | content_item_id -%}{%- assign releaseDate = statistics.Content.SiteStatistics.LatestReleaseDate.Text -%}{%- if releaseDate and releaseDate != '' -%}{%- assign releaseDateUtc = releaseDate | replace: 'Z', '' -%}{{ 'DateTime' | shape_new: utc: releaseDateUtc, format: 'MMMM yyyy' | shape_render }}{%- endif -%}",
+          "Hint": "The publish date of the latest release, from the SiteStatistics singleton, formatted in the visitor's culture via Orchard Core's DateTime shape.",
+          "Usage": "[latest_release_date]",
+          "DefaultValue": "[latest_release_date]",
+          "Categories": [
+            "Content"
+          ]
+        },
+        "contributor_avatars": {
+          "Content": "{%- assign statistics = 'ocwebsitesitestatistics00' | content_item_id -%}{%- assign contributors = statistics.Content.SiteStatistics.TopContributors -%}{%- if contributors and contributors.size > 0 -%}{%- assign totalContributors = statistics.Content.SiteStatistics.Contributors.Value -%}{%- assign overflow = totalContributors | minus: contributors.size -%}{{ 'ContributorAvatars' | shape_new: contributors: contributors, overflow: overflow | shape_render }}{%- endif -%}",
+          "Hint": "The community avatar row: reads the SiteStatistics singleton's TopContributors JSON (from the GitHub API) and renders the ContributorAvatars theme shape, with a live '+N' overflow. Drop it in a Card body.",
+          "Usage": "[contributor_avatars]",
+          "DefaultValue": "[contributor_avatars]",
+          "Categories": [
+            "Content"
+          ]
+        },
+        "cmd": {
+          "Content": "<span class=\"code-command\">{{ Content }}</span>",
+          "Hint": "Color a command / keyword in a code snippet (green).",
+          "Usage": "[cmd]dotnet[/cmd]",
+          "DefaultValue": "[cmd][/cmd]",
+          "Categories": [
+            "Code"
+          ]
+        },
+        "name": {
+          "Content": "<span class=\"code-name\">{{ Content }}</span>",
+          "Hint": "Color a name / value / string in a code snippet (amber).",
+          "Usage": "[name]MySite[/name]",
+          "DefaultValue": "[name][/name]",
+          "Categories": [
+            "Code"
+          ]
+        },
+        "comment": {
+          "Content": "<span class=\"code-comment\">{{ Content }}</span>",
+          "Hint": "Color a comment or prompt in a code snippet (dim italic).",
+          "Usage": "[comment]# do this[/comment]",
+          "DefaultValue": "[comment][/comment]",
+          "Categories": [
+            "Code"
+          ]
+        },
+        "flag": {
+          "Content": "<span class=\"code-flag\">{{ Content }}</span>",
+          "Hint": "Color a CLI flag in a code snippet (light).",
+          "Usage": "[flag]-n[/flag]",
+          "DefaultValue": "[flag][/flag]",
+          "Categories": [
+            "Code"
+          ]
+        },
+        "type": {
+          "Content": "<span class=\"code-type\">{{ Content }}</span>",
+          "Hint": "Color a type in a code snippet (blue).",
+          "Usage": "[type]WebApplication[/type]",
+          "DefaultValue": "[type][/type]",
+          "Categories": [
+            "Code"
+          ]
+        }
+      }
+    },
+    {
+      "name": "WorkflowType",
+      "data": [
+        {
+          "WorkflowTypeId": "[js: variables('workflowTypeId')]",
+          "Name": "Daily NuGet Downloads",
+          "IsEnabled": true,
+          "IsSingleton": false,
+          "DeleteFinishedWorkflows": true,
+          "Activities": [
+            {
+              "ActivityId": "[js: variables('timerId')]",
+              "Name": "TimerEvent",
+              "X": 0,
+              "Y": 0,
+              "IsStart": true,
+              "Properties": {
+                "ActivityMetadata": {
+                  "Title": "Every 24 hours"
+                },
+                "CronExpression": "0 0 * * *",
+                "UseLocalTime": false
+              }
+            },
+            {
+              "ActivityId": "[js: variables('httpId')]",
+              "Name": "HttpRequestTask",
+              "X": 260,
+              "Y": 0,
+              "IsStart": false,
+              "Properties": {
+                "ActivityMetadata": {
+                  "Title": "Fetch NuGet downloads"
+                },
+                "Url": {
+                  "Expression": "https://azuresearch-usnc.nuget.org/query?q=packageid:OrchardCore.Abstractions&prerelease=true&semVerLevel=2.0.0"
+                },
+                "HttpMethod": "GET",
+                "HttpResponseCodes": "200"
+              }
+            },
+            {
+              "ActivityId": "[js: variables('scriptId')]",
+              "Name": "ScriptTask",
+              "X": 520,
+              "Y": 0,
+              "IsStart": false,
+              "Properties": {
+                "ActivityMetadata": {
+                  "Title": "Parse downloads"
+                },
+                "AvailableOutcomes": [
+                  "Done"
+                ],
+                "Script": {
+                  "Expression": "var response = JSON.parse(lastResult().Body); var total = 0; if (response.data.length > 0) { total = response.data[0].totalDownloads; } output('count', total); setOutcome('Done');"
+                }
+              }
+            },
+            {
+              "ActivityId": "[js: variables('updateId')]",
+              "Name": "UpdateContentTask",
+              "X": 780,
+              "Y": 0,
+              "IsStart": false,
+              "Properties": {
+                "ActivityMetadata": {
+                  "Title": "Store in SiteStatistics"
+                },
+                "Content": {
+                  "Expression": "\"ocwebsitesitestatistics00\""
+                },
+                "ContentProperties": {
+                  "Expression": "{ \"SiteStatistics\": { \"NugetDownloads\": { \"Value\": {{ Workflow.Output[\"count\"] }} } } }"
+                },
+                "Publish": true
+              }
+            },
+            {
+              "ActivityId": "[js: variables('refreshPublish0')]",
+              "Name": "ContentUpdatedEvent",
+              "X": 0,
+              "Y": 160,
+              "IsStart": true,
+              "Properties": {
+                "ActivityMetadata": {
+                  "Title": "On Statistics refresh save"
+                },
+                "ContentTypeFilter": [
+                  "StatisticsRefresh"
+                ]
+              }
+            }
+          ],
+          "Transitions": [
+            {
+              "Id": 0,
+              "SourceActivityId": "[js: variables('timerId')]",
+              "SourceOutcomeName": "Done",
+              "DestinationActivityId": "[js: variables('httpId')]"
+            },
+            {
+              "Id": 0,
+              "SourceActivityId": "[js: variables('httpId')]",
+              "SourceOutcomeName": "200",
+              "DestinationActivityId": "[js: variables('scriptId')]"
+            },
+            {
+              "Id": 0,
+              "SourceActivityId": "[js: variables('scriptId')]",
+              "SourceOutcomeName": "Done",
+              "DestinationActivityId": "[js: variables('updateId')]"
+            },
+            {
+              "Id": 0,
+              "SourceActivityId": "[js: variables('refreshPublish0')]",
+              "SourceOutcomeName": "Done",
+              "DestinationActivityId": "[js: variables('httpId')]"
+            }
+          ]
+        },
+        {
+          "WorkflowTypeId": "[js: variables('starsTypeId')]",
+          "Name": "Daily GitHub Stars",
+          "IsEnabled": true,
+          "IsSingleton": false,
+          "DeleteFinishedWorkflows": true,
+          "Activities": [
+            {
+              "ActivityId": "[js: variables('starsTimerId')]",
+              "Name": "TimerEvent",
+              "X": 0,
+              "Y": 0,
+              "IsStart": true,
+              "Properties": {
+                "ActivityMetadata": {
+                  "Title": "Every 24 hours"
+                },
+                "CronExpression": "0 0 * * *",
+                "UseLocalTime": false
+              }
+            },
+            {
+              "ActivityId": "[js: variables('starsHttpId')]",
+              "Name": "HttpRequestTask",
+              "X": 260,
+              "Y": 0,
+              "IsStart": false,
+              "Properties": {
+                "ActivityMetadata": {
+                  "Title": "Fetch GitHub stars"
+                },
+                "Url": {
+                  "Expression": "https://api.github.com/repos/OrchardCMS/OrchardCore"
+                },
+                "HttpMethod": "GET",
+                "Headers": {
+                  "Expression": "User-Agent: OrchardCoreWebsite"
+                },
+                "HttpResponseCodes": "200"
+              }
+            },
+            {
+              "ActivityId": "[js: variables('starsScriptId')]",
+              "Name": "ScriptTask",
+              "X": 520,
+              "Y": 0,
+              "IsStart": false,
+              "Properties": {
+                "ActivityMetadata": {
+                  "Title": "Parse stargazers"
+                },
+                "AvailableOutcomes": [
+                  "Done"
+                ],
+                "Script": {
+                  "Expression": "var response = JSON.parse(lastResult().Body); output('count', response.stargazers_count); setOutcome('Done');"
+                }
+              }
+            },
+            {
+              "ActivityId": "[js: variables('starsUpdateId')]",
+              "Name": "UpdateContentTask",
+              "X": 780,
+              "Y": 0,
+              "IsStart": false,
+              "Properties": {
+                "ActivityMetadata": {
+                  "Title": "Store in SiteStatistics"
+                },
+                "Content": {
+                  "Expression": "\"ocwebsitesitestatistics00\""
+                },
+                "ContentProperties": {
+                  "Expression": "{ \"SiteStatistics\": { \"GithubStars\": { \"Value\": {{ Workflow.Output[\"count\"] }} } } }"
+                },
+                "Publish": true
+              }
+            },
+            {
+              "ActivityId": "[js: variables('refreshPublish1')]",
+              "Name": "ContentUpdatedEvent",
+              "X": 0,
+              "Y": 160,
+              "IsStart": true,
+              "Properties": {
+                "ActivityMetadata": {
+                  "Title": "On Statistics refresh save"
+                },
+                "ContentTypeFilter": [
+                  "StatisticsRefresh"
+                ]
+              }
+            }
+          ],
+          "Transitions": [
+            {
+              "Id": 0,
+              "SourceActivityId": "[js: variables('starsTimerId')]",
+              "SourceOutcomeName": "Done",
+              "DestinationActivityId": "[js: variables('starsHttpId')]"
+            },
+            {
+              "Id": 0,
+              "SourceActivityId": "[js: variables('starsHttpId')]",
+              "SourceOutcomeName": "200",
+              "DestinationActivityId": "[js: variables('starsScriptId')]"
+            },
+            {
+              "Id": 0,
+              "SourceActivityId": "[js: variables('starsScriptId')]",
+              "SourceOutcomeName": "Done",
+              "DestinationActivityId": "[js: variables('starsUpdateId')]"
+            },
+            {
+              "Id": 0,
+              "SourceActivityId": "[js: variables('refreshPublish1')]",
+              "SourceOutcomeName": "Done",
+              "DestinationActivityId": "[js: variables('starsHttpId')]"
+            }
+          ]
+        },
+        {
+          "WorkflowTypeId": "[js: variables('contribTypeId')]",
+          "Name": "Daily Contributors",
+          "IsEnabled": true,
+          "IsSingleton": false,
+          "DeleteFinishedWorkflows": true,
+          "Activities": [
+            {
+              "ActivityId": "[js: variables('contribTimerId')]",
+              "Name": "TimerEvent",
+              "X": 0,
+              "Y": 0,
+              "IsStart": true,
+              "Properties": {
+                "ActivityMetadata": {
+                  "Title": "Every 24 hours"
+                },
+                "CronExpression": "0 0 * * *",
+                "UseLocalTime": false
+              }
+            },
+            {
+              "ActivityId": "[js: variables('contribHttpId')]",
+              "Name": "HttpRequestTask",
+              "X": 260,
+              "Y": 0,
+              "IsStart": false,
+              "Properties": {
+                "ActivityMetadata": {
+                  "Title": "Fetch contributor count"
+                },
+                "Url": {
+                  "Expression": "https://img.shields.io/github/contributors/OrchardCMS/OrchardCore.json"
+                },
+                "HttpMethod": "GET",
+                "HttpResponseCodes": "200"
+              }
+            },
+            {
+              "ActivityId": "[js: variables('contribScriptId')]",
+              "Name": "ScriptTask",
+              "X": 520,
+              "Y": 0,
+              "IsStart": false,
+              "Properties": {
+                "ActivityMetadata": {
+                  "Title": "Parse contributor count"
+                },
+                "AvailableOutcomes": [
+                  "Done"
+                ],
+                "Script": {
+                  "Expression": "var response = JSON.parse(lastResult().Body); output('count', parseInt(response.value, 10)); setOutcome('Done');"
+                }
+              }
+            },
+            {
+              "ActivityId": "[js: variables('contribUpdateId')]",
+              "Name": "UpdateContentTask",
+              "X": 780,
+              "Y": 0,
+              "IsStart": false,
+              "Properties": {
+                "ActivityMetadata": {
+                  "Title": "Store in SiteStatistics"
+                },
+                "Content": {
+                  "Expression": "\"ocwebsitesitestatistics00\""
+                },
+                "ContentProperties": {
+                  "Expression": "{ \"SiteStatistics\": { \"Contributors\": { \"Value\": {{ Workflow.Output[\"count\"] }} } } }"
+                },
+                "Publish": true
+              }
+            },
+            {
+              "ActivityId": "[js: variables('refreshPublish2')]",
+              "Name": "ContentUpdatedEvent",
+              "X": 0,
+              "Y": 160,
+              "IsStart": true,
+              "Properties": {
+                "ActivityMetadata": {
+                  "Title": "On Statistics refresh save"
+                },
+                "ContentTypeFilter": [
+                  "StatisticsRefresh"
+                ]
+              }
+            }
+          ],
+          "Transitions": [
+            {
+              "Id": 0,
+              "SourceActivityId": "[js: variables('contribTimerId')]",
+              "SourceOutcomeName": "Done",
+              "DestinationActivityId": "[js: variables('contribHttpId')]"
+            },
+            {
+              "Id": 0,
+              "SourceActivityId": "[js: variables('contribHttpId')]",
+              "SourceOutcomeName": "200",
+              "DestinationActivityId": "[js: variables('contribScriptId')]"
+            },
+            {
+              "Id": 0,
+              "SourceActivityId": "[js: variables('contribScriptId')]",
+              "SourceOutcomeName": "Done",
+              "DestinationActivityId": "[js: variables('contribUpdateId')]"
+            },
+            {
+              "Id": 0,
+              "SourceActivityId": "[js: variables('refreshPublish2')]",
+              "SourceOutcomeName": "Done",
+              "DestinationActivityId": "[js: variables('contribHttpId')]"
+            }
+          ]
+        },
+        {
+          "WorkflowTypeId": "[js: variables('topTypeId')]",
+          "Name": "Daily Top Contributors",
+          "IsEnabled": true,
+          "IsSingleton": false,
+          "DeleteFinishedWorkflows": true,
+          "Activities": [
+            {
+              "ActivityId": "[js: variables('topTimerId')]",
+              "Name": "TimerEvent",
+              "X": 0,
+              "Y": 0,
+              "IsStart": true,
+              "Properties": {
+                "ActivityMetadata": {
+                  "Title": "Every 24 hours"
+                },
+                "CronExpression": "0 0 * * *",
+                "UseLocalTime": false
+              }
+            },
+            {
+              "ActivityId": "[js: variables('topHttpId')]",
+              "Name": "HttpRequestTask",
+              "X": 260,
+              "Y": 0,
+              "IsStart": false,
+              "Properties": {
+                "ActivityMetadata": {
+                  "Title": "Fetch top contributors"
+                },
+                "Url": {
+                  "Expression": "https://api.github.com/repos/OrchardCMS/OrchardCore/contributors?per_page=10"
+                },
+                "HttpMethod": "GET",
+                "Headers": {
+                  "Expression": "User-Agent: OrchardCoreWebsite"
+                },
+                "HttpResponseCodes": "200"
+              }
+            },
+            {
+              "ActivityId": "[js: variables('topScriptId')]",
+              "Name": "ScriptTask",
+              "X": 520,
+              "Y": 0,
+              "IsStart": false,
+              "Properties": {
+                "ActivityMetadata": {
+                  "Title": "Parse top 5 users"
+                },
+                "AvailableOutcomes": [
+                  "Done",
+                  "Skip"
+                ],
+                "Script": {
+                  "Expression": "var contributors = JSON.parse(lastResult().Body); var logins = [], avatars = [], profiles = []; if (Array.isArray(contributors)) { for (var index = 0; index < contributors.length && logins.length < 5; index++) { var contributor = contributors[index]; if (contributor.type !== 'User') { continue; } logins.push(contributor.login); avatars.push(contributor.avatar_url); profiles.push(contributor.html_url); } } output('logins', logins); output('avatars', avatars); output('profiles', profiles); if (logins.length > 0) { setOutcome('Done'); } else { setOutcome('Skip'); }"
+                }
+              }
+            },
+            {
+              "ActivityId": "[js: variables('topUpdateId')]",
+              "Name": "UpdateContentTask",
+              "X": 780,
+              "Y": 0,
+              "IsStart": false,
+              "Properties": {
+                "ActivityMetadata": {
+                  "Title": "Store TopContributors JSON"
+                },
+                "Content": {
+                  "Expression": "\"ocwebsitesitestatistics00\""
+                },
+                "ContentProperties": {
+                  "Expression": "{ \"SiteStatistics\": { \"TopContributors\": [{% for login in Workflow.Output['logins'] %}{% assign index = forloop.index0 %}{% unless forloop.first %},{% endunless %}{ \"login\": \"{{ login }}\", \"avatar_url\": \"{{ Workflow.Output['avatars'][index] }}\", \"html_url\": \"{{ Workflow.Output['profiles'][index] }}\" }{% endfor %}] } }"
+                },
+                "Publish": true
+              }
+            },
+            {
+              "ActivityId": "[js: variables('refreshPublish3')]",
+              "Name": "ContentUpdatedEvent",
+              "X": 0,
+              "Y": 160,
+              "IsStart": true,
+              "Properties": {
+                "ActivityMetadata": {
+                  "Title": "On Statistics refresh save"
+                },
+                "ContentTypeFilter": [
+                  "StatisticsRefresh"
+                ]
+              }
+            }
+          ],
+          "Transitions": [
+            {
+              "Id": 0,
+              "SourceActivityId": "[js: variables('topTimerId')]",
+              "SourceOutcomeName": "Done",
+              "DestinationActivityId": "[js: variables('topHttpId')]"
+            },
+            {
+              "Id": 0,
+              "SourceActivityId": "[js: variables('topHttpId')]",
+              "SourceOutcomeName": "200",
+              "DestinationActivityId": "[js: variables('topScriptId')]"
+            },
+            {
+              "Id": 0,
+              "SourceActivityId": "[js: variables('topScriptId')]",
+              "SourceOutcomeName": "Done",
+              "DestinationActivityId": "[js: variables('topUpdateId')]"
+            },
+            {
+              "Id": 0,
+              "SourceActivityId": "[js: variables('refreshPublish3')]",
+              "SourceOutcomeName": "Done",
+              "DestinationActivityId": "[js: variables('topHttpId')]"
+            }
+          ]
+        },
+        {
+          "WorkflowTypeId": "[js: variables('commitTypeId')]",
+          "Name": "Hourly Last Commit",
+          "IsEnabled": true,
+          "IsSingleton": false,
+          "DeleteFinishedWorkflows": true,
+          "Activities": [
+            {
+              "ActivityId": "[js: variables('commitTimerId')]",
+              "Name": "TimerEvent",
+              "X": 0,
+              "Y": 0,
+              "IsStart": true,
+              "Properties": {
+                "ActivityMetadata": {
+                  "Title": "Every hour"
+                },
+                "CronExpression": "0 * * * *",
+                "UseLocalTime": false
+              }
+            },
+            {
+              "ActivityId": "[js: variables('commitHttpId')]",
+              "Name": "HttpRequestTask",
+              "X": 260,
+              "Y": 0,
+              "IsStart": false,
+              "Properties": {
+                "ActivityMetadata": {
+                  "Title": "Fetch latest commit"
+                },
+                "Url": {
+                  "Expression": "https://api.github.com/repos/OrchardCMS/OrchardCore/commits?per_page=1"
+                },
+                "HttpMethod": "GET",
+                "Headers": {
+                  "Expression": "User-Agent: OrchardCoreWebsite"
+                },
+                "HttpResponseCodes": "200"
+              }
+            },
+            {
+              "ActivityId": "[js: variables('commitScriptId')]",
+              "Name": "ScriptTask",
+              "X": 520,
+              "Y": 0,
+              "IsStart": false,
+              "Properties": {
+                "ActivityMetadata": {
+                  "Title": "Store commit timestamp"
+                },
+                "AvailableOutcomes": [
+                  "Done",
+                  "Skip"
+                ],
+                "Script": {
+                  "Expression": "var data = JSON.parse(lastResult().Body); if (Array.isArray(data) && data.length > 0 && data[0].commit) { output('committedAt', data[0].commit.committer.date); output('url', data[0].html_url || ''); output('message', (data[0].commit.message || '').split('\\n')[0]); setOutcome('Done'); } else { setOutcome('Skip'); }"
+                }
+              }
+            },
+            {
+              "ActivityId": "[js: variables('commitUpdateId')]",
+              "Name": "UpdateContentTask",
+              "X": 780,
+              "Y": 0,
+              "IsStart": false,
+              "Properties": {
+                "ActivityMetadata": {
+                  "Title": "Store in SiteStatistics"
+                },
+                "Content": {
+                  "Expression": "\"ocwebsitesitestatistics00\""
+                },
+                "ContentProperties": {
+                  "Expression": "{ \"SiteStatistics\": { \"LastCommit\": { \"Text\": \"{{ Workflow.Output[\"committedAt\"] }}\" }, \"LastCommitMessage\": { \"Text\": \"{{ Workflow.Output[\"message\"] }}\" }, \"LastCommitUrl\": { \"Text\": \"{{ Workflow.Output[\"url\"] }}\" } } }"
+                },
+                "Publish": true
+              }
+            },
+            {
+              "ActivityId": "[js: variables('refreshPublish4')]",
+              "Name": "ContentUpdatedEvent",
+              "X": 0,
+              "Y": 160,
+              "IsStart": true,
+              "Properties": {
+                "ActivityMetadata": {
+                  "Title": "On Statistics refresh save"
+                },
+                "ContentTypeFilter": [
+                  "StatisticsRefresh"
+                ]
+              }
+            }
+          ],
+          "Transitions": [
+            {
+              "Id": 0,
+              "SourceActivityId": "[js: variables('commitTimerId')]",
+              "SourceOutcomeName": "Done",
+              "DestinationActivityId": "[js: variables('commitHttpId')]"
+            },
+            {
+              "Id": 0,
+              "SourceActivityId": "[js: variables('commitHttpId')]",
+              "SourceOutcomeName": "200",
+              "DestinationActivityId": "[js: variables('commitScriptId')]"
+            },
+            {
+              "Id": 0,
+              "SourceActivityId": "[js: variables('commitScriptId')]",
+              "SourceOutcomeName": "Done",
+              "DestinationActivityId": "[js: variables('commitUpdateId')]"
+            },
+            {
+              "Id": 0,
+              "SourceActivityId": "[js: variables('refreshPublish4')]",
+              "SourceOutcomeName": "Done",
+              "DestinationActivityId": "[js: variables('commitHttpId')]"
+            }
+          ]
+        },
+        {
+          "WorkflowTypeId": "[js: variables('releaseTypeId')]",
+          "Name": "Daily Latest Release",
+          "IsEnabled": true,
+          "IsSingleton": false,
+          "DeleteFinishedWorkflows": true,
+          "Activities": [
+            {
+              "ActivityId": "[js: variables('releaseTimerId')]",
+              "Name": "TimerEvent",
+              "X": 0,
+              "Y": 0,
+              "IsStart": true,
+              "Properties": {
+                "ActivityMetadata": {
+                  "Title": "Every 24 hours"
+                },
+                "CronExpression": "0 0 * * *",
+                "UseLocalTime": false
+              }
+            },
+            {
+              "ActivityId": "[js: variables('releaseHttpId')]",
+              "Name": "HttpRequestTask",
+              "X": 260,
+              "Y": 0,
+              "IsStart": false,
+              "Properties": {
+                "ActivityMetadata": {
+                  "Title": "Fetch latest release"
+                },
+                "Url": {
+                  "Expression": "https://api.github.com/repos/OrchardCMS/OrchardCore/releases/latest"
+                },
+                "HttpMethod": "GET",
+                "Headers": {
+                  "Expression": "User-Agent: OrchardCoreWebsite"
+                },
+                "HttpResponseCodes": "200"
+              }
+            },
+            {
+              "ActivityId": "[js: variables('releaseScriptId')]",
+              "Name": "ScriptTask",
+              "X": 520,
+              "Y": 0,
+              "IsStart": false,
+              "Properties": {
+                "ActivityMetadata": {
+                  "Title": "Parse release version"
+                },
+                "AvailableOutcomes": [
+                  "Done",
+                  "Skip"
+                ],
+                "Script": {
+                  "Expression": "var data = JSON.parse(lastResult().Body); var tag = data.tag_name || data.name; if (tag) { output('release', tag.replace(/^v/, '')); output('releaseUrl', data.html_url || ''); output('releaseDate', data.published_at || data.created_at || ''); setOutcome('Done'); } else { setOutcome('Skip'); }"
+                }
+              }
+            },
+            {
+              "ActivityId": "[js: variables('releaseUpdateId')]",
+              "Name": "UpdateContentTask",
+              "X": 780,
+              "Y": 0,
+              "IsStart": false,
+              "Properties": {
+                "ActivityMetadata": {
+                  "Title": "Store in SiteStatistics"
+                },
+                "Content": {
+                  "Expression": "\"ocwebsitesitestatistics00\""
+                },
+                "ContentProperties": {
+                  "Expression": "{ \"SiteStatistics\": { \"LatestRelease\": { \"Text\": \"{{ Workflow.Output[\"release\"] }}\" }, \"LatestReleaseUrl\": { \"Text\": \"{{ Workflow.Output[\"releaseUrl\"] }}\" }, \"LatestReleaseDate\": { \"Text\": \"{{ Workflow.Output[\"releaseDate\"] }}\" } } }"
+                },
+                "Publish": true
+              }
+            },
+            {
+              "ActivityId": "[js: variables('refreshPublish5')]",
+              "Name": "ContentUpdatedEvent",
+              "X": 0,
+              "Y": 160,
+              "IsStart": true,
+              "Properties": {
+                "ActivityMetadata": {
+                  "Title": "On Statistics refresh save"
+                },
+                "ContentTypeFilter": [
+                  "StatisticsRefresh"
+                ]
+              }
+            }
+          ],
+          "Transitions": [
+            {
+              "Id": 0,
+              "SourceActivityId": "[js: variables('releaseTimerId')]",
+              "SourceOutcomeName": "Done",
+              "DestinationActivityId": "[js: variables('releaseHttpId')]"
+            },
+            {
+              "Id": 0,
+              "SourceActivityId": "[js: variables('releaseHttpId')]",
+              "SourceOutcomeName": "200",
+              "DestinationActivityId": "[js: variables('releaseScriptId')]"
+            },
+            {
+              "Id": 0,
+              "SourceActivityId": "[js: variables('releaseScriptId')]",
+              "SourceOutcomeName": "Done",
+              "DestinationActivityId": "[js: variables('releaseUpdateId')]"
+            },
+            {
+              "Id": 0,
+              "SourceActivityId": "[js: variables('refreshPublish5')]",
+              "SourceOutcomeName": "Done",
+              "DestinationActivityId": "[js: variables('releaseHttpId')]"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

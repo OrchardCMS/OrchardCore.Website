@@ -1,0 +1,34 @@
+@*
+    Shared section intro (heading + lead), rendered from the attachable BlockIntro part. Invoked with:
+      @await DisplayAsync(await New.BlockIntro(Title: intro.Title.Text, Lead: intro.Lead.Html))
+    Optional args → Model.WrapperWidth / Model.LeadWidth:
+      WrapperWidth — the wrapper's max-width utilities (default "max-w-3xl"; centred grids pass "mx-auto max-w-4xl")
+      LeadWidth    — an extra max-width on the lead (e.g. "max-w-2xl"); omit for full wrapper width.
+    Renders nothing when both title and lead are blank; the heading is hidden when the title is blank.
+*@
+@{
+    string wrapper = Model.WrapperWidth;
+    if (string.IsNullOrEmpty(wrapper))
+    {
+        wrapper = "max-w-3xl";
+    }
+
+    string leadWidth = Model.LeadWidth;
+    string title = Model.Title;
+    string lead = Model.Lead;
+    var hasTitle = !string.IsNullOrEmpty(title);
+    var hasLead = !string.IsNullOrEmpty(lead);
+}
+@if (hasTitle || hasLead)
+{
+    <div class="@wrapper">
+        @if (hasTitle)
+        {
+            <h2 class="text-[clamp(2rem,4.5vw,3.25rem)] leading-[1.1] tracking-tight text-green-900 theme-dark:text-white">@title</h2>
+        }
+        @if (hasLead)
+        {
+            <div class="prose prose-lg mt-6 text-pretty@(string.IsNullOrEmpty(leadWidth) ? "" : " " + leadWidth)">@Html.Raw(lead)</div>
+        }
+    </div>
+}

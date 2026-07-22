@@ -1,0 +1,313 @@
+{
+  "name": "TheOrchardCoreTheme.Model.Profiles",
+  "displayName": "Orchard Core Website - Content Model",
+  "description": "Two people/profile blocks that share one Profile item type: ProfileCards (rich square photo-card grid) and ProfileList (compact circular-avatar grid). The Profile image is an uploaded MediaField, or - when blank and a GitHub URL is set - the GitHub avatar (github.com/<handle>.png). Generic and reusable (speakers, organisers, team, contributors).",
+  "author": "Orchard Core",
+  "version": "1.0.0",
+  "issetuprecipe": false,
+  "categories": [
+    "theme"
+  ],
+  "steps": [
+    {
+      "name": "ReplaceContentDefinition",
+      "ContentTypes": [
+        {
+          "Name": "ProfileCards",
+          "DisplayName": "Profile Cards",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Stereotype": "Block",
+              "Category": "Content",
+              "ThumbnailPath": "~/TheOrchardCoreTheme/block-thumbnails/ProfileCards.png?v=2",
+              "Description": "A photo grid of people (speakers, team, etc.)."
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "BlockPart",
+              "Name": "BlockPart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
+              }
+            },
+            {
+              "PartName": "BlockIntro",
+              "Name": "BlockIntro",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                }
+              }
+            },
+            {
+              "PartName": "BagPart",
+              "Name": "Profiles",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "DisplayName": "Profiles",
+                  "Description": "The people shown as large photo cards.",
+                  "Position": "2"
+                },
+                "BagPartSettings": {
+                  "ContainedContentTypes": [
+                    "Profile"
+                  ],
+                  "CollapseContainedItems": true
+                }
+              }
+            },
+            {
+              "PartName": "BlockActionsPart",
+              "Name": "BlockActionsPart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "3"
+                }
+              }
+            },
+            {
+              "PartName": "BagPart",
+              "Name": "CallToActions",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "DisplayName": "Call To Actions",
+                  "Description": "The closing call-to-action buttons shown beneath the grid.",
+                  "Position": "4"
+                },
+                "BagPartSettings": {
+                  "ContainedContentTypes": [
+                    "CallToAction"
+                  ],
+                  "CollapseContainedItems": true
+                }
+              }
+            },
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                },
+                "TitlePartSettings": {
+                  "Options": 2,
+                  "Pattern": "{{ Model.ContentItem.Content.BlockIntro.Title.Text }}",
+                  "RenderTitle": false
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "ProfileList",
+          "DisplayName": "Profile List",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Stereotype": "Block",
+              "Category": "Content",
+              "ThumbnailPath": "~/TheOrchardCoreTheme/block-thumbnails/ProfileList.png?v=2",
+              "Description": "A compact list of people with avatars and links."
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "BlockPart",
+              "Name": "BlockPart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
+              }
+            },
+            {
+              "PartName": "BlockIntro",
+              "Name": "BlockIntro",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                }
+              }
+            },
+            {
+              "PartName": "BagPart",
+              "Name": "Profiles",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "DisplayName": "Profiles",
+                  "Description": "The people shown as a compact avatar list.",
+                  "Position": "2"
+                },
+                "BagPartSettings": {
+                  "ContainedContentTypes": [
+                    "Profile"
+                  ],
+                  "CollapseContainedItems": true
+                }
+              }
+            },
+            {
+              "PartName": "BlockActionsPart",
+              "Name": "BlockActionsPart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "3"
+                }
+              }
+            },
+            {
+              "PartName": "BagPart",
+              "Name": "CallToActions",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "DisplayName": "Call To Actions",
+                  "Description": "The closing call-to-action buttons shown beneath the list.",
+                  "Position": "4"
+                },
+                "BagPartSettings": {
+                  "ContainedContentTypes": [
+                    "CallToAction"
+                  ],
+                  "CollapseContainedItems": true
+                }
+              }
+            },
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                },
+                "TitlePartSettings": {
+                  "Options": 2,
+                  "Pattern": "{{ Model.ContentItem.Content.BlockIntro.Title.Text }}",
+                  "RenderTitle": false
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "Profile",
+          "DisplayName": "Profile",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Stereotype": ""
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "Profile",
+              "Name": "Profile",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                }
+              }
+            },
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                },
+                "TitlePartSettings": {
+                  "Options": 0,
+                  "RenderTitle": false
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "ContentParts": [
+        {
+          "Name": "Profile",
+          "Settings": {
+            "ContentPartSettings": {
+              "Description": "One person: the name is the editable TitlePart (item DisplayText, also the image alt). Holds a role/subtitle, a photo (or a GitHub-avatar fallback), an optional bio shown in a dialog, and GitHub/LinkedIn links. Shared by the ProfileCards and ProfileList blocks."
+            }
+          },
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "TextField",
+              "Name": "Role",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Role",
+                  "Position": "0"
+                },
+                "TextFieldSettings": {
+                  "Hint": "Optional. Job title, role, or @handle shown under the name."
+                }
+              }
+            },
+            {
+              "FieldName": "MediaField",
+              "Name": "Photo",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Photo",
+                  "Editor": "Gallery",
+                  "Position": "1"
+                },
+                "MediaFieldSettings": {
+                  "Multiple": false,
+                  "AllowMediaText": true,
+                  "AllowAnchors": false,
+                  "Hint": "Optional. The person's photo. Set its media text to override the alt text. If left blank and a GitHub URL is set, the GitHub avatar is used."
+                }
+              }
+            },
+            {
+              "FieldName": "HtmlField",
+              "Name": "Bio",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Bio",
+                  "Editor": "Trumbowyg",
+                  "Position": "2"
+                },
+                "HtmlFieldSettings": {
+                  "Hint": "Optional. A short biography. When set, the card becomes clickable and opens the bio in a dialog."
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "GitHubUrl",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "GitHub URL",
+                  "Editor": "Url",
+                  "Position": "3"
+                },
+                "TextFieldSettings": {
+                  "Hint": "Optional. The person's GitHub profile, e.g. https://github.com/username. Also used as the avatar when no photo is uploaded."
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "LinkedInUrl",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "LinkedIn URL",
+                  "Editor": "Url",
+                  "Position": "4"
+                },
+                "TextFieldSettings": {
+                  "Hint": "Optional. The person's LinkedIn profile URL."
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

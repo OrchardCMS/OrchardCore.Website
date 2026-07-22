@@ -1,0 +1,106 @@
+@using Microsoft.AspNetCore.Html
+@inject OrchardCore.Shortcodes.Services.IShortcodeService ShortcodeService
+@*
+    Get Started. Heading + lead, then a two-column layout: a tabbed code box (left) of install methods
+    and a stack of no-install option cards (right), closing with the shared BlockActions row.
+    The code tabs are CSS-only (hidden radios + named peers, like CardTabs) — no JavaScript for switching.
+    Each panel is a terminal: the snippet's colors are authored in the content via the [cmd]/[name]/
+    [comment]/[flag]/[type] shortcode tags (rendered via the shortcode service); theme.js only powers the
+    `.copy-btn` (strips comments + prompts so the clipboard holds runnable commands). Band/anchor from Section.
+*@
+@{
+    var item = (ContentItem)Model.ContentItem;
+    var intro = item.Get<ContentPart>("BlockIntro");
+    var section = item.Get<ContentPart>("BlockPart");
+    var theme = section?.Get<TextField>("Theme")?.Text;
+    var themeName = (string.IsNullOrEmpty(theme) ? "White" : theme).ToLowerInvariant();
+    var anchor = section?.Get<TextField>("AnchorId")?.Text;
+    var methods = item.Get<BagPart>("Methods")?.ContentItems ?? [];
+    var options = item.Get<BagPart>("Options")?.ContentItems ?? [];
+    var blockActions = item.Get<ContentPart>("BlockActionsPart");
+    var uid = item.ContentItemId;
+
+    // Closing actions row: copy from BlockActionsPart, buttons from the CallToActions bag.
+    var actionsHtml = new HtmlContentBuilder();
+    foreach (var cta in item.Get<BagPart>("CallToActions")?.ContentItems ?? [])
+    {
+        var callToAction = cta.Get<ContentPart>("CallToAction");
+        var link = callToAction?.Get<LinkField>("Link");
+        actionsHtml.AppendHtml(await DisplayAsync(await New.Button(Url: link?.Url, Text: link?.Text, Target: link?.Target, Variant: callToAction?.Get<TextField>("Variant")?.Text)));
+    }
+}
+<section id="@(string.IsNullOrEmpty(anchor) ? null : anchor)" class="theme-@themeName">
+    <div class="mx-auto max-w-content px-6 band">
+
+        @await DisplayAsync(await New.BlockIntro(Title: intro?.Get<TextField>("Title")?.Text, Lead: intro?.Get<HtmlField>("Lead")?.Html))
+
+        <div class="mt-10 grid gap-4 lg:grid-cols-5 lg:items-stretch">
+
+            @* Left: tabbed code box. CSS-only via named peers (no JS): radios are peers, the
+               matching label + panel react with peer-checked/m<i>. Flat grid so the radios are siblings of
+               both. Rows are `auto / 1fr`: the tabs keep their natural height (row 1) and the checked panel
+               (row 2) fills the rest, so the box matches the option-cards column height without stretching the tabs. *@
+            @if (methods.Count > 0)
+            {
+                @* A CSS-only radio group (hidden radios drive peer-checked panel switching), not a
+                   WAI-ARIA tab widget: role="group" (no required-children constraint) keeps the accessible group
+                   name without the aria-required-children violation a tablist/radiogroup would raise here. *@
+                <div class="grid grid-cols-[repeat(4,auto)_1fr] overflow-hidden rounded-2xl bg-code-bg shadow-soft lg:col-span-3 lg:grid-rows-[auto_1fr] theme-dark:ring-1 theme-dark:ring-white/10" role="group" aria-label="Ways to start">
+                    @for (var i = 0; i < methods.Count; i++)
+                    {
+                        <input class="peer/m@(i) sr-only" type="radio" name="code-@uid" id="code-@uid-@i" checked="@(i == 0)">
+                    }
+                    @for (var i = 0; i < methods.Count; i++)
+                    {
+                        <label class="row-start-1 cursor-pointer border-b-2 border-transparent px-5 py-3.5 text-sm font-bold text-white/55 transition hover:text-white peer-checked/m@(i):border-accent-bright peer-checked/m@(i):text-white focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-amber" for="code-@uid-@i">@methods[i].DisplayText</label>
+                    }
+                    @for (var i = 0; i < methods.Count; i++)
+                    {
+                        var snippet = methods[i].Get<ContentPart>("StartMethod")?.Get<TextField>("CodeSnippet")?.Text;
+                        <div data-code-block class="hidden relative col-[1/-1] row-start-2 border-t border-white/10 peer-checked/m@(i):block">
+                            <button type="button" class="copy-btn absolute right-3 top-3 z-10 rounded-full border border-white/20 px-3 py-1 text-xs text-white/70 transition hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber">Copy</button>
+                            <pre class="overflow-x-auto p-6 font-mono text-sm leading-relaxed text-code-ink"><code>@Html.Raw(await ShortcodeService.ProcessAsync(snippet ?? ""))</code></pre>
+                        </div>
+                    }
+                </div>
+            }
+
+            @* Right: no-install option cards. Each option's Theme picks its look (Dark = featured
+               green card; the `theme-dark` class also gives the shared Button shape its on-dark treatment), and
+               its buttons come from the CallToActions bag, rendered through the same Button shape as every block. *@
+            @if (options.Count > 0)
+            {
+                <div class="grid gap-4 sm:grid-cols-2 lg:col-span-2 lg:grid-cols-1 lg:grid-rows-2">
+                    @foreach (var option in options)
+                    {
+                        var startOption = option.Get<ContentPart>("StartOption");
+                        var optionThemeValue = startOption?.Get<TextField>("Theme")?.Text;
+                        var optionTheme = string.IsNullOrEmpty(optionThemeValue) ? "White" : optionThemeValue;
+                        var optionActions = option.Get<BagPart>("CallToActions")?.ContentItems ?? [];
+                        var optionBody = startOption?.Get<HtmlField>("Body")?.Html;
+                        var isDark = optionTheme == "Dark";
+                        <div class="@(isDark ? "theme-dark flex h-full flex-col rounded-xl bg-green-900 p-6 text-white" : "flex h-full flex-col rounded-xl bg-white p-6 theme-dark:bg-white/5")">
+                            <h3 class="@(isDark ? "text-xl text-white" : "text-xl text-green-900 theme-dark:text-white")">@option.DisplayText</h3>
+                            <div class="@(isDark ? "prose mt-3 flex-1" : "prose mt-3 flex-1 text-ink-soft theme-dark:text-green-100/80")">@Html.Raw(await ShortcodeService.ProcessAsync(optionBody ?? ""))</div>
+                            @if (optionActions.Count > 0)
+                            {
+                                <div class="mt-6 flex flex-wrap items-center gap-3">
+                                    @foreach (var cta in optionActions)
+                                    {
+                                        var callToAction = cta.Get<ContentPart>("CallToAction");
+                                        var link = callToAction?.Get<LinkField>("Link");
+                                        @await DisplayAsync(await New.Button(Url: link?.Url, Text: link?.Text, Target: link?.Target, Variant: callToAction?.Get<TextField>("Variant")?.Text))
+                                    }
+                                </div>
+                            }
+                        </div>
+                    }
+                </div>
+            }
+
+        </div>
+
+        @await DisplayAsync(await New.BlockActions(Heading: blockActions?.Get<TextField>("Heading")?.Text, Text: blockActions?.Get<HtmlField>("Text")?.Html, Actions: actionsHtml, MaxWidth: "max-w-none"))
+
+    </div>
+</section>

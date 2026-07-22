@@ -1,0 +1,48 @@
+@*
+    Shared tabbed card grid, reusable by any block with a Tabs bag. Invoked with:
+      @await DisplayAsync(await New.CardTabs(Tabs: <Tab content items>, Uid: <unique id>))
+    With 2+ tabs it renders a segmented toggle (buttons in a bordered pill) over the card sets; a small
+    handler in theme.js (`[data-card-tabs]`) swaps the active set and toggles the active-button
+    utilities — no tab CSS. With one tab there's just its grid. Cards follow the band via `theme-*:`
+    variants. No top margin of its own — the calling block adds spacing above it when needed (so it
+    sits flush when it's the first thing in a section, e.g. a tabbed grid merged under a Statistics
+    block).
+*@
+@{
+    var tabs = (object?)Model.Tabs as IReadOnlyList<ContentItem> ?? [];
+}
+@if (tabs.Count > 1)
+{
+    <div data-card-tabs>
+        <div class="flex justify-center">
+            <div class="inline-flex rounded-lg border border-rule bg-white p-1 theme-dark:border-white/15 theme-dark:bg-white/10" role="tablist" aria-label="Card categories">
+                @{ var first = true; }
+                @foreach (var tab in tabs)
+                {
+                    <button type="button" data-card-tab role="tab" aria-selected="@(first ? "true" : "false")" class="tab-toggle@(first ? " is-active" : "")">@(tab.Get<ContentPart>("Tab")?.Get<TextField>("Title")?.Text)</button>
+                    first = false;
+                }
+            </div>
+        </div>
+        @{ var firstSet = true; }
+        @foreach (var tab in tabs)
+        {
+            <div data-card-tab-set role="tabpanel" class="mx-auto mt-8 grid max-w-4xl gap-5 sm:grid-cols-2 lg:grid-cols-3@(firstSet ? "" : " hidden")">
+                @foreach (var card in tab.Get<BagPart>("Cards")?.ContentItems ?? [])
+                {
+                    @await DisplayAsync(await New.Card(Item: card))
+                }
+            </div>
+            firstSet = false;
+        }
+    </div>
+}
+else if (tabs.Count == 1)
+{
+    <div class="mx-auto grid max-w-4xl gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        @foreach (var card in tabs[0].Get<BagPart>("Cards")?.ContentItems ?? [])
+        {
+            @await DisplayAsync(await New.Card(Item: card))
+        }
+    </div>
+}

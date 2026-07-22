@@ -1,0 +1,42 @@
+@using Microsoft.AspNetCore.Html
+@*
+    Cards Grid (Tabbed). An optional heading + lead, then audience tabs of cards (rendered by the shared
+    CardTabs shape, which uses the shared Card shape), plus the shared BlockActions closing row.
+    Band/anchor + theme come from the Block part.
+*@
+@{
+    var item = (ContentItem)Model.ContentItem;
+    var intro = item.Get<ContentPart>("BlockIntro");
+    var section = item.Get<ContentPart>("BlockPart");
+    var theme = section?.Get<TextField>("Theme")?.Text;
+    var themeName = (string.IsNullOrEmpty(theme) ? "White" : theme).ToLowerInvariant();
+    var anchor = section?.Get<TextField>("AnchorId")?.Text;
+    var tabs = item.Get<BagPart>("Tabs")?.ContentItems ?? [];
+    var blockActions = item.Get<ContentPart>("BlockActionsPart");
+    var introTitle = intro?.Get<TextField>("Title")?.Text;
+
+    // Closing actions row: copy from BlockActionsPart, buttons from the CallToActions bag.
+    var actionsHtml = new HtmlContentBuilder();
+    foreach (var cta in item.Get<BagPart>("CallToActions")?.ContentItems ?? [])
+    {
+        var callToAction = cta.Get<ContentPart>("CallToAction");
+        var link = callToAction?.Get<LinkField>("Link");
+        actionsHtml.AppendHtml(await DisplayAsync(await New.Button(Url: link?.Url, Text: link?.Text, Target: link?.Target, Variant: callToAction?.Get<TextField>("Variant")?.Text)));
+    }
+}
+<section id="@(string.IsNullOrEmpty(anchor) ? null : anchor)" class="theme-@themeName">
+    <div class="mx-auto max-w-content px-6 band">
+
+        @await DisplayAsync(await New.BlockIntro(Title: introTitle, Lead: intro?.Get<HtmlField>("Lead")?.Html, WrapperWidth: "mx-auto max-w-4xl", LeadWidth: "max-w-2xl"))
+
+        @* Space the tabs below this block's own heading; when there's no heading (e.g. merged
+           under a Statistics block) the section/merge padding above already provides the gap. *@
+        @if (tabs.Count > 0)
+        {
+            <div class="@(string.IsNullOrEmpty(introTitle) ? null : "mt-12")">@await DisplayAsync(await New.CardTabs(Tabs: tabs, Uid: item.ContentItemId))</div>
+        }
+
+        @await DisplayAsync(await New.BlockActions(Heading: blockActions?.Get<TextField>("Heading")?.Text, Text: blockActions?.Get<HtmlField>("Text")?.Html, Actions: actionsHtml))
+
+    </div>
+</section>

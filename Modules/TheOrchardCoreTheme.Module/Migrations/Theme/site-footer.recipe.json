@@ -1,0 +1,409 @@
+{
+  "name": "TheOrchardCoreTheme.Model.SiteFooter",
+  "displayName": "Orchard Core Website - Content Model",
+  "description": "The composable, per-culture site footer built from Widgets placed via Layers. Three widget types - PartnerPromo (heading, intro, CTA, partner logos), Brand (tagline + social URLs) and LinkColumn (a link column) - plus the Partner and Link bag items. Widgets are seeded twice (en + fr) onto English/French culture layers; the theme renders them in the 'Footer Top' and 'Footer Bottom' zones.",
+  "author": "Orchard Core",
+  "version": "1.0.0",
+  "issetuprecipe": false,
+  "categories": [
+    "theme"
+  ],
+  "steps": [
+    {
+      "name": "ReplaceContentDefinition",
+      "ContentTypes": [
+        {
+          "Name": "PartnerPromo",
+          "DisplayName": "Partner Promo",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Stereotype": "Widget",
+              "Description": "A heading, intro and call-to-action alongside a set of partner / sponsor logos."
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                },
+                "TitlePartSettings": {
+                  "Options": 0,
+                  "RenderTitle": false
+                }
+              }
+            },
+            {
+              "PartName": "PartnerPromo",
+              "Name": "PartnerPromo",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                }
+              }
+            },
+            {
+              "PartName": "BagPart",
+              "Name": "CallToActions",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "DisplayName": "Call To Actions",
+                  "Description": "The call-to-action button(s) shown beside the heading.",
+                  "Position": "2"
+                },
+                "BagPartSettings": {
+                  "ContainedContentTypes": [
+                    "CallToAction"
+                  ],
+                  "CollapseContainedItems": true
+                }
+              }
+            },
+            {
+              "PartName": "BagPart",
+              "Name": "Partners",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "DisplayName": "Partners",
+                  "Description": "The partner / sponsor logos shown as cards.",
+                  "Position": "3"
+                },
+                "BagPartSettings": {
+                  "ContainedContentTypes": [
+                    "Partner"
+                  ],
+                  "CollapseContainedItems": true
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "Brand",
+          "DisplayName": "Brand",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Stereotype": "Widget",
+              "Description": "The brand tagline and social links. The logo and site name are themed."
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                },
+                "TitlePartSettings": {
+                  "Options": 0,
+                  "RenderTitle": false
+                }
+              }
+            },
+            {
+              "PartName": "Brand",
+              "Name": "Brand",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "LinkColumn",
+          "DisplayName": "Link Column",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Stereotype": "Widget",
+              "Description": "A column of links under a heading (the item title)."
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                },
+                "TitlePartSettings": {
+                  "Options": 0,
+                  "RenderTitle": false
+                }
+              }
+            },
+            {
+              "PartName": "BagPart",
+              "Name": "Links",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "DisplayName": "Links",
+                  "Description": "The links in this column, in order.",
+                  "Position": "1"
+                },
+                "BagPartSettings": {
+                  "ContainedContentTypes": [
+                    "Link"
+                  ],
+                  "CollapseContainedItems": true
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "Partner",
+          "DisplayName": "Partner",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Stereotype": ""
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                },
+                "TitlePartSettings": {
+                  "Options": 0,
+                  "RenderTitle": false
+                }
+              }
+            },
+            {
+              "PartName": "Partner",
+              "Name": "Partner",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "Link",
+          "DisplayName": "Link",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Stereotype": ""
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                },
+                "TitlePartSettings": {
+                  "Options": 2,
+                  "Pattern": "{{ Model.ContentItem.Content.Link.Link.Text }}",
+                  "RenderTitle": false
+                }
+              }
+            },
+            {
+              "PartName": "Link",
+              "Name": "Link",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "ContentParts": [
+        {
+          "Name": "PartnerPromo",
+          "Settings": {
+            "ContentPartSettings": {
+              "Description": "Heading and intro for the partner promo."
+            }
+          },
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "TextField",
+              "Name": "Heading",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Heading",
+                  "Position": "0"
+                },
+                "TextFieldSettings": {
+                  "Hint": "The heading, e.g. Built by the community, with help from our partners."
+                }
+              }
+            },
+            {
+              "FieldName": "HtmlField",
+              "Name": "Intro",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Intro",
+                  "Editor": "Trumbowyg",
+                  "Position": "1"
+                },
+                "HtmlFieldTrumbowygEditorSettings": {
+                  "Options": "{ \"btns\": [[\"strong\", \"em\"], [\"link\"], [\"removeformat\"]], \"removeformatPasted\": true }",
+                  "InsertMediaWithUrl": false
+                },
+                "HtmlFieldSettings": {
+                  "Hint": "Optional. A short paragraph under the heading."
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "Brand",
+          "Settings": {
+            "ContentPartSettings": {
+              "Description": "The brand tagline and social links shown in the footer."
+            }
+          },
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "HtmlField",
+              "Name": "Tagline",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Tagline",
+                  "Editor": "Trumbowyg",
+                  "Position": "0"
+                },
+                "HtmlFieldTrumbowygEditorSettings": {
+                  "Options": "{ \"btns\": [[\"strong\", \"em\"], [\"link\"], [\"removeformat\"]], \"removeformatPasted\": true }",
+                  "InsertMediaWithUrl": false
+                },
+                "HtmlFieldSettings": {
+                  "Hint": "Optional. A short line under the site name."
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "GitHubUrl",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "GitHub URL",
+                  "Editor": "Url",
+                  "Position": "1"
+                },
+                "TextFieldSettings": {
+                  "Hint": "Optional. Shows a GitHub icon link when set."
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "DiscordUrl",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Discord URL",
+                  "Editor": "Url",
+                  "Position": "2"
+                },
+                "TextFieldSettings": {
+                  "Hint": "Optional. Shows a Discord icon link when set."
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "YouTubeUrl",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "YouTube URL",
+                  "Editor": "Url",
+                  "Position": "3"
+                },
+                "TextFieldSettings": {
+                  "Hint": "Optional. Shows a YouTube icon link when set."
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "Partner",
+          "Settings": {
+            "ContentPartSettings": {
+              "Description": "One partner / sponsor: the name is the editable title (also the logo alt). Holds a logo and an optional link."
+            }
+          },
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "MediaField",
+              "Name": "Logo",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Logo",
+                  "Editor": "Gallery",
+                  "Position": "0"
+                },
+                "MediaFieldSettings": {
+                  "Multiple": false,
+                  "AllowMediaText": true,
+                  "AllowAnchors": false,
+                  "Hint": "The partner logo. Set its media text to override the alt text."
+                }
+              }
+            },
+            {
+              "FieldName": "LinkField",
+              "Name": "Link",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Link",
+                  "Position": "1"
+                },
+                "LinkFieldSettings": {
+                  "LinkTextMode": "Optional",
+                  "HintLinkText": "Optional. The link's accessible label; defaults to the partner name.",
+                  "UrlPlaceholder": "https://example.com"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "Link",
+          "Settings": {
+            "ContentPartSettings": {
+              "Description": "One link in a column: a label and a URL."
+            }
+          },
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "LinkField",
+              "Name": "Link",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Link",
+                  "Position": "0"
+                },
+                "LinkFieldSettings": {
+                  "LinkTextMode": "Required",
+                  "HintLinkText": "The link label shown in the footer.",
+                  "UrlPlaceholder": "https://example.com"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

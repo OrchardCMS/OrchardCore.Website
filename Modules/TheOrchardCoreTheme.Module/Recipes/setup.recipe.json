@@ -1,0 +1,63 @@
+{
+  "name": "TheOrchardCoreTheme.Setup",
+  "displayName": "Orchard Core Website - Setup",
+  "description": "Installs a fresh site that uses TheOrchardCoreTheme. Enabling the theme pulls in the companion module, whose migration runs the content model and seed content automatically.",
+  "author": "Orchard Core",
+  "website": "https://orchardcore.net",
+  "version": "1.0.0",
+  "issetuprecipe": true,
+  "categories": [ "theme" ],
+  "tags": [ "orchardcore" ],
+  "steps": [
+    {
+      "name": "feature",
+      "enable": [
+        "OrchardCore.HomeRoute",
+        "OrchardCore.Admin",
+        "OrchardCore.Diagnostics",
+        "OrchardCore.DynamicCache",
+        "OrchardCore.Features",
+        "OrchardCore.Navigation",
+        "OrchardCore.Recipes",
+        "OrchardCore.Resources",
+        "OrchardCore.Roles",
+        "OrchardCore.Security",
+        "OrchardCore.Settings",
+        "OrchardCore.Themes",
+        "OrchardCore.Users",
+        "OrchardCore.Alias",
+        "OrchardCore.Autoroute",
+        "OrchardCore.Localization",
+        "OrchardCore.ContentLocalization",
+        "OrchardCore.ContentLocalization.ContentCulturePicker",
+        "OrchardCore.Html",
+        "OrchardCore.ContentFields",
+        "OrchardCore.ContentPreview",
+        "OrchardCore.Contents",
+        "OrchardCore.ContentTypes",
+        "OrchardCore.Flows",
+        "OrchardCore.Liquid",
+        "OrchardCore.Media",
+        "OrchardCore.Menu",
+        "OrchardCore.Seo",
+        "OrchardCore.Templates",
+        "OrchardCore.Title",
+        "OrchardCore.Widgets",
+        "OrchardCore.Layers",
+        "OrchardCore.Workflows",
+        "OrchardCore.Workflows.Timers",
+        "OrchardCore.Workflows.Http",
+        "OrchardCore.Shortcodes",
+        "OrchardCore.Shortcodes.Templates",
+        "TheAdmin",
+        "TheOrchardCoreTheme.Module",
+        "TheOrchardCoreTheme"
+      ]
+    },
+    {
+      "name": "themes",
+      "admin": "TheAdmin",
+      "site": "TheOrchardCoreTheme"
+    }
+  ]
+}
