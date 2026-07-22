@@ -12,7 +12,7 @@
     <label asp-for="Text" class="form-label">@Model.PartFieldDefinition.DisplayName()</label>
     <div class="ocat-end">
         @await DisplayAsync(await New.ShortcodeModal())
-        <input asp-for="Text" class="form-control shortcode-modal-input" placeholder="@settings.Placeholder" />
+        <input asp-for="Text" class="form-control shortcode-modal-input content-preview-text" placeholder="@settings.Placeholder" />
         <span asp-validation-for="Text"></span>
         @if (!string.IsNullOrEmpty(settings.Hint))
         {

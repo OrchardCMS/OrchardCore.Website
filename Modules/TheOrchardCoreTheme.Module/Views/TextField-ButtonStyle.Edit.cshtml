@@ -28,7 +28,7 @@
             var optId = $"{baseId}_{opt.Value}";
             var style = styles.TryGetValue(opt.Value ?? string.Empty, out var s) ? s : "background:#e5e7eb; color:#374151;";
             <div class="btnsw__item">
-                <input class="btnsw__input" type="radio" id="@optId" name="@groupName" value="@opt.Value" checked="@(string.Equals(opt.Value, current, StringComparison.OrdinalIgnoreCase))" />
+                <input class="btnsw__input content-preview-text" type="radio" id="@optId" name="@groupName" value="@opt.Value" checked="@(string.Equals(opt.Value, current, StringComparison.OrdinalIgnoreCase))" />
                 <label class="btnsw__label" for="@optId">
                     <span class="btnsw__preview" style="@style">Button</span>
                     <span class="btnsw__name">@opt.Name</span>

@@ -176,7 +176,7 @@
           "WorkflowTypeId": "[js: variables('workflowTypeId')]",
           "Name": "Daily NuGet Downloads",
           "IsEnabled": true,
-          "IsSingleton": true,
+          "IsSingleton": false,
           "DeleteFinishedWorkflows": true,
           "Activities": [
             {
@@ -204,7 +204,7 @@
                   "Title": "Fetch NuGet downloads"
                 },
                 "Url": {
-                  "Expression": "https://azuresearch-usnc.nuget.org/query?q=OrchardCore&take=1000&prerelease=true&semVerLevel=2.0.0"
+                  "Expression": "https://azuresearch-usnc.nuget.org/query?q=packageid:OrchardCore.Abstractions&prerelease=true&semVerLevel=2.0.0"
                 },
                 "HttpMethod": "GET",
                 "HttpResponseCodes": "200"
@@ -218,13 +218,13 @@
               "IsStart": false,
               "Properties": {
                 "ActivityMetadata": {
-                  "Title": "Parse total downloads"
+                  "Title": "Parse downloads"
                 },
                 "AvailableOutcomes": [
                   "Done"
                 ],
                 "Script": {
-                  "Expression": "var response = JSON.parse(lastResult().Body); var ids = ['OrchardCore.Application.Cms.Targets', 'OrchardCore.Application.Mvc.Targets', 'OrchardCore.Module.Targets', 'OrchardCore.Theme.Targets']; var total = 0; for (var i = 0; i < response.data.length; i++) { var p = response.data[i]; if (ids.indexOf(p.id) !== -1) { total += p.totalDownloads; } } output('count', total); setOutcome('Done');"
+                  "Expression": "var response = JSON.parse(lastResult().Body); var total = 0; if (response.data.length > 0) { total = response.data[0].totalDownloads; } output('count', total); setOutcome('Done');"
                 }
               }
             },
@@ -294,7 +294,7 @@
           "WorkflowTypeId": "[js: variables('starsTypeId')]",
           "Name": "Daily GitHub Stars",
           "IsEnabled": true,
-          "IsSingleton": true,
+          "IsSingleton": false,
           "DeleteFinishedWorkflows": true,
           "Activities": [
             {
@@ -415,7 +415,7 @@
           "WorkflowTypeId": "[js: variables('contribTypeId')]",
           "Name": "Daily Contributors",
           "IsEnabled": true,
-          "IsSingleton": true,
+          "IsSingleton": false,
           "DeleteFinishedWorkflows": true,
           "Activities": [
             {
@@ -533,7 +533,7 @@
           "WorkflowTypeId": "[js: variables('topTypeId')]",
           "Name": "Daily Top Contributors",
           "IsEnabled": true,
-          "IsSingleton": true,
+          "IsSingleton": false,
           "DeleteFinishedWorkflows": true,
           "Activities": [
             {
@@ -655,7 +655,7 @@
           "WorkflowTypeId": "[js: variables('commitTypeId')]",
           "Name": "Hourly Last Commit",
           "IsEnabled": true,
-          "IsSingleton": true,
+          "IsSingleton": false,
           "DeleteFinishedWorkflows": true,
           "Activities": [
             {
@@ -777,7 +777,7 @@
           "WorkflowTypeId": "[js: variables('releaseTypeId')]",
           "Name": "Daily Latest Release",
           "IsEnabled": true,
-          "IsSingleton": true,
+          "IsSingleton": false,
           "DeleteFinishedWorkflows": true,
           "Activities": [
             {

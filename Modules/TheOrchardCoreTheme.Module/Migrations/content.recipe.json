@@ -27,8 +27,8 @@
           "SourcePath": "../wwwroot/assets/logos/sony.svg"
         },
         {
-          "TargetPath": "logos/smithsonian-colour.svg",
-          "SourcePath": "../wwwroot/assets/logos/smithsonian-colour.svg"
+          "TargetPath": "logos/smithsonian-color.svg",
+          "SourcePath": "../wwwroot/assets/logos/smithsonian-color.svg"
         },
         {
           "TargetPath": "logos/starbucks-emblem.png",

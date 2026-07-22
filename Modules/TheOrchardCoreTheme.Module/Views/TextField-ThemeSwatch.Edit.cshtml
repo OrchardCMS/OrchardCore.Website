@@ -29,7 +29,7 @@
             var optId = $"{baseId}_{opt.Value}";
             var colors = swatches.TryGetValue(opt.Value ?? string.Empty, out var c) ? c : (bg: "#e5e7eb", fg: "#374151");
             <div class="theme-swatch">
-                <input class="theme-swatch__input" type="radio" id="@optId" name="@groupName" value="@opt.Value" checked="@(string.Equals(opt.Value, current, StringComparison.OrdinalIgnoreCase))" />
+                <input class="theme-swatch__input content-preview-text" type="radio" id="@optId" name="@groupName" value="@opt.Value" checked="@(string.Equals(opt.Value, current, StringComparison.OrdinalIgnoreCase))" />
                 <label class="theme-swatch__label" for="@optId">
                     <span class="theme-swatch__preview" style="background:@colors.bg; color:@colors.fg;">Aa</span>
                     <span class="theme-swatch__name">@opt.Name</span>
