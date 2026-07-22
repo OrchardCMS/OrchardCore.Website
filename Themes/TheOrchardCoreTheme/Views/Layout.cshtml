@@ -1,6 +1,100 @@
+@using System.Globalization
 @using Microsoft.AspNetCore.Html
 @using OrchardCore.ContentManagement
+@using OrchardCore.ContentLocalization
+@using OrchardCore.ContentLocalization.Models
 @inject IContentManager ContentManager
+@inject IContentLocalizationManager ContentLocalizationManager
+@{
+    // Loaded once for the whole layout: the primary nav is built from the CURRENT page's section
+    // blocks that opt in (BlockPart.ShowInNav + NavText), each linking to its section AnchorId, in
+    // on-page order. The Layout has no Model.ContentItem, so load the current (culture-specific) page
+    // from the matched route value. navLinks stays empty for non-LandingPage pages.
+    var navLinks = new List<(string Anchor, string Text)>();
+
+    // hreflang alternates for this page's culture variants (populated below), emitted in <head>.
+    var hrefLangs = new List<(string Culture, string Href)>();
+
+    // The Harvest link is the one nav item that leaves the page, so it cannot come from a block. Only
+    // Home shows it. HomeRoute points at the English home item, but every culture's home variant shares
+    // its LocalizationSet, so we match on that rather than the (culture-specific) id. The Harvest page is
+    // localized too, so link to the current culture's variant (/fr/harvest); English keeps /harvest.
+    var isHome = false;
+    var culture = Orchard.CultureName();
+    var harvestUrl = string.IsNullOrEmpty(culture) || culture == "en" ? "~/harvest" : $"~/{culture}/harvest";
+
+    // The logo links home in the CURRENT culture, not always the English root. The English home is
+    // served at "/"; other cultures resolve their own home variant (same LocalizationSet) and use its
+    // localized path (e.g. /fr/accueil), falling back to "/" if that culture has no home translation.
+    var homeId = Site.HomeRoute?["contentItemId"] as string;
+    var homeSet = homeId is null ? null : (await ContentManager.GetAsync(homeId))?.As<LocalizationPart>()?.LocalizationSet;
+    var homeUrl = "~/";
+    if (!string.IsNullOrEmpty(culture) && culture != "en" && !string.IsNullOrEmpty(homeSet))
+    {
+        var localizedHome = await ContentLocalizationManager.GetContentItemAsync(homeSet, culture);
+        var localizedHomePath = (string)(localizedHome?.Content.AutoroutePart?.Path);
+        if (!string.IsNullOrEmpty(localizedHomePath))
+        {
+            homeUrl = "~/" + localizedHomePath;
+        }
+    }
+
+    if (Context.Request.RouteValues["contentItemId"] is string contentItemId)
+    {
+        var current = await ContentManager.GetAsync(contentItemId);
+
+        var currentSet = current?.As<LocalizationPart>()?.LocalizationSet;
+        isHome = !string.IsNullOrEmpty(currentSet) && currentSet == homeSet;
+
+        if (current?.ContentType == "LandingPage")
+        {
+            foreach (var block in current.Get<BagPart>("Sections")?.ContentItems ?? [])
+            {
+                var nav = block.Get<ContentPart>("BlockPart");
+                if (nav?.Get<BooleanField>("ShowInNav")?.Value == true)
+                {
+                    var navText = nav.Get<TextField>("NavText")?.Text;
+                    var anchorId = nav.Get<TextField>("AnchorId")?.Text;
+                    if (!string.IsNullOrEmpty(navText) && !string.IsNullOrEmpty(anchorId))
+                    {
+                        navLinks.Add((anchorId!, navText!));
+                    }
+                }
+            }
+        }
+
+        // One <link rel="alternate" hreflang> per culture variant sharing this page's LocalizationSet,
+        // so search engines connect the translations and serve the right one. The English home is served
+        // at the site root, so it advertises "/" rather than its /home slug.
+        if (!string.IsNullOrEmpty(currentSet))
+        {
+            var baseUrl = $"{Context.Request.Scheme}://{Context.Request.Host}";
+            foreach (var variant in await ContentLocalizationManager.GetItemsForSetAsync(currentSet))
+            {
+                var variantCulture = variant.As<LocalizationPart>()?.Culture;
+                if (string.IsNullOrEmpty(variantCulture))
+                {
+                    continue;
+                }
+                var path = variant.ContentItemId == homeId ? string.Empty : (string)(variant.Content.AutoroutePart?.Path);
+                hrefLangs.Add((variantCulture, baseUrl + Url.Content("~/" + (path ?? string.Empty))));
+            }
+        }
+    }
+
+    // Language switcher: one entry per existing translation of this page (same LocalizationSet),
+    // labelled with the language's own native name. Shown only when there is more than one.
+    var languages = hrefLangs
+        .Select(h => (h.Culture, h.Href,
+            Label: FirstUpper(CultureInfo.GetCultureInfo(h.Culture).NativeName),
+            IsCurrent: string.Equals(h.Culture, culture, StringComparison.OrdinalIgnoreCase)))
+        .OrderBy(l => l.Label, StringComparer.CurrentCulture)
+        .ToList();
+    var currentLanguageLabel = languages.FirstOrDefault(l => l.IsCurrent).Label
+        ?? FirstUpper(CultureInfo.GetCultureInfo(string.IsNullOrEmpty(culture) ? "en" : culture).NativeName);
+
+    static string FirstUpper(string value) => string.IsNullOrEmpty(value) ? value : char.ToUpper(value[0]) + value[1..];
+}
 <!DOCTYPE html>
 <html lang="@Orchard.CultureName()">
 <head>
@@ -9,6 +103,17 @@
     <title>@RenderTitleSegments(Site.SiteName, "before", new HtmlString(" - "))</title>
 
     <resources type="Meta" />
+
+    @* hreflang alternates linking this page's culture variants (computed above); x-default -> English. *@
+    @foreach (var (hlCulture, hlHref) in hrefLangs)
+    {
+        <link rel="alternate" hreflang="@hlCulture" href="@hlHref" />
+    }
+    @{ var defaultHref = hrefLangs.FirstOrDefault(h => h.Culture == "en").Href; }
+    @if (!string.IsNullOrEmpty(defaultHref))
+    {
+        <link rel="alternate" hreflang="x-default" href="@defaultHref" />
+    }
 
     <link rel="icon" type="image/webp" href="@Url.Content("~/TheOrchardCoreTheme/assets/orchard-core-symbol-logo-color.webp")">
     <link rel="apple-touch-icon" href="@Url.Content("~/TheOrchardCoreTheme/assets/orchard-core-symbol-logo-color.webp")">
@@ -40,47 +145,10 @@
 </head>
 <body dir="@Orchard.CultureDir()" class="bg-white text-ink">
 
-@{
-    // The primary nav is built from the CURRENT page's section blocks that opt in
-    // (BlockPart.ShowInNav + NavText), each linking to its section AnchorId, in on-page order. The
-    // Layout has no Model.ContentItem, so load the current (culture-specific) page from the matched
-    // route value. navLinks stays empty for non-LandingPage pages, so the nav loops render nothing.
-    // One nav link per opted-in block, reused by the desktop nav and the mobile menu.
-    var navLinks = new List<(string Anchor, string Text)>();
-
-    // The Harvest link below is the one nav item that leaves the page, so it cannot come from a block.
-    // Only Home gets it: navLinks is populated for every LandingPage, including the Harvest pages
-    // themselves. "/" is served by HomeRoute, which supplies the same contentItemId as /home, so Home
-    // matches on both routes.
-    var isHome = false;
-    if (Context.Request.RouteValues["contentItemId"] is string contentItemId)
-    {
-        isHome = contentItemId == Site.HomeRoute?["contentItemId"] as string;
-
-        var current = await ContentManager.GetAsync(contentItemId);
-        if (current?.ContentType == "LandingPage")
-        {
-            foreach (var block in current.Get<BagPart>("Sections")?.ContentItems ?? [])
-            {
-                var nav = block.Get<ContentPart>("BlockPart");
-                if (nav?.Get<BooleanField>("ShowInNav")?.Value == true)
-                {
-                    var navText = nav.Get<TextField>("NavText")?.Text;
-                    var anchorId = nav.Get<TextField>("AnchorId")?.Text;
-                    if (!string.IsNullOrEmpty(navText) && !string.IsNullOrEmpty(anchorId))
-                    {
-                        navLinks.Add((anchorId!, navText!));
-                    }
-                }
-            }
-        }
-    }
-}
-
 <header id="siteHeader" class="sticky top-0 z-40 transition-shadow duration-300">
   <div class="mx-auto flex max-w-content items-center justify-between px-6 py-3.5">
     <div class="flex items-center gap-8 lg:gap-10">
-      <a href="@Url.Content("~/")" class="flex items-center">
+      <a href="@Url.Content(homeUrl)" class="flex items-center">
         @* Full colored logo (symbol + wordmark), inlined as SVG so it costs no extra
            request and paints with the first byte of HTML. Fills live on the two group ancestors
            (grey wordmark / green symbol); in dark mode the header's `html.dark #siteHeader .site-logo`
@@ -117,7 +185,7 @@
           @* No data-spy: this link navigates rather than scrolling, so scroll-spy must skip it. *@
           @if (isHome)
           {
-            <li><a class="nav-link transition-colors hover:text-leaf focus-visible:outline-2 focus-visible:outline-green-700" href="@Url.Content("~/harvest")">Harvest</a></li>
+            <li><a class="nav-link transition-colors hover:text-leaf focus-visible:outline-2 focus-visible:outline-green-700" href="@Url.Content(harvestUrl)">Harvest</a></li>
           }
         </ul>
       </nav>
@@ -127,6 +195,34 @@
       @* Social icons are content-managed: a SocialLinks widget placed (via Layers) in the
          site-wide 'Header' zone, on the 'Always' layer. Manage under Design → Widgets. *@
       @await RenderSectionAsync("Header", required: false)
+
+      @* Language switcher: a native <details> dropdown (no JavaScript) listing this page's
+         translations. Each links straight to the localized URL; the current language is marked. *@
+      @if (languages.Count > 1)
+      {
+        <details class="lang-switcher relative hidden lg:block">
+          <summary class="flex cursor-pointer list-none items-center gap-1.5 text-sm font-medium text-green-900 marker:content-none [&::-webkit-details-marker]:hidden focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-700 theme-dark:text-white">
+            <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            <span>@currentLanguageLabel</span>
+            <svg aria-hidden="true" class="transition-transform" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+          </summary>
+          <ul class="absolute right-0 z-50 mt-3 min-w-44 overflow-hidden rounded-xl border border-rule bg-white py-1 shadow-soft">
+            @foreach (var lang in languages)
+            {
+              <li>
+                <a href="@lang.Href" hreflang="@lang.Culture" lang="@lang.Culture" aria-current="@(lang.IsCurrent ? "true" : null)"
+                   class="flex items-center justify-between gap-6 px-4 py-2 text-sm hover:bg-cream @(lang.IsCurrent ? "font-semibold text-green-900 theme-dark:text-white" : "text-ink-soft")">
+                  <span>@lang.Label</span>
+                  @if (lang.IsCurrent)
+                  {
+                    <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+                  }
+                </a>
+              </li>
+            }
+          </ul>
+        </details>
+      }
 
       <button id="themeToggle" type="button" role="switch" aria-checked="false" aria-label="Switch to dark mode" class="relative inline-flex h-6 w-11 shrink-0 items-center rounded-full border transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-700">
         <svg aria-hidden="true" class="pointer-events-none absolute left-[6px] top-1/2 h-3 w-3 -translate-y-1/2 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
@@ -156,7 +252,27 @@
     }
     @if (isHome)
     {
-      <li><a class="nav-link block py-3" href="@Url.Content("~/harvest")">Harvest</a></li>
+      <li><a class="nav-link block py-3" href="@Url.Content(harvestUrl)">Harvest</a></li>
+    }
+    @if (languages.Count > 1)
+    {
+      <li class="mt-2 border-t border-rule pt-3">
+        <span class="block pb-1 text-xs font-semibold uppercase tracking-wide text-ink-soft">Language</span>
+        <ul class="flex flex-col">
+          @foreach (var lang in languages)
+          {
+            <li>
+              <a class="nav-link flex items-center justify-between py-2" href="@lang.Href" hreflang="@lang.Culture" lang="@lang.Culture" aria-current="@(lang.IsCurrent ? "true" : null)">
+                <span class="@(lang.IsCurrent ? "font-semibold" : "")">@lang.Label</span>
+                @if (lang.IsCurrent)
+                {
+                  <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+                }
+              </a>
+            </li>
+          }
+        </ul>
+      </li>
     }
   </ul>
 </nav>

@@ -48,6 +48,16 @@ public sealed class Migrations : DataMigration
         await _recipeMigrator.ExecuteAsync("Theme/site-header.recipe.json", this);
 
         await _recipeMigrator.ExecuteAsync("content.recipe.json", this);
+
+        // Per-language content: each file adds its culture's LandingPage variants (sharing the
+        // English items' LocalizationSets) and footer widgets on its own culture layer. They run
+        // after the English base because they reference its LocalizationSets and reuse its media.
+        // The Layers step merges by name and the content step imports additively, so each language
+        // is self-contained — add another by dropping in a content-<culture>.recipe.json, adding the
+        // culture to content.recipe.json's SupportedCultures, and registering it here.
+        await _recipeMigrator.ExecuteAsync("content-fr.recipe.json", this);
+        await _recipeMigrator.ExecuteAsync("content-hu.recipe.json", this);
+
         await _recipeMigrator.ExecuteAsync("automation.recipe.json", this);
 
         return 1;

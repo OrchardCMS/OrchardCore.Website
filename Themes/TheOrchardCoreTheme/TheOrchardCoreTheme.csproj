@@ -28,6 +28,7 @@
   <ItemGroup>
     <PackageReference Include="OrchardCore.Theme.Targets" Version="3.0.1" />
     <PackageReference Include="OrchardCore.ContentManagement" Version="3.0.1" />
+    <PackageReference Include="OrchardCore.ContentLocalization.Abstractions" Version="3.0.1" />
     <PackageReference Include="OrchardCore.DisplayManagement" Version="3.0.1" />
     <PackageReference Include="OrchardCore.ResourceManagement" Version="3.0.1" />
     <PackageReference Include="OrchardCore.Media" Version="3.0.1" />
