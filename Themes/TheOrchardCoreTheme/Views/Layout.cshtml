@@ -27,12 +27,12 @@
     // served at "/"; other cultures resolve their own home variant (same LocalizationSet) and use its
     // localized path (e.g. /fr/accueil), falling back to "/" if that culture has no home translation.
     var homeId = Site.HomeRoute?["contentItemId"] as string;
-    var homeSet = homeId is null ? null : (await ContentManager.GetAsync(homeId))?.As<LocalizationPart>()?.LocalizationSet;
+    var homeSet = homeId is null ? null : (await ContentManager.GetAsync(homeId))?.Get<LocalizationPart>(nameof(LocalizationPart))?.LocalizationSet;
     var homeUrl = "~/";
     if (!string.IsNullOrEmpty(culture) && culture != "en" && !string.IsNullOrEmpty(homeSet))
     {
         var localizedHome = await ContentLocalizationManager.GetContentItemAsync(homeSet, culture);
-        var localizedHomePath = (string)(localizedHome?.Content.AutoroutePart?.Path);
+        var localizedHomePath = (string?)(localizedHome?.Content.AutoroutePart?.Path);
         if (!string.IsNullOrEmpty(localizedHomePath))
         {
             homeUrl = "~/" + localizedHomePath;
@@ -43,7 +43,7 @@
     {
         var current = await ContentManager.GetAsync(contentItemId);
 
-        var currentSet = current?.As<LocalizationPart>()?.LocalizationSet;
+        var currentSet = current?.Get<LocalizationPart>(nameof(LocalizationPart))?.LocalizationSet;
         isHome = !string.IsNullOrEmpty(currentSet) && currentSet == homeSet;
 
         if (current?.ContentType == "LandingPage")
@@ -71,12 +71,12 @@
             var baseUrl = $"{Context.Request.Scheme}://{Context.Request.Host}";
             foreach (var variant in await ContentLocalizationManager.GetItemsForSetAsync(currentSet))
             {
-                var variantCulture = variant.As<LocalizationPart>()?.Culture;
+                var variantCulture = variant.Get<LocalizationPart>(nameof(LocalizationPart))?.Culture;
                 if (string.IsNullOrEmpty(variantCulture))
                 {
                     continue;
                 }
-                var path = variant.ContentItemId == homeId ? string.Empty : (string)(variant.Content.AutoroutePart?.Path);
+                var path = variant.ContentItemId == homeId ? string.Empty : (string?)(variant.Content.AutoroutePart?.Path);
                 hrefLangs.Add((variantCulture, baseUrl + Url.Content("~/" + (path ?? string.Empty))));
             }
         }
