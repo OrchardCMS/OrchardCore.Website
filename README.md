@@ -6,7 +6,7 @@ This is the repository of <https://orchardcore.net/>. You can work with it local
 
 You can just launch the web app (like with <kbd>Ctrl</kbd>+<kbd>F5</kbd> in Visual Studio) and it will just work. It utilizes [Auto Setup](https://docs.orchardcore.net/en/latest/reference/modules/AutoSetup/) to initialize the site with content used for local development.
 
-You can log in with `admin` and `Passsword1!`.
+You can log in with `admin` and `Password1!`.
 
 To reinitialize the site, just delete the `OrchardCore.Web/App_Data` folder, or use the `Reset-Local.ps1` from the root.
 
