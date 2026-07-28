@@ -1,10 +1,11 @@
 using OrchardCore.DisplayManagement.Manifest;
+using OrchardCore.Modules.Manifest;
 
 [assembly: Theme(
     Name = "TheOrchardCoreTheme",
-    Author = "Orchard Core",
-    Website = "https://orchardcore.net",
-    Version = "0.0.1",
+    Author = ManifestConstants.OrchardCoreTeam,
+    Website = ManifestConstants.OrchardCoreWebsite,
+    Version = "1.0.0",
     Description = "The theme for the orchardcore.net website.",
     Dependencies =
     [
