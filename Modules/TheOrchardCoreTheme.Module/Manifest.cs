@@ -3,9 +3,9 @@ using OrchardCore.Modules.Manifest;
 [assembly: Module(
     Id = "TheOrchardCoreTheme.Module",
     Name = "Orchard Core Website",
-    Author = "Orchard Core",
-    Website = "https://orchardcore.net",
-    Version = "0.0.1",
+    Author = ManifestConstants.OrchardCoreTeam,
+    Website = ManifestConstants.OrchardCoreWebsite,
+    Version = "1.0.0",
     Description = "Companion module for TheOrchardCoreTheme: editor layout (tabs) and the content model + seed content (run on first enable).",
     Category = "Content",
     // These must be enabled (and their schema migrated) before this module's migration runs the
