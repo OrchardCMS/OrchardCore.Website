@@ -20,7 +20,9 @@
        command has no fail-on-error or retry flags, so a transient GitHub error body gets saved and
        then executed as the CLI, failing CI with "Syntax error: redirection unexpected". The override
        below adds curl's fail-fast and retry flags. Must live in the csproj body (not
-       Directory.Build.props) so the package's .props-defined paths are already set. -->
+       Directory.Build.props) so the package's .props-defined paths are already set. 
+       Once https://github.com/Lombiq/Tailwind-Targets/issues/11 is fixed and released, this workaround
+       can be removed. -->
   <PropertyGroup>
     <TailwindDownloadCommand Condition="'$(TailwindCliOs)' != 'windows'">curl -fSL --retry 5 --retry-delay 3 --retry-all-errors -o "$(TailwindCliTempPath)" "$(TailwindCliDownloadUrl)"</TailwindDownloadCommand>
   </PropertyGroup>
