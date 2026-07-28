@@ -9,7 +9,6 @@
 
   <ItemGroup>
     <None Remove="AppOffline\app_offline.htm" />
-    <None Remove="Recipes\Templates\**\*.liquid" />
   </ItemGroup>
 
   <ItemGroup>
@@ -19,7 +18,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Recipes\Templates\**\*.liquid" />
+    <None Update="Recipes\**\*.*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
