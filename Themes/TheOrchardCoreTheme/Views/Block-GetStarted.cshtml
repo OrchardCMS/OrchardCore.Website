@@ -52,13 +52,15 @@
                     }
                     @for (var i = 0; i < methods.Count; i++)
                     {
-                        <label class="row-start-1 cursor-pointer border-b-2 border-transparent px-5 py-3.5 text-sm font-bold text-white/55 transition hover:text-white peer-checked/m@(i):border-accent-bright peer-checked/m@(i):text-white focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-amber" for="code-@uid-@i">@methods[i].DisplayText</label>
+                        <label class="row-start-1 cursor-pointer border-b-2 border-transparent px-5 py-3.5 text-sm font-bold text-white/55 transition hover:text-white peer-checked/m@(i):border-accent-bright peer-checked/m@(i):text-white focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-amber" for="code-@uid-@i"
+                               data-pirsch-event="Install Method Selected" data-pirsch-meta-method="@methods[i].DisplayText">@methods[i].DisplayText</label>
                     }
                     @for (var i = 0; i < methods.Count; i++)
                     {
                         var snippet = methods[i].Get<ContentPart>("StartMethod")?.Get<TextField>("CodeSnippet")?.Text;
                         <div data-code-block class="hidden relative col-[1/-1] row-start-2 border-t border-white/10 peer-checked/m@(i):block">
-                            <button type="button" class="copy-btn absolute right-3 top-3 z-10 rounded-full border border-white/20 px-3 py-1 text-xs text-white/70 transition hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber">Copy</button>
+                            <button type="button" class="copy-btn absolute right-3 top-3 z-10 rounded-full border border-white/20 px-3 py-1 text-xs text-white/70 transition hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber"
+                                    data-pirsch-event="Copy Install Command" data-pirsch-meta-source="Get Started" data-pirsch-meta-method="@methods[i].DisplayText">Copy</button>
                             <pre class="overflow-x-auto p-6 font-mono text-sm leading-relaxed text-code-ink"><code>@Html.Raw(await ShortcodeService.ProcessAsync(snippet ?? ""))</code></pre>
                         </div>
                     }

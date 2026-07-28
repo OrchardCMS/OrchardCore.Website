@@ -73,6 +73,7 @@
                                decorative once it is set. *@
                             <button type="button" data-profile data-profile-name="@profile.DisplayText" data-profile-role="@role"
                                     aria-haspopup="dialog" aria-label="Read the bio of @profile.DisplayText"
+                                    data-pirsch-event="Profile Opened" data-pirsch-meta-name="@profile.DisplayText"
                                     class="group cursor-pointer rounded-xl text-center focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-700 theme-dark:focus-visible:outline-white">
                                 @{ await RenderPersonAsync(profile, role, withBioOverlay: true); }
                             </button>

@@ -19,7 +19,9 @@
                 @{ var first = true; }
                 @foreach (var tab in tabs)
                 {
-                    <button type="button" data-card-tab role="tab" aria-selected="@(first ? "true" : "false")" class="tab-toggle@(first ? " is-active" : "")">@(tab.Get<ContentPart>("Tab")?.Get<TextField>("Title")?.Text)</button>
+                    var tabTitle = tab.Get<ContentPart>("Tab")?.Get<TextField>("Title")?.Text;
+                    <button type="button" data-card-tab role="tab" aria-selected="@(first ? "true" : "false")" class="tab-toggle@(first ? " is-active" : "")"
+                            data-pirsch-event="Tab Selected" data-pirsch-meta-tab="@tabTitle">@tabTitle</button>
                     first = false;
                 }
             </div>

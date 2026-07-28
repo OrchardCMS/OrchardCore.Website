@@ -17,7 +17,8 @@
 }
 @if (!string.IsNullOrEmpty(url))
 {
-    <a href="@Url.Content(url)" class="group mb-7 inline-flex flex-wrap items-center gap-x-2.5 gap-y-1 rounded-md border py-1 pl-1.5 pr-3.5 text-sm font-medium transition focus-visible:outline-2 focus-visible:outline-offset-2 border-rule bg-cream text-green-900 hover:border-green-600 focus-visible:outline-green-700 theme-dark:border-white/15 theme-dark:bg-white/5 theme-dark:text-green-100 theme-dark:hover:border-white/30 theme-dark:hover:bg-white/10 theme-dark:focus-visible:outline-accent-bright">
+    <a href="@Url.Content(url)" class="group mb-7 inline-flex flex-wrap items-center gap-x-2.5 gap-y-1 rounded-md border py-1 pl-1.5 pr-3.5 text-sm font-medium transition focus-visible:outline-2 focus-visible:outline-offset-2 border-rule bg-cream text-green-900 hover:border-green-600 focus-visible:outline-green-700 theme-dark:border-white/15 theme-dark:bg-white/5 theme-dark:text-green-100 theme-dark:hover:border-white/30 theme-dark:hover:bg-white/10 theme-dark:focus-visible:outline-accent-bright"
+       data-pirsch-event="Announcement Click" data-pirsch-meta-badge="@badge" data-pirsch-meta-message="@message" data-pirsch-meta-url="@Url.Content(url)">
         @if (!string.IsNullOrEmpty(badge))
         {
             <span class="rounded-sm px-2 py-0.5 text-xs font-semibold uppercase tracking-wide bg-green-600 text-white theme-dark:bg-accent-bright theme-dark:text-green-900">@badge</span>

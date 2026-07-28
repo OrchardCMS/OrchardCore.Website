@@ -60,7 +60,8 @@
                     @foreach (var featureItem in features)
                     {
                         var (_, _, _, summary, _) = Feature(featureItem);
-                        <button type="button" data-feat-tab role="tab" aria-selected="@(firstTab ? "true" : "false")" class="feat-tab@(firstTab ? " is-active" : "")">
+                        <button type="button" data-feat-tab role="tab" aria-selected="@(firstTab ? "true" : "false")" class="feat-tab@(firstTab ? " is-active" : "")"
+                                data-pirsch-event="Feature Viewed" data-pirsch-meta-feature="@featureItem.DisplayText">
                             <span class="min-w-0">
                                 <span class="feat-name">@featureItem.DisplayText</span>
                                 <span class="feat-summary">@summary</span>
@@ -104,7 +105,8 @@
                 @foreach (var featureItem in features)
                 {
                     var (light, dark, alt, summary, description) = Feature(featureItem);
-                    <details name="featacc-@uid" class="group overflow-hidden rounded-xl bg-cream" open="@firstDetails">
+                    <details name="featacc-@uid" class="group overflow-hidden rounded-xl bg-cream" open="@firstDetails"
+                             data-pirsch-open-event="Feature Viewed" data-pirsch-meta-feature="@featureItem.DisplayText">
                         <summary class="flex cursor-pointer list-none items-center justify-between gap-3 px-5 py-4 [&::-webkit-details-marker]:hidden focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-700">
                             <span class="min-w-0">
                                 <span class="block font-serif text-base text-green-900 theme-dark:text-white">@featureItem.DisplayText</span>

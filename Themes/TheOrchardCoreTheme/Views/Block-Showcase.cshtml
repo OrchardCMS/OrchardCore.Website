@@ -45,7 +45,8 @@
                     @* The overlay + caption are identical for both variants; only the wrapper differs. *@
                     if (hasUrl)
                     {
-                        <a href="@Url.Content(url)" target="@(isExternal ? "_blank" : null)" rel="@(isExternal ? "noopener" : null)" class="@cardClass">
+                        <a href="@Url.Content(url)" target="@(isExternal ? "_blank" : null)" rel="@(isExternal ? "noopener" : null)" class="@cardClass"
+                           data-pirsch-event="Showcase Click" data-pirsch-meta-name="@showcaseItem.DisplayText" data-pirsch-meta-url="@Url.Content(url)">
                             @if (image is not null)
                             {
                                 @await DisplayAsync(await New.Image(Path: image, Alt: showcaseItem.DisplayText, Width: 640, Height: 400, Sizes: "(min-width:1024px) 380px, (min-width:640px) 46vw, 92vw", Class: "h-full w-full object-cover"))
