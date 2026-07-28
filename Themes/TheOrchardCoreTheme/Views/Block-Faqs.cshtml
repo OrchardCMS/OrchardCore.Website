@@ -1,0 +1,103 @@
+@using System.Text.Json
+@using System.Text.RegularExpressions
+@using Microsoft.AspNetCore.Html
+@inject OrchardCore.Shortcodes.Services.IShortcodeService ShortcodeService
+@*
+    FAQs. Heading + lead, then an accordion of questions — native <details>, no JavaScript, and not
+    exclusive (several can be open). Each question is the FaqItem's title (DisplayText); the answer is
+    its Answer HTML. Closes with the shared BlockActions row. Band/anchor + theme come from the Block part.
+
+    AI / search discoverability: a schema.org FAQPage JSON-LD block is emitted from the same questions.
+    System.Text.Json escapes <, >, & so the data can't break out of the <script>, and the answers are
+    reduced to plain text. One FAQPage per FAQs block, registered at the foot via the script tag helper.
+*@
+@{
+    var item = (ContentItem)Model.ContentItem;
+    var intro = item.Get<ContentPart>("BlockIntro");
+    var section = item.Get<ContentPart>("BlockPart");
+    var theme = section?.Get<TextField>("Theme")?.Text;
+    var themeName = (string.IsNullOrEmpty(theme) ? "White" : theme).ToLowerInvariant();
+    var anchor = section?.Get<TextField>("AnchorId")?.Text;
+    var questions = item.Get<BagPart>("Questions")?.ContentItems ?? [];
+    var blockActions = item.Get<ContentPart>("BlockActionsPart");
+
+    // Closing actions row: copy from BlockActionsPart, buttons from the CallToActions bag.
+    var actionsHtml = new HtmlContentBuilder();
+    foreach (var cta in item.Get<BagPart>("CallToActions")?.ContentItems ?? [])
+    {
+        var callToAction = cta.Get<ContentPart>("CallToAction");
+        var link = callToAction?.Get<LinkField>("Link");
+        actionsHtml.AppendHtml(await DisplayAsync(await New.Button(Url: link?.Url, Text: link?.Text, Target: link?.Target, Variant: callToAction?.Get<TextField>("Variant")?.Text)));
+    }
+}
+<section id="@(string.IsNullOrEmpty(anchor) ? null : anchor)" class="theme-@themeName">
+    <div class="mx-auto max-w-content px-6 band">
+
+        @await DisplayAsync(await New.BlockIntro(Title: intro?.Get<TextField>("Title")?.Text, Lead: intro?.Get<HtmlField>("Lead")?.Html, WrapperWidth: "mx-auto max-w-4xl"))
+
+        @if (questions.Count > 0)
+        {
+            <div class="mx-auto mt-12 max-w-4xl space-y-3">
+                @foreach (var faq in questions)
+                {
+                    var answer = faq.Get<ContentPart>("FaqItem")?.Get<HtmlField>("Answer")?.Html;
+                    var faqActions = faq.Get<BagPart>("CallToActions")?.ContentItems ?? [];
+                    <details class="group rounded-xl bg-cream-deep px-6 theme-cream:bg-white theme-dark:bg-white/5">
+                        <summary class="flex cursor-pointer list-none items-center justify-between gap-6 py-5 [&::-webkit-details-marker]:hidden focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-700">
+                            <h3 class="text-base text-green-900 theme-dark:text-white">@faq.DisplayText</h3>
+                            <svg class="h-5 w-5 shrink-0 text-green-600 transition-transform duration-300 group-open:rotate-180 theme-dark:text-green-100/80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+                        </summary>
+                        <div class="pb-5">
+                            <div class="prose max-w-none">@Html.Raw(await ShortcodeService.ProcessAsync(answer ?? ""))</div>
+                            @if (faqActions.Count > 0)
+                            {
+                                <div class="mt-5 flex flex-wrap items-center gap-3">
+                                    @foreach (var cta in faqActions)
+                                    {
+                                        var callToAction = cta.Get<ContentPart>("CallToAction");
+                                        var link = callToAction?.Get<LinkField>("Link");
+                                        @await DisplayAsync(await New.Button(Url: link?.Url, Text: link?.Text, Target: link?.Target, Variant: callToAction?.Get<TextField>("Variant")?.Text))
+                                    }
+                                </div>
+                            }
+                        </div>
+                    </details>
+                }
+            </div>
+        }
+
+        @await DisplayAsync(await New.BlockActions(Heading: blockActions?.Get<TextField>("Heading")?.Text, Text: blockActions?.Get<HtmlField>("Text")?.Html, Actions: actionsHtml))
+
+    </div>
+</section>
+
+@* schema.org FAQPage structured data (JSON-LD) for AI/search discoverability. Registered at the foot
+   via the resource-management script tag helper, so it renders at the bottom of the body — in the
+   Layout's `<resources type="FootScript" />` — rather than inline at the block's position. *@
+@if (questions.Count > 0)
+{
+    var mainEntity = new List<Dictionary<string, object>>();
+    foreach (var faq in questions)
+    {
+        var answerHtml = faq.Get<ContentPart>("FaqItem")?.Get<HtmlField>("Answer")?.Html;
+        mainEntity.Add(new Dictionary<string, object>
+        {
+            ["@type"] = "Question",
+            ["name"] = faq.DisplayText ?? "",
+            ["acceptedAnswer"] = new Dictionary<string, object>
+            {
+                ["@type"] = "Answer",
+                ["text"] = Regex.Replace(answerHtml ?? "", "<[^>]*>", string.Empty).Trim(),
+            },
+        });
+    }
+
+    var faqPageJson = JsonSerializer.Serialize(new Dictionary<string, object>
+    {
+        ["@context"] = "https://schema.org",
+        ["@type"] = "FAQPage",
+        ["mainEntity"] = mainEntity,
+    });
+
+    <script at="Foot" type="application/ld+json">@Html.Raw(faqPageJson)</script>
+}

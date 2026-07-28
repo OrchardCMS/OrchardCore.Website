@@ -1,0 +1,162 @@
+{
+  "name": "TheOrchardCoreTheme.Model.HeroText",
+  "displayName": "Orchard Core Website - Content Model",
+  "description": "The Hero (Code) block.",
+  "author": "Orchard Core",
+  "version": "1.0.0",
+  "issetuprecipe": false,
+  "categories": [
+    "theme"
+  ],
+  "steps": [
+    {
+      "name": "ReplaceContentDefinition",
+      "ContentTypes": [
+        {
+          "Name": "HeroText",
+          "DisplayName": "Hero (Code)",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Stereotype": "Block",
+              "Category": "Hero",
+              "ThumbnailPath": "~/TheOrchardCoreTheme/block-thumbnails/HeroText.png?v=2",
+              "Description": "Big headline hero with copy, a code snippet and buttons."
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "HeroText",
+              "Name": "HeroText",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                }
+              }
+            },
+            {
+              "PartName": "BlockPart",
+              "Name": "BlockPart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
+              }
+            },
+            {
+              "PartName": "BagPart",
+              "Name": "CallToActions",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "DisplayName": "Call To Actions",
+                  "Description": "The call-to-action buttons shown in this hero.",
+                  "Position": "2"
+                },
+                "BagPartSettings": {
+                  "ContainedContentTypes": [
+                    "CallToAction"
+                  ],
+                  "CollapseContainedItems": true
+                }
+              }
+            },
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                },
+                "TitlePartSettings": {
+                  "Options": 0,
+                  "RenderTitle": false
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "ContentParts": [
+        {
+          "Name": "HeroText",
+          "Settings": {
+            "ContentPartSettings": {
+              "Description": "Fields for the text-only hero."
+            }
+          },
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "HtmlField",
+              "Name": "Lead",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Lead",
+                  "Editor": "Trumbowyg",
+                  "Position": "1"
+                },
+                "HtmlFieldTrumbowygEditorSettings": {
+                  "Options": "{ \"btns\": [[\"strong\", \"em\"], [\"link\"], [\"insertShortcode\"], [\"removeformat\"]], \"removeformatPasted\": true }",
+                  "InsertMediaWithUrl": false
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "AnnouncementBadge",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Announcement badge",
+                  "Position": "2"
+                },
+                "TextFieldSettings": {
+                  "Hint": "Short badge text, e.g. Event or Release."
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "AnnouncementText",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Announcement text",
+                  "Position": "3"
+                },
+                "TextFieldSettings": {
+                  "Hint": "The message shown between the badge and the link."
+                }
+              }
+            },
+            {
+              "FieldName": "LinkField",
+              "Name": "Announcement",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Announcement link",
+                  "Position": "4"
+                },
+                "LinkFieldSettings": {
+                  "LinkTextMode": "Optional",
+                  "HintLinkText": "Link label, e.g. See details",
+                  "Hint": "The link label (e.g. \"See details\") and its URL. The whole banner shows only when a URL is set."
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "CodeSnippet",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Code snippet",
+                  "Editor": "TextArea",
+                  "Position": "5"
+                },
+                "TextFieldSettings": {
+                  "Hint": "Optional terminal block shown under the lead. Color tokens with shortcode tags: [cmd], [name], [comment], [flag], [type]. '#' comment lines and '$ '/'> ' prompts are stripped on copy."
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

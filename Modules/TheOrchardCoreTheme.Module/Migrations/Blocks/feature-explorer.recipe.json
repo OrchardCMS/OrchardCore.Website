@@ -1,0 +1,217 @@
+{
+  "name": "TheOrchardCoreTheme.Model.FeatureExplorer",
+  "displayName": "Orchard Core Website - Content Model",
+  "description": "The Feature Explorer block and its Feature items.",
+  "author": "Orchard Core",
+  "version": "1.0.0",
+  "issetuprecipe": false,
+  "categories": [
+    "theme"
+  ],
+  "steps": [
+    {
+      "name": "ReplaceContentDefinition",
+      "ContentTypes": [
+        {
+          "Name": "FeatureExplorer",
+          "DisplayName": "Feature Explorer",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Stereotype": "Block",
+              "Category": "Content",
+              "ThumbnailPath": "~/TheOrchardCoreTheme/block-thumbnails/FeatureExplorer.png?v=2",
+              "Description": "An explorable grid of features with detail."
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "BlockPart",
+              "Name": "BlockPart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
+              }
+            },
+            {
+              "PartName": "BlockIntro",
+              "Name": "BlockIntro",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                }
+              }
+            },
+            {
+              "PartName": "BagPart",
+              "Name": "Features",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "DisplayName": "Features",
+                  "Description": "The features listed in the explorer; each is a tab with a detail panel.",
+                  "Position": "2"
+                },
+                "BagPartSettings": {
+                  "ContainedContentTypes": [
+                    "Feature"
+                  ],
+                  "CollapseContainedItems": true
+                }
+              }
+            },
+            {
+              "PartName": "BlockActionsPart",
+              "Name": "BlockActionsPart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "3"
+                }
+              }
+            },
+            {
+              "PartName": "BagPart",
+              "Name": "CallToActions",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "DisplayName": "Call To Actions",
+                  "Description": "The closing call-to-action buttons shown beneath the explorer.",
+                  "Position": "4"
+                },
+                "BagPartSettings": {
+                  "ContainedContentTypes": [
+                    "CallToAction"
+                  ],
+                  "CollapseContainedItems": true
+                }
+              }
+            },
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                },
+                "TitlePartSettings": {
+                  "Options": 2,
+                  "Pattern": "{{ Model.ContentItem.Content.BlockIntro.Title.Text }}",
+                  "RenderTitle": false
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "Feature",
+          "DisplayName": "Feature",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Stereotype": ""
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "Feature",
+              "Name": "Feature",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                }
+              }
+            },
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                },
+                "TitlePartSettings": {
+                  "Options": 0,
+                  "RenderTitle": false
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "ContentParts": [
+        {
+          "Name": "Feature",
+          "Settings": {
+            "ContentPartSettings": {
+              "Description": "A single feature: a tab summary plus a detail title, description and screenshot. The item's title is the feature name and the screenshot alt text."
+            }
+          },
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "TextField",
+              "Name": "Summary",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Summary",
+                  "Position": "0"
+                },
+                "TextFieldSettings": {
+                  "Hint": "Short one-line summary shown under the name in the tab rail."
+                }
+              }
+            },
+            {
+              "FieldName": "HtmlField",
+              "Name": "Description",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Description",
+                  "Editor": "Trumbowyg",
+                  "Position": "1"
+                },
+                "HtmlFieldTrumbowygEditorSettings": {
+                  "Options": "{ \"btns\": [[\"strong\", \"em\"], [\"link\"], [\"insertShortcode\"], [\"removeformat\"]], \"removeformatPasted\": true }",
+                  "InsertMediaWithUrl": false
+                },
+                "HtmlFieldSettings": {
+                  "Hint": "The description shown in the detail panel."
+                }
+              }
+            },
+            {
+              "FieldName": "MediaField",
+              "Name": "Screenshot",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Screenshot",
+                  "Editor": "Gallery",
+                  "Position": "2"
+                },
+                "MediaFieldSettings": {
+                  "Multiple": false,
+                  "AllowMediaText": true,
+                  "AllowAnchors": false,
+                  "Hint": "The screenshot shown in the detail panel. Set its media text as the alt text."
+                }
+              }
+            },
+            {
+              "FieldName": "MediaField",
+              "Name": "ScreenshotDark",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Screenshot (dark)",
+                  "Editor": "Gallery",
+                  "Position": "3"
+                },
+                "MediaFieldSettings": {
+                  "Multiple": false,
+                  "AllowMediaText": false,
+                  "AllowAnchors": false,
+                  "Hint": "Optional dark-mode version of the screenshot; shown when the site is in dark mode."
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

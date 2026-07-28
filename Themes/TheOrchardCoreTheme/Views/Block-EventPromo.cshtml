@@ -1,0 +1,70 @@
+@*
+    Event Promo. A two-column call-to-action: copy + buttons on the left, a date poster on the right
+    (month, day range, year, place over an optional image with a green gradient). Buttons come from the
+    shared CallToActions bag via the Button shape. Band/anchor + theme come from the Block part.
+*@
+@{
+    var item = (ContentItem)Model.ContentItem;
+    var block = item.Get<ContentPart>("EventPromo");
+    var section = item.Get<ContentPart>("BlockPart");
+    var theme = section?.Get<TextField>("Theme")?.Text;
+    var themeName = (string.IsNullOrEmpty(theme) ? "White" : theme).ToLowerInvariant();
+    var anchor = section?.Get<TextField>("AnchorId")?.Text;
+    var callToActions = item.Get<BagPart>("CallToActions")?.ContentItems ?? [];
+    var poster = block?.Get<MediaField>("PosterImage")?.Paths?.FirstOrDefault();
+    var body = block?.Get<HtmlField>("Body")?.Html;
+    var month = block?.Get<TextField>("EventMonth")?.Text;
+    var days = block?.Get<TextField>("EventDays")?.Text;
+    var year = block?.Get<TextField>("EventYear")?.Text;
+    var place = block?.Get<TextField>("EventPlace")?.Text;
+}
+<section id="@(string.IsNullOrEmpty(anchor) ? null : anchor)" class="theme-@themeName">
+    <div class="mx-auto max-w-content px-6 band">
+        <div class="grid gap-10 lg:grid-cols-2 lg:items-center lg:gap-16">
+
+            @* Copy column. *@
+            <div>
+                <h2 class="text-2xl text-green-900 theme-dark:text-white">@(block?.Get<TextField>("Heading")?.Text)</h2>
+                @if (!string.IsNullOrEmpty(body))
+                {
+                    <div class="prose prose-lg mt-3 max-w-md text-pretty">@Html.Raw(body)</div>
+                }
+                @if (callToActions.Count > 0)
+                {
+                    <div class="mt-6 flex flex-wrap gap-4">
+                        @foreach (var cta in callToActions)
+                        {
+                            var callToAction = cta.Get<ContentPart>("CallToAction");
+                            var link = callToAction?.Get<LinkField>("Link");
+                            @await DisplayAsync(await New.Button(Url: link?.Url, Text: link?.Text, Target: link?.Target, Variant: callToAction?.Get<TextField>("Variant")?.Text))
+                        }
+                    </div>
+                }
+            </div>
+
+            @* Date poster column. *@
+            <div class="relative flex aspect-[4/3] flex-col items-center justify-center overflow-hidden rounded-2xl bg-green-900 text-center shadow-soft">
+                @if (poster is not null)
+                {
+                    @await DisplayAsync(await New.Image(Path: poster, Alt: "", AriaHidden: true, Width: 800, Height: 600, Sizes: "(min-width:1024px) 480px, 90vw", Class: "pointer-events-none absolute inset-0 h-full w-full select-none object-cover"))
+                    <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-green-900 via-green-900/35 to-transparent" aria-hidden="true"></div>
+                }
+                <div class="relative z-10">
+                    @if (!string.IsNullOrEmpty(month))
+                    {
+                        <span class="block font-serif text-xl text-leaf">@month</span>
+                    }
+                    @if (!string.IsNullOrEmpty(days))
+                    {
+                        <span class="block font-serif text-7xl leading-none text-white sm:text-8xl">@days</span>
+                    }
+                    @if (!string.IsNullOrEmpty(year) || !string.IsNullOrEmpty(place))
+                    {
+                        <span class="mt-3 block text-sm font-semibold text-white">@year@(!string.IsNullOrEmpty(year) && !string.IsNullOrEmpty(place) ? " · " : "")@place</span>
+                    }
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>

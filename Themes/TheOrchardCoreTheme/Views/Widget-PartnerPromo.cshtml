@@ -1,0 +1,66 @@
+@*
+    Partner promo (Widget, rendered in the 'Footer Top' zone). A heading + intro + CTA on the left, a grid
+    of partner logo cards on the right. Reuses the shared Button shape for the CTA. Sits in the footer's
+    theme-dark band.
+*@
+@{
+    var item = (ContentItem)Model.ContentItem;
+    var promo = item.Get<ContentPart>("PartnerPromo");
+    var ctas = item.Get<BagPart>("CallToActions")?.ContentItems ?? [];
+    var partners = item.Get<BagPart>("Partners")?.ContentItems ?? [];
+    var heading = promo?.Get<TextField>("Heading")?.Text;
+    var intro = promo?.Get<HtmlField>("Intro")?.Html;
+}
+<div class="grid gap-12 lg:grid-cols-2 lg:items-center lg:gap-16">
+    <div>
+        @if (!string.IsNullOrEmpty(heading))
+        {
+            <h2 class="text-[clamp(1.75rem,3.5vw,2.5rem)] leading-[1.1] tracking-tight text-white">@heading</h2>
+        }
+        @if (!string.IsNullOrEmpty(intro))
+        {
+            <div class="mt-5 max-w-md text-lg leading-relaxed text-pretty text-green-100/80">@Html.Raw(intro)</div>
+        }
+        @if (ctas.Count > 0)
+        {
+            <div class="mt-8 flex flex-wrap gap-3">
+                @foreach (var cta in ctas)
+                {
+                    var callToAction = cta.Get<ContentPart>("CallToAction");
+                    var link = callToAction?.Get<LinkField>("Link");
+                    @await DisplayAsync(await New.Button(Url: link?.Url, Text: link?.Text, Target: link?.Target, Variant: callToAction?.Get<TextField>("Variant")?.Text))
+                }
+            </div>
+        }
+    </div>
+    @if (partners.Count > 0)
+    {
+        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            @foreach (var partnerItem in partners)
+            {
+                var partner = partnerItem.Get<ContentPart>("Partner");
+                var alt = partnerItem.DisplayText;
+                var logoPath = partner?.Get<MediaField>("Logo")?.Paths?.FirstOrDefault();
+                var link = partner?.Get<LinkField>("Link")?.Url;
+                if (!string.IsNullOrEmpty(link))
+                {
+                    <a href="@Url.Content(link)" aria-label="@alt" class="flex aspect-square items-center justify-center rounded-xl bg-white/90 p-5 transition hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
+                        @if (!string.IsNullOrEmpty(logoPath))
+                        {
+                            <img src="@Orchard.AssetUrl(logoPath)" alt="@alt" loading="lazy" decoding="async" class="max-h-16 w-auto max-w-full object-contain">
+                        }
+                    </a>
+                }
+                else
+                {
+                    <div class="flex aspect-square items-center justify-center rounded-xl bg-white/90 p-5">
+                        @if (!string.IsNullOrEmpty(logoPath))
+                        {
+                            <img src="@Orchard.AssetUrl(logoPath)" alt="@alt" loading="lazy" decoding="async" class="max-h-16 w-auto max-w-full object-contain">
+                        }
+                    </div>
+                }
+            }
+        </div>
+    }
+</div>

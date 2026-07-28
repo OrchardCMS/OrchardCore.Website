@@ -1,0 +1,208 @@
+{
+  "name": "TheOrchardCoreTheme.Model.LogoStrip",
+  "displayName": "Orchard Core Website - Content Model",
+  "description": "The Logo Strip block and its Logo items.",
+  "author": "Orchard Core",
+  "version": "1.0.0",
+  "issetuprecipe": false,
+  "categories": [
+    "theme"
+  ],
+  "steps": [
+    {
+      "name": "ReplaceContentDefinition",
+      "ContentTypes": [
+        {
+          "Name": "LogoStrip",
+          "DisplayName": "Logo Strip",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Stereotype": "Block",
+              "Category": "Layout",
+              "ThumbnailPath": "~/TheOrchardCoreTheme/block-thumbnails/LogoStrip.png?v=2",
+              "Description": "A row of partner or customer logos with an optional label."
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "BlockPart",
+              "Name": "BlockPart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
+              }
+            },
+            {
+              "PartName": "LogoStrip",
+              "Name": "LogoStrip",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                }
+              }
+            },
+            {
+              "PartName": "BagPart",
+              "Name": "Logos",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "DisplayName": "Logos",
+                  "Description": "The logos shown in the strip.",
+                  "Position": "2"
+                },
+                "BagPartSettings": {
+                  "ContainedContentTypes": [
+                    "Logo"
+                  ],
+                  "CollapseContainedItems": true
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "Logo",
+          "DisplayName": "Logo",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Stereotype": ""
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "Logo",
+              "Name": "Logo",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                }
+              }
+            },
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                },
+                "TitlePartSettings": {
+                  "Options": 0,
+                  "RenderTitle": false
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "ContentParts": [
+        {
+          "Name": "LogoStrip",
+          "Settings": {
+            "ContentPartSettings": {
+              "Description": "Fields for the Logo Strip block."
+            }
+          },
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "TextField",
+              "Name": "Label",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Label",
+                  "Position": "0"
+                },
+                "TextFieldSettings": {
+                  "Hint": "Optional leading text shown before the logos, e.g. \"Sponsors\". Leave blank for none."
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "Size",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Logo size",
+                  "Editor": "PredefinedList",
+                  "Position": "1"
+                },
+                "TextFieldPredefinedListEditorSettings": {
+                  "Editor": "Dropdown",
+                  "DefaultValue": "Standard",
+                  "Options": [
+                    {
+                      "name": "Standard (partner strip)",
+                      "value": "Standard"
+                    },
+                    {
+                      "name": "Large (sponsor bar)",
+                      "value": "Large"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "Logo",
+          "Settings": {
+            "ContentPartSettings": {
+              "Description": "A single logo: light/dark artwork and an optional link. The item's title is its name and the image alt text."
+            }
+          },
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "MediaField",
+              "Name": "LightImage",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Light image",
+                  "Editor": "Gallery",
+                  "Position": "0"
+                },
+                "MediaFieldSettings": {
+                  "Multiple": false,
+                  "AllowMediaText": false,
+                  "AllowAnchors": false,
+                  "Hint": "The logo for light backgrounds."
+                }
+              }
+            },
+            {
+              "FieldName": "MediaField",
+              "Name": "DarkImage",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Dark image",
+                  "Editor": "Gallery",
+                  "Position": "1"
+                },
+                "MediaFieldSettings": {
+                  "Multiple": false,
+                  "AllowMediaText": false,
+                  "AllowAnchors": false,
+                  "Hint": "Optional version for dark backgrounds (e.g. a white logo). If empty, the light image is auto-inverted on dark."
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "Url",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Link URL",
+                  "Editor": "Url",
+                  "Position": "2"
+                },
+                "TextFieldSettings": {
+                  "Hint": "Optional. If set, clicking the logo opens this URL (used for sponsors). Leave blank for no link."
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

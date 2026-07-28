@@ -1,0 +1,90 @@
+@inject OrchardCore.Shortcodes.Services.IShortcodeService ShortcodeService
+@*
+    Statistics. An optional heading + lead, then a row of statistic tiles (always dark-green so they
+    read on any band). Stat Numbers may be a shortcode (e.g. [github_stars]). Band/anchor + theme come
+    from the Block part; stack it with another same-background block to read as one section.
+*@
+@{
+    var item = (ContentItem)Model.ContentItem;
+    var intro = item.Get<ContentPart>("BlockIntro");
+    var section = item.Get<ContentPart>("BlockPart");
+    var theme = section?.Get<TextField>("Theme")?.Text;
+    var themeName = (string.IsNullOrEmpty(theme) ? "White" : theme).ToLowerInvariant();
+    var anchor = section?.Get<TextField>("AnchorId")?.Text;
+    var statistics = item.Get<BagPart>("Stats")?.ContentItems ?? [];
+    var freshness = item.Get<ContentPart>("Freshness");
+    var lastCommitLabel = freshness?.Get<TextField>("LastCommitLabel")?.Text;
+    var latestReleaseLabel = freshness?.Get<TextField>("LatestReleaseLabel")?.Text;
+    var hasLastCommit = !string.IsNullOrEmpty(lastCommitLabel);
+    var hasLatestRelease = !string.IsNullOrEmpty(latestReleaseLabel);
+
+    // Freshness line: editable labels + live GitHub values, read from the SiteStatistics singleton.
+    var statsItem = await Orchard.GetContentItemByIdAsync("ocwebsitesitestatistics00");
+    var siteStatistics = statsItem?.Get<ContentPart>("SiteStatistics");
+    var hasCommitMessage = !string.IsNullOrEmpty(siteStatistics?.Get<TextField>("LastCommitMessage")?.Text);
+    var hasReleaseDate = !string.IsNullOrEmpty(siteStatistics?.Get<TextField>("LatestReleaseDate")?.Text);
+    var commitUrl = siteStatistics?.Get<TextField>("LastCommitUrl")?.Text;
+    var releaseUrl = siteStatistics?.Get<TextField>("LatestReleaseUrl")?.Text;
+}
+<section id="@(string.IsNullOrEmpty(anchor) ? null : anchor)" class="theme-@themeName">
+    <div class="mx-auto max-w-content px-6 band">
+
+        @await DisplayAsync(await New.BlockIntro(Title: intro?.Get<TextField>("Title")?.Text, Lead: intro?.Get<HtmlField>("Lead")?.Html, WrapperWidth: "mx-auto max-w-4xl", LeadWidth: "max-w-2xl"))
+
+        @if (statistics.Count > 0)
+        {
+            <dl class="mx-auto mt-10 grid max-w-4xl grid-cols-2 gap-4 lg:grid-cols-4">
+                @foreach (var statisticItem in statistics)
+                {
+                    var statistic = statisticItem.Get<ContentPart>("Statistic");
+                    var number = statistic?.Get<TextField>("Number")?.Text;
+                    <div class="rounded-xl bg-green-900 p-5 text-center">
+                        <dd class="font-serif text-3xl text-green-100 sm:text-4xl">@(await ShortcodeService.ProcessAsync(number ?? ""))</dd>
+                        <dt class="mt-2 text-sm text-green-100/70">@(statistic?.Get<TextField>("Label")?.Text)</dt>
+                    </div>
+                }
+            </dl>
+        }
+
+        @* Freshness line: [last_commit] renders the commit time as a localised "X ago" (Orchard Core
+           TimeSpan shape) and [last_commit_message] the commit subject; [latest_release] the version and
+           [latest_release_date] the publish date (DateTime shape, visitor's culture). Each half shows only
+           if its label is set; the message/date show only when present. *@
+        @if (hasLastCommit || hasLatestRelease)
+        {
+            @* On sm+ the line never wraps (sm:flex-nowrap); the commit-message chip is the only
+               flexible part (min-w-0 + truncate), so a long message ellipsises to keep "Last commit …" and
+               "Latest release …" on one line. On mobile it wraps to two lines and the chip truncates to fit. *@
+            <p class="mx-auto mt-5 flex max-w-4xl flex-wrap items-center justify-center gap-x-3 gap-y-2 text-center text-sm text-ink-soft theme-dark:text-green-100/70 sm:flex-nowrap">
+                @if (hasLastCommit)
+                {
+                    <span class="flex min-w-0 items-center justify-center gap-x-2"><span class="shrink-0 whitespace-nowrap">@lastCommitLabel @Html.Raw(await ShortcodeService.ProcessAsync("[last_commit]"))</span>@if (hasCommitMessage)
+                    {
+                        if (!string.IsNullOrEmpty(commitUrl))
+                        {
+                            <a href="@commitUrl" target="_blank" rel="noopener" title="View this commit on GitHub" class="min-w-0 truncate rounded bg-cream-deep px-1.5 py-0.5 font-mono text-xs text-green-900 no-underline transition-colors hover:text-green-700 theme-dark:bg-white/10 theme-dark:text-green-100 theme-dark:hover:text-white">@(await ShortcodeService.ProcessAsync("[last_commit_message]"))</a>
+                        }
+                        else
+                        {
+                            <code class="min-w-0 truncate rounded bg-cream-deep px-1.5 py-0.5 font-mono text-xs text-green-900 theme-dark:bg-white/10 theme-dark:text-green-100">@(await ShortcodeService.ProcessAsync("[last_commit_message]"))</code>
+                        }
+                    }</span>
+                }
+                @if (hasLastCommit && hasLatestRelease)
+                {
+                    <span class="hidden shrink-0 text-rule sm:inline" aria-hidden="true">&middot;</span>
+                }
+                @if (hasLatestRelease)
+                {
+                    var releaseVersion = await ShortcodeService.ProcessAsync("[latest_release]");
+                    <span class="shrink-0 whitespace-nowrap">@latestReleaseLabel @if (!string.IsNullOrEmpty(releaseUrl))
+                    {<a href="@releaseUrl" target="_blank" rel="noopener" title="View the release notes on GitHub" class="font-semibold text-green-900 underline decoration-green-700/30 underline-offset-2 transition-colors hover:decoration-green-700 theme-dark:text-white theme-dark:decoration-white/30 theme-dark:hover:decoration-white">@releaseVersion</a>}
+                    else
+                    {<strong class="font-semibold text-green-900 theme-dark:text-white">@releaseVersion</strong>}@if (hasReleaseDate)
+                    {<text>, @Html.Raw(await ShortcodeService.ProcessAsync("[latest_release_date]"))</text>}</span>
+                }
+            </p>
+        }
+
+    </div>
+</section>

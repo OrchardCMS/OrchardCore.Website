@@ -1,0 +1,64 @@
+@*
+    Text and Image. A generic two-column feature: the title (the item's TitlePart/DisplayText), rich
+    body, and buttons on one side; a photo (a 4:3 crop, positioned by its focal-point anchor) on the
+    other. The editor picks which side the image sits via ImageSide (Left/Right, default Right); the
+    swap is lg-only so mobile always stacks the text first. Band/anchor + theme come from the Block part.
+*@
+@{
+    var item = (ContentItem)Model.ContentItem;
+    var block = item.Get<ContentPart>("TextAndImage");
+    var section = item.Get<ContentPart>("BlockPart");
+    var theme = section?.Get<TextField>("Theme")?.Text;
+    var themeName = (string.IsNullOrEmpty(theme) ? "White" : theme).ToLowerInvariant();
+    var anchorId = section?.Get<TextField>("AnchorId")?.Text;
+    var title = item.DisplayText;
+    var body = block?.Get<HtmlField>("Body")?.Html;
+    var callToActions = item.Get<BagPart>("CallToActions")?.ContentItems ?? [];
+
+    var imageField = block?.Get<MediaField>("Image");
+    var image = imageField?.Paths?.FirstOrDefault();
+    var alt = imageField?.MediaTexts?.FirstOrDefault() ?? "";
+    var anchor = imageField?.GetAnchors().FirstOrDefault();
+
+    var imageSideValue = block?.Get<TextField>("ImageSide")?.Text;
+    var imageSide = string.IsNullOrEmpty(imageSideValue) ? "Right" : imageSideValue;
+    var textOrder = imageSide == "Left" ? "lg:order-last" : "";
+    var imgOrder = imageSide == "Left" ? "lg:order-first" : "";
+    var gridCols = image is null ? "" : "lg:grid-cols-2";
+}
+<section id="@(string.IsNullOrEmpty(anchorId) ? null : anchorId)" class="theme-@themeName">
+    <div class="mx-auto max-w-content px-6 band">
+        <div class="grid gap-10 lg:items-center lg:gap-16 @gridCols">
+
+            @* Copy column: title, body, inline buttons. *@
+            <div class="@textOrder">
+                @if (!string.IsNullOrEmpty(title))
+                {
+                    <h2 class="text-[clamp(2rem,4.5vw,3.25rem)] leading-[1.1] tracking-tight text-green-900 theme-dark:text-white">@title</h2>
+                }
+                @if (!string.IsNullOrEmpty(body))
+                {
+                    <div class="prose prose-lg mt-6 text-pretty">@Html.Raw(body)</div>
+                }
+                @if (callToActions.Count > 0)
+                {
+                    <div class="mt-8 flex flex-wrap gap-4">
+                        @foreach (var cta in callToActions)
+                        {
+                            var callToAction = cta.Get<ContentPart>("CallToAction");
+                            var link = callToAction?.Get<LinkField>("Link");
+                            @await DisplayAsync(await New.Button(Url: link?.Url, Text: link?.Text, Target: link?.Target, Variant: callToAction?.Get<TextField>("Variant")?.Text))
+                        }
+                    </div>
+                }
+            </div>
+
+            @* Image column: 4:3 crop, server-cropped to its focal point (anchor). *@
+            @if (image is not null)
+            {
+                @await DisplayAsync(await New.Image(Path: image, Anchor: anchor, Alt: alt, Width: 800, Height: 600, Sizes: "(min-width:1024px) 560px, 92vw", Class: $"aspect-[4/3] w-full rounded-2xl object-cover shadow-soft {imgOrder}"))
+            }
+
+        </div>
+    </div>
+</section>

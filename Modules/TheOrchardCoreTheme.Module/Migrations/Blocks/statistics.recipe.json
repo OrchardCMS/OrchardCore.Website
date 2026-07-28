@@ -1,0 +1,196 @@
+{
+  "name": "TheOrchardCoreTheme.Model.Statistics",
+  "displayName": "Orchard Core Website - Content Model",
+  "description": "The Statistics block (a row of stat tiles) and its Statistic items.",
+  "author": "Orchard Core",
+  "version": "1.0.0",
+  "issetuprecipe": false,
+  "categories": [
+    "theme"
+  ],
+  "steps": [
+    {
+      "name": "ReplaceContentDefinition",
+      "ContentTypes": [
+        {
+          "Name": "Statistics",
+          "DisplayName": "Statistics",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Stereotype": "Block",
+              "Category": "Content",
+              "ThumbnailPath": "~/TheOrchardCoreTheme/block-thumbnails/Statistics.png?v=2",
+              "Description": "A headline plus a row of key numbers (stars, downloads, etc.)."
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "BlockPart",
+              "Name": "BlockPart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
+              }
+            },
+            {
+              "PartName": "BlockIntro",
+              "Name": "BlockIntro",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                }
+              }
+            },
+            {
+              "PartName": "BagPart",
+              "Name": "Stats",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "DisplayName": "Statistics",
+                  "Description": "The statistic tiles.",
+                  "Position": "2"
+                },
+                "BagPartSettings": {
+                  "ContainedContentTypes": [
+                    "Statistic"
+                  ],
+                  "CollapseContainedItems": true
+                }
+              }
+            },
+            {
+              "PartName": "Freshness",
+              "Name": "Freshness",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "3"
+                }
+              }
+            },
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                },
+                "TitlePartSettings": {
+                  "Options": 2,
+                  "Pattern": "{{ Model.ContentItem.Content.BlockIntro.Title.Text }}",
+                  "RenderTitle": false
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "Statistic",
+          "DisplayName": "Statistic",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Stereotype": ""
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "Statistic",
+              "Name": "Statistic",
+              "Settings": {}
+            },
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                },
+                "TitlePartSettings": {
+                  "Options": 2,
+                  "Pattern": "{{ Model.ContentItem.Content.Statistic.Number.Text }} {{ Model.ContentItem.Content.Statistic.Label.Text }}",
+                  "RenderTitle": false
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "ContentParts": [
+        {
+          "Name": "Freshness",
+          "Settings": {
+            "ContentPartSettings": {
+              "Attachable": true,
+              "Description": "The freshness line under the stat tiles: editable labels before the live [last_commit] / [latest_release] values. Clear a label to hide that half."
+            }
+          },
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "TextField",
+              "Name": "LastCommitLabel",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Last commit label",
+                  "Position": "0"
+                },
+                "TextFieldSettings": {
+                  "Hint": "The text before the live commit time, e.g. 'Last commit'. Leave blank to hide it."
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "LatestReleaseLabel",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Latest release label",
+                  "Position": "1"
+                },
+                "TextFieldSettings": {
+                  "Hint": "The text before the live release version, e.g. 'Latest release'. Leave blank to hide it."
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "Statistic",
+          "Settings": {
+            "ContentPartSettings": {
+              "Description": "A single statistic tile (big number + label)."
+            }
+          },
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "TextField",
+              "Name": "Number",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Number",
+                  "Editor": "Shortcode",
+                  "Position": "0"
+                },
+                "TextFieldSettings": {
+                  "Hint": "A number (e.g. 8,000+) or a shortcode such as [nuget_downloads] - use the picker to insert one."
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "Label",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Label",
+                  "Position": "1"
+                },
+                "TextFieldSettings": {
+                  "Hint": "e.g. GitHub stars"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

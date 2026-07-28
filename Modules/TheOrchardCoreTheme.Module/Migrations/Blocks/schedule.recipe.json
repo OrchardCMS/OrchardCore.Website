@@ -1,0 +1,332 @@
+{
+  "name": "TheOrchardCoreTheme.Model.Schedule",
+  "displayName": "Orchard Core Website - Content Model",
+  "description": "A generic Schedule/agenda block: Schedule -> Groups (a day, track, or section: heading + subheading) -> Sessions (time, title, description, presenter, and a Session/Break type). Groups stack full-width; sessions with a description are expandable accordions; Break rows render tinted with no presenter.",
+  "author": "Orchard Core",
+  "version": "1.0.0",
+  "issetuprecipe": false,
+  "categories": [
+    "theme"
+  ],
+  "steps": [
+    {
+      "name": "ReplaceContentDefinition",
+      "ContentTypes": [
+        {
+          "Name": "Schedule",
+          "DisplayName": "Schedule",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Stereotype": "Block",
+              "Category": "Content",
+              "ThumbnailPath": "~/TheOrchardCoreTheme/block-thumbnails/Schedule.png?v=2",
+              "Description": "An agenda or timetable grouped by day, track or section."
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "BlockPart",
+              "Name": "BlockPart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
+              }
+            },
+            {
+              "PartName": "BlockIntro",
+              "Name": "BlockIntro",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                }
+              }
+            },
+            {
+              "PartName": "BagPart",
+              "Name": "Groups",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "DisplayName": "Groups",
+                  "Description": "Each group is a day, track, or section - a heading (and optional subheading) plus its sessions. Add one group with no heading for a flat, ungrouped schedule.",
+                  "Position": "2"
+                },
+                "BagPartSettings": {
+                  "ContainedContentTypes": [
+                    "ScheduleGroup"
+                  ],
+                  "CollapseContainedItems": true
+                }
+              }
+            },
+            {
+              "PartName": "BlockActionsPart",
+              "Name": "BlockActionsPart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "3"
+                }
+              }
+            },
+            {
+              "PartName": "BagPart",
+              "Name": "CallToActions",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "DisplayName": "Call To Actions",
+                  "Description": "The closing call-to-action buttons shown beneath the schedule.",
+                  "Position": "4"
+                },
+                "BagPartSettings": {
+                  "ContainedContentTypes": [
+                    "CallToAction"
+                  ],
+                  "CollapseContainedItems": true
+                }
+              }
+            },
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                },
+                "TitlePartSettings": {
+                  "Options": 2,
+                  "Pattern": "{{ Model.ContentItem.Content.BlockIntro.Title.Text }}",
+                  "RenderTitle": false
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "ScheduleGroup",
+          "DisplayName": "Group",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Stereotype": ""
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "ScheduleGroup",
+              "Name": "ScheduleGroup",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                }
+              }
+            },
+            {
+              "PartName": "BagPart",
+              "Name": "Sessions",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "DisplayName": "Sessions",
+                  "Description": "The sessions/rows in this group, in order.",
+                  "Position": "2"
+                },
+                "BagPartSettings": {
+                  "ContainedContentTypes": [
+                    "ScheduleSession"
+                  ],
+                  "CollapseContainedItems": true
+                }
+              }
+            },
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                },
+                "TitlePartSettings": {
+                  "Options": 2,
+                  "Pattern": "{{ Model.ContentItem.Content.ScheduleGroup.Heading.Text }}",
+                  "RenderTitle": false
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "ScheduleSession",
+          "DisplayName": "Session",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Stereotype": ""
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "ScheduleSession",
+              "Name": "ScheduleSession",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                }
+              }
+            },
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                },
+                "TitlePartSettings": {
+                  "Options": 0,
+                  "RenderTitle": false
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "ContentParts": [
+        {
+          "Name": "ScheduleGroup",
+          "Settings": {
+            "ContentPartSettings": {
+              "Description": "A group of sessions (a day, track, or section). Its heading is the item title."
+            }
+          },
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "TextField",
+              "Name": "Heading",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Heading",
+                  "Position": "0"
+                },
+                "TextFieldSettings": {
+                  "Hint": "Optional. The group heading, e.g. Day one, Track A, Morning. Leave blank for a flat schedule."
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "Subheading",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Subheading",
+                  "Position": "1"
+                },
+                "TextFieldSettings": {
+                  "Hint": "Optional small line under the heading, e.g. Thursday 10 September, Room 1."
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "ScheduleSession",
+          "Settings": {
+            "ContentPartSettings": {
+              "Description": "One row in the schedule: the title is the editable TitlePart (item DisplayText). Holds a time, an optional expandable description, an optional presenter (name/role/photo), and a Session/Break type."
+            }
+          },
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "TextField",
+              "Name": "Time",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Time",
+                  "Position": "0"
+                },
+                "TextFieldSettings": {
+                  "Hint": "Optional. Free text, e.g. 09:55 or 9:00 AM."
+                }
+              }
+            },
+            {
+              "FieldName": "HtmlField",
+              "Name": "Description",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Description",
+                  "Editor": "Trumbowyg",
+                  "Position": "1"
+                },
+                "HtmlFieldTrumbowygEditorSettings": {
+                  "Options": "{ \"btns\": [[\"strong\", \"em\"], [\"link\"], [\"removeformat\"]], \"removeformatPasted\": true }",
+                  "InsertMediaWithUrl": false
+                },
+                "HtmlFieldSettings": {
+                  "Hint": "Optional. If set, the row expands (accordion) to reveal this."
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "PresenterName",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Presenter name",
+                  "Position": "2"
+                },
+                "TextFieldSettings": {
+                  "Hint": "Optional. Shown under the title, e.g. the speaker(s)."
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "PresenterRole",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Presenter role",
+                  "Position": "3"
+                },
+                "TextFieldSettings": {
+                  "Hint": "Optional. Shown after the presenter name, e.g. Co-founder, Lombiq."
+                }
+              }
+            },
+            {
+              "FieldName": "MediaField",
+              "Name": "PresenterPhoto",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Presenter photo",
+                  "Editor": "Gallery",
+                  "Position": "4"
+                },
+                "MediaFieldSettings": {
+                  "Multiple": false,
+                  "AllowMediaText": true,
+                  "AllowAnchors": false,
+                  "Hint": "Optional small photo shown beside the time."
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "Type",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Type",
+                  "Editor": "PredefinedList",
+                  "Position": "5"
+                },
+                "TextFieldPredefinedListEditorSettings": {
+                  "Editor": "Dropdown",
+                  "DefaultValue": "Session",
+                  "Options": [
+                    { "name": "Session", "value": "Session" },
+                    { "name": "Break", "value": "Break" }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

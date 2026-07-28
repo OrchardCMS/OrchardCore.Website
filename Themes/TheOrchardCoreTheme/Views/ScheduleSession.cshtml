@@ -1,0 +1,79 @@
+@*
+    Shared schedule row. Invoked as:
+      @await DisplayAsync(await New.ScheduleSession(Item: <ScheduleSession content item>))
+    Background comes from the Type (Session = white card; Break = tinted, e.g. lunch/registration).
+    Whether the row is an expandable <details> accordion or a plain row depends only on whether it has
+    a Description — so a break with notes (nearby cafés, etc.) expands just like a session, but stays
+    tinted. The presenter photo slot is always reserved (a spacer when absent) so rows line up.
+*@
+@{
+    var item = (ContentItem)Model.Item;
+    var session = item.Get<ContentPart>("ScheduleSession");
+    var typeValue = session?.Get<TextField>("Type")?.Text;
+    var type = string.IsNullOrEmpty(typeValue) ? "Session" : typeValue;
+    var time = session?.Get<TextField>("Time")?.Text;
+    var title = item.DisplayText;
+    var description = session?.Get<HtmlField>("Description")?.Html;
+    var presenterName = session?.Get<TextField>("PresenterName")?.Text;
+    var presenterRole = session?.Get<TextField>("PresenterRole")?.Text;
+    var photoField = session?.Get<MediaField>("PresenterPhoto");
+    var photo = photoField?.Paths?.FirstOrDefault();
+    var photoAlt = photoField?.MediaTexts?.FirstOrDefault();
+    if (string.IsNullOrEmpty(photoAlt))
+    {
+        photoAlt = presenterName;
+    }
+    var hasDescription = !string.IsNullOrEmpty(description);
+    var hasPresenter = !string.IsNullOrEmpty(presenterName);
+    var hasRole = !string.IsNullOrEmpty(presenterRole);
+    var bgClass = type == "Break" ? "bg-rule theme-dark:bg-white/10" : "bg-white theme-dark:bg-white/5";
+
+    // The presenter photo, shared by both the accordion and the plain variant.
+    var photoCol = photo is not null
+        ? await DisplayAsync(await New.Image(Path: photo, Alt: photoAlt, Width: 80, Height: 80, Sizes: "40px", Class: "h-10 w-10 shrink-0 rounded-lg object-cover bg-cream theme-dark:bg-white/10"))
+        : null;
+}
+@if (hasDescription)
+{
+    <details class="group rounded-lg @bgClass">
+        <summary class="cursor-pointer list-none px-4 py-3 [&::-webkit-details-marker]:hidden focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-700">
+            <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4">
+                <span class="w-36 shrink-0 whitespace-nowrap text-sm font-semibold text-green-700 theme-dark:text-accent-bright">@time</span>
+                <div class="flex min-w-0 flex-1 items-center gap-4">
+                    @if (photoCol is not null)
+                    {
+                        @photoCol
+                    }
+                    else
+                    {
+                        <span class="h-10 w-10 shrink-0" aria-hidden="true"></span>
+                    }
+                    <span class="min-w-0 flex-1"><span class="block font-serif text-green-900 theme-dark:text-white">@title</span>@if (hasPresenter)
+                    {<span class="block truncate text-sm text-ink-soft theme-dark:text-green-100/70">@presenterName@(hasRole ? " · " + presenterRole : "")</span>}</span>
+                    <svg class="h-5 w-5 shrink-0 text-green-600 transition-transform duration-300 group-open:rotate-180 theme-dark:text-accent-bright" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+                </div>
+            </div>
+        </summary>
+        <div class="prose prose-sm max-w-none pb-4 pl-4 pr-4 sm:pl-[14.5rem]">@Html.Raw(description)</div>
+    </details>
+}
+else
+{
+    <div class="rounded-lg @bgClass px-4 py-3">
+        <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4">
+            <span class="w-36 shrink-0 whitespace-nowrap text-sm font-semibold text-green-700 theme-dark:text-accent-bright">@time</span>
+            <div class="flex min-w-0 flex-1 items-center gap-4">
+                @if (photoCol is not null)
+                {
+                    @photoCol
+                }
+                else
+                {
+                    <span class="h-10 w-10 shrink-0" aria-hidden="true"></span>
+                }
+                <span class="min-w-0 flex-1"><span class="block font-serif text-green-900 theme-dark:text-white">@title</span>@if (hasPresenter)
+                {<span class="block truncate text-sm text-ink-soft theme-dark:text-green-100/70">@presenterName@(hasRole ? " · " + presenterRole : "")</span>}</span>
+            </div>
+        </div>
+    </div>
+}

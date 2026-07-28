@@ -1,0 +1,85 @@
+{
+  "TextField_Edit": [
+    { "place": "Parts:1#Announcement;20", "differentiator": "HeroText-AnnouncementBadge" },
+    { "place": "Parts:2#Announcement;20", "differentiator": "HeroText-AnnouncementText" },
+    { "place": "Parts:6#Announcement;20", "differentiator": "HeroEvent-AnnouncementBadge" },
+    { "place": "Parts:7#Announcement;20", "differentiator": "HeroEvent-AnnouncementText" },
+
+    { "place": "Parts:1#Actions;40", "differentiator": "BlockActionsPart-Heading" },
+
+    { "place": "Parts:0#Content;1", "differentiator": "BlockPart-Theme" },
+    { "place": "Parts:2#Advanced;90", "differentiator": "BlockPart-AnchorId" },
+    { "place": "Parts:2#Advanced;92", "differentiator": "BlockPart-NavText" },
+
+    { "place": "Parts:0#Content;1", "differentiator": "StartOption-Theme" },
+
+    { "place": "Parts:1#Event Details;20", "differentiator": "EventPromo-EventMonth" },
+    { "place": "Parts:2#Event Details;20", "differentiator": "EventPromo-EventDays" },
+    { "place": "Parts:3#Event Details;20", "differentiator": "EventPromo-EventYear" },
+    { "place": "Parts:4#Event Details;20", "differentiator": "EventPromo-EventPlace" },
+
+    { "place": "Parts:1#Event Details;20", "differentiator": "HeroEvent-EventMonth" },
+    { "place": "Parts:2#Event Details;20", "differentiator": "HeroEvent-EventDays" },
+    { "place": "Parts:3#Event Details;20", "differentiator": "HeroEvent-EventYear" },
+    { "place": "Parts:4#Event Details;20", "differentiator": "HeroEvent-EventPlace" },
+
+    { "place": "Parts:1#Freshness;30", "differentiator": "Freshness-LastCommitLabel" },
+    { "place": "Parts:2#Freshness;30", "differentiator": "Freshness-LatestReleaseLabel" },
+
+    { "place": "Parts:1#Presenter;20", "differentiator": "ScheduleSession-PresenterName" },
+    { "place": "Parts:2#Presenter;20", "differentiator": "ScheduleSession-PresenterRole" }
+  ],
+
+  "BooleanField_Edit": [
+    { "place": "Parts:2#Advanced;91", "differentiator": "BlockPart-ShowInNav" }
+  ],
+
+  "HtmlField_Edit": [
+    { "place": "Parts:2#Actions;40", "differentiator": "BlockActionsPart-Text" }
+  ],
+
+  "MediaField_Edit": [
+    { "place": "Parts:5#Event Details;20", "differentiator": "EventPromo-PosterImage" },
+    { "place": "Parts:3#Presenter;20", "differentiator": "ScheduleSession-PresenterPhoto" },
+    { "place": "Parts:1#Images;20", "differentiator": "Gallery-Images" },
+    { "place": "Parts:5#Event Details;20", "differentiator": "HeroEvent-PosterImage" }
+  ],
+
+  "LinkField_Edit": [
+    { "place": "Parts:3#Announcement;20", "differentiator": "HeroText-Announcement" },
+    { "place": "Parts:8#Announcement;20", "differentiator": "HeroEvent-Announcement" }
+  ],
+
+  "BagPart_Edit": [
+    { "place": "Parts:1#Statistics;20", "differentiator": "Stats", "contentType": [ "Statistics" ] },
+    { "place": "Parts:1#Tabs;20", "differentiator": "Tabs", "contentType": [ "CardGridTabbed" ] },
+    { "place": "Parts:3#Actions;40", "differentiator": "CallToActions", "contentType": [ "CardGridTabbed" ] },
+    { "place": "Parts:1#Cards;20", "differentiator": "Cards", "contentType": [ "CardGrid" ] },
+    { "place": "Parts:3#Actions;40", "differentiator": "CallToActions", "contentType": [ "CardGrid" ] },
+    { "place": "Parts:1#Features;20", "differentiator": "Features", "contentType": [ "FeatureExplorer" ] },
+    { "place": "Parts:3#Actions;40", "differentiator": "CallToActions", "contentType": [ "FeatureExplorer" ] },
+    { "place": "Parts:1#Columns;20", "differentiator": "Columns", "contentType": [ "ComparisonTable" ] },
+    { "place": "Parts:1#Rows;30", "differentiator": "Rows", "contentType": [ "ComparisonTable" ] },
+    { "place": "Parts:3#Actions;40", "differentiator": "CallToActions", "contentType": [ "ComparisonTable" ] },
+    { "place": "Parts:1#Items;20", "differentiator": "Items", "contentType": [ "Showcase" ] },
+    { "place": "Parts:3#Actions;40", "differentiator": "CallToActions", "contentType": [ "Showcase" ] },
+    { "place": "Parts:1#Code;20", "differentiator": "Methods", "contentType": [ "GetStarted" ] },
+    { "place": "Parts:1#Options;30", "differentiator": "Options", "contentType": [ "GetStarted" ] },
+    { "place": "Parts:3#Actions;40", "differentiator": "CallToActions", "contentType": [ "GetStarted" ] },
+    { "place": "Parts:3#Actions;40", "differentiator": "CallToActions", "contentType": [ "EventPromo" ] },
+    { "place": "Parts:1#Questions;20", "differentiator": "Questions", "contentType": [ "Faqs" ] },
+    { "place": "Parts:3#Actions;40", "differentiator": "CallToActions", "contentType": [ "Faqs" ] },
+    { "place": "Parts:1#Profiles;20", "differentiator": "Profiles", "contentType": [ "ProfileCards" ] },
+    { "place": "Parts:3#Actions;40", "differentiator": "CallToActions", "contentType": [ "ProfileCards" ] },
+    { "place": "Parts:1#Profiles;20", "differentiator": "Profiles", "contentType": [ "ProfileList" ] },
+    { "place": "Parts:3#Actions;40", "differentiator": "CallToActions", "contentType": [ "ProfileList" ] },
+    { "place": "Parts:1#Groups;20", "differentiator": "Groups", "contentType": [ "Schedule" ] },
+    { "place": "Parts:3#Actions;40", "differentiator": "CallToActions", "contentType": [ "Schedule" ] },
+    { "place": "Parts:1#Sessions;20", "differentiator": "Sessions", "contentType": [ "ScheduleGroup" ] },
+    { "place": "Parts:2#Testimonials;30", "differentiator": "Testimonials", "contentType": [ "Gallery" ] },
+    { "place": "Parts:3#Actions;40", "differentiator": "CallToActions", "contentType": [ "Gallery" ] },
+    { "place": "Parts:3#Actions;40", "differentiator": "CallToActions", "contentType": [ "TextAndImage" ] },
+    { "place": "Parts:2#Actions;40", "differentiator": "CallToActions", "contentType": [ "PartnerPromo" ] },
+    { "place": "Parts:1#Partners;30", "differentiator": "Partners", "contentType": [ "PartnerPromo" ] }
+  ]
+}

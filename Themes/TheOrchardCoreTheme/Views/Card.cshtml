@@ -1,0 +1,45 @@
+@inject OrchardCore.Shortcodes.Services.IShortcodeService ShortcodeService
+@*
+    Shared card. Renders one Card content item:
+      @await DisplayAsync(await New.Card(Item: <card content item>))
+    A card is title + body, with an optional meta line and an optional button (Link + Variant, via the
+    shared Button shape). The body is run through the shortcode service, so editors can drop tokens in
+    it — e.g. [contributor_avatars] for the "built by the community" avatar row (defined in the
+    module's automation recipe).
+    The shell is band-aware (white normally, cream on a white band, translucent on a dark band) so the
+    same card reads on every section background.
+*@
+@{
+    var item = (ContentItem)Model.Item;
+    var card = item.Get<ContentPart>("Card");
+    var actions = item.Get<BagPart>("CallToActions")?.ContentItems ?? [];
+    var meta = card?.Get<TextField>("Meta")?.Text;
+    var body = card?.Get<HtmlField>("Body")?.Html;
+}
+<div class="flex h-full flex-col rounded-xl bg-white p-6 theme-white:bg-cream theme-dark:bg-white/5">
+    <h3 class="text-lg text-green-900 theme-dark:text-white">@item.DisplayText</h3>
+    @if (!string.IsNullOrEmpty(meta))
+    {
+        <p class="mt-1 text-sm font-semibold text-green-700 theme-dark:text-accent-bright">@meta</p>
+    }
+    @if (!string.IsNullOrEmpty(body))
+    {
+        <div class="prose mt-2 flex-1">@Html.Raw(await ShortcodeService.ProcessAsync(body))</div>
+    }
+    else
+    {
+        <div class="flex-1"></div>
+    }
+
+    @if (actions.Count > 0)
+    {
+        <div class="mt-6 flex flex-wrap items-center gap-3">
+            @foreach (var cta in actions)
+            {
+                var callToAction = cta.Get<ContentPart>("CallToAction");
+                var link = callToAction?.Get<LinkField>("Link");
+                @await DisplayAsync(await New.Button(Url: link?.Url, Text: link?.Text, Target: link?.Target, Variant: callToAction?.Get<TextField>("Variant")?.Text))
+            }
+        </div>
+    }
+</div>

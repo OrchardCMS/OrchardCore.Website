@@ -1,0 +1,67 @@
+@inject OrchardCore.Shortcodes.Services.IShortcodeService ShortcodeService
+@*
+    Hero (Text Only). The page-opening section: centred headline, lead, an optional
+    announcement badge and terminal snippet, and call-to-action buttons. The outer band +
+    anchor come from the shared Block. The block's background is its "theme": the wrapper
+    carries a `theme-<name>` class and per-theme styling is applied with `theme-*:` utility
+    variants (no on-dark branching in the view).
+*@
+@{
+    var item = (ContentItem)Model.ContentItem;
+    var hero = item.Get<ContentPart>("HeroText");
+    var section = item.Get<ContentPart>("BlockPart");
+    var theme = section?.Get<TextField>("Theme")?.Text;
+    var themeName = (string.IsNullOrEmpty(theme) ? "White" : theme).ToLowerInvariant();
+    var anchor = section?.Get<TextField>("AnchorId")?.Text;
+    var callToActions = item.Get<BagPart>("CallToActions")?.ContentItems ?? [];
+    var lead = hero?.Get<HtmlField>("Lead")?.Html;
+    var codeSnippet = hero?.Get<TextField>("CodeSnippet")?.Text;
+    var announcement = hero?.Get<LinkField>("Announcement");
+}
+<section id="@(string.IsNullOrEmpty(anchor) ? null : anchor)" class="relative overflow-hidden theme-@themeName">
+
+    @* Faint brand watermark: the Orchard Core leaf symbol, inlined as SVG (no extra request)
+       and tucked into the bottom-right, clipped by the section's `overflow-hidden` and sitting behind the
+       `z-10` content. `fill="currentColor"` + the h1's own color classes (`text-green-900
+       theme-dark:text-white`) let it follow the theme: dark-green on the white/cream hero, near-white in
+       dark mode or on a Dark-themed hero — no invert filters. *@
+    <svg aria-hidden="true" viewBox="68.84 223.2 148.88 148.88" fill="currentColor" class="pointer-events-none absolute -bottom-32 -right-32 w-[680px] max-w-none select-none text-green-900 opacity-[0.04] theme-dark:text-white theme-dark:opacity-[0.06]">
+        <path d="M143.28,223.2c-41.11,0-74.44,33.33-74.44,74.44s33.33,74.44,74.44,74.44c41.11,0,74.44-33.33,74.44-74.44S184.4,223.2,143.28,223.2z M143.28,357.75c-33.2,0-60.12-26.91-60.12-60.12c0-33.2,26.91-60.12,60.12-60.12c33.2,0,60.12,26.91,60.12,60.12C203.4,330.84,176.48,357.75,143.28,357.75z"/>
+        <path d="M179.12,333.16L179.12,333.16L179.12,333.16c-19.36-19.36-19.36-50.76,0-70.13l0,0l0,0C198.48,282.4,198.48,313.8,179.12,333.16z"/>
+        <path d="M159.2,313.24L159.2,313.24L159.2,313.24c-27.39,0-49.59-22.2-49.59-49.59v0h0C137,263.66,159.2,285.86,159.2,313.24z"/>
+        <path d="M108.77,333.35L108.77,333.35L108.77,333.35c19.36-19.36,50.76-19.36,70.13,0l0,0l0,0C159.53,352.71,128.13,352.71,108.77,333.35z"/>
+    </svg>
+
+    <div class="relative z-10 mx-auto max-w-content px-6 pt-10 pb-16 text-center sm:pt-14 sm:pb-20">
+
+        @await DisplayAsync(await New.Announcement(Url: announcement?.Url, Text: announcement?.Text, Badge: hero?.Get<TextField>("AnnouncementBadge")?.Text, Message: hero?.Get<TextField>("AnnouncementText")?.Text))
+
+        <h1 class="mx-auto mt-5 max-w-4xl text-[clamp(2.5rem,5.5vw,4.5rem)] leading-[1.05] tracking-[-0.02em] text-green-900 theme-dark:text-white">@item.DisplayText</h1>
+
+        @if (!string.IsNullOrEmpty(lead))
+        {
+            <div class="prose prose-lg mx-auto mt-5 max-w-2xl text-pretty">@Html.Raw(lead)</div>
+        }
+
+        @if (!string.IsNullOrEmpty(codeSnippet))
+        {
+            <div data-code-block class="relative mx-auto mt-8 max-w-xl overflow-hidden rounded-2xl bg-code-bg text-left shadow-soft theme-dark:ring-1 theme-dark:ring-white/10">
+                <button type="button" class="copy-btn absolute right-3 top-3 z-10 rounded-full border border-white/20 px-3 py-1 text-xs text-white/70 transition hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber">Copy</button>
+                <pre class="overflow-x-auto p-6 font-mono text-sm leading-relaxed text-code-ink"><code>@Html.Raw(await ShortcodeService.ProcessAsync(codeSnippet))</code></pre>
+            </div>
+        }
+
+        @if (callToActions.Count > 0)
+        {
+            <div class="mt-8 flex flex-wrap items-center justify-center gap-4">
+                @foreach (var cta in callToActions)
+                {
+                    var callToAction = cta.Get<ContentPart>("CallToAction");
+                    var link = callToAction?.Get<LinkField>("Link");
+                    @await DisplayAsync(await New.Button(Url: link?.Url, Text: link?.Text, Target: link?.Target, Variant: callToAction?.Get<TextField>("Variant")?.Text))
+                }
+            </div>
+        }
+
+    </div>
+</section>

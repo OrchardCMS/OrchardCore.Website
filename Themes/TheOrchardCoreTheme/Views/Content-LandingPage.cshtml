@@ -1,0 +1,16 @@
+@using OrchardCore.ContentManagement.Display
+@using OrchardCore.DisplayManagement.ModelBinding
+@inject IContentItemDisplayManager ContentItemDisplayManager
+@inject IUpdateModelAccessor UpdateModelAccessor
+@*
+    A LandingPage is just a stack of section blocks. Render the Sections bag at the
+    Detail display type; each contained block renders through its Block-<Type> template,
+    which supplies its own full-width band. No page chrome here (that is the layout).
+*@
+@{
+    var item = (ContentItem)Model.ContentItem;
+}
+@foreach (var block in item.Get<BagPart>("Sections")?.ContentItems ?? [])
+{
+    @await DisplayAsync(await ContentItemDisplayManager.BuildDisplayAsync(block, UpdateModelAccessor.ModelUpdater, "Detail"))
+}

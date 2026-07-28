@@ -1,0 +1,137 @@
+@using Microsoft.AspNetCore.Html
+@*
+    Feature Explorer. Heading + lead, then an explorer of features.
+    - Desktop (lg+): a tab rail + panel stage. A small theme.js handler (`[data-feature-explorer]`)
+      toggles `.is-active` on the clicked tab and `hidden` on the matching panel; the tab look lives in
+      the `.feat-tab` component class (@@apply). Without JS the first panel stays shown.
+    - Mobile (<lg): a native <details> accordion (exclusive via the shared name), no JS.
+    Each panel/details carries a light + optional dark screenshot; site.css swaps them on `html.dark`.
+    Band/anchor + theme come from the Block part.
+*@
+@{
+    var item = (ContentItem)Model.ContentItem;
+    var intro = item.Get<ContentPart>("BlockIntro");
+    var section = item.Get<ContentPart>("BlockPart");
+    var theme = section?.Get<TextField>("Theme")?.Text;
+    var themeName = (string.IsNullOrEmpty(theme) ? "White" : theme).ToLowerInvariant();
+    var anchor = section?.Get<TextField>("AnchorId")?.Text;
+    var features = item.Get<BagPart>("Features")?.ContentItems ?? [];
+    var blockActions = item.Get<ContentPart>("BlockActionsPart");
+    var uid = item.ContentItemId;
+
+    // Closing actions row: copy from BlockActionsPart, buttons from the CallToActions bag.
+    var actionsHtml = new HtmlContentBuilder();
+    foreach (var cta in item.Get<BagPart>("CallToActions")?.ContentItems ?? [])
+    {
+        var callToAction = cta.Get<ContentPart>("CallToAction");
+        var link = callToAction?.Get<LinkField>("Link");
+        actionsHtml.AppendHtml(await DisplayAsync(await New.Button(Url: link?.Url, Text: link?.Text, Target: link?.Target, Variant: callToAction?.Get<TextField>("Variant")?.Text)));
+    }
+
+    // The screenshot pair for one feature, shared by the desktop panel and the mobile accordion.
+    static (string? Light, string? Dark, string? Alt, string? Summary, string? Description) Feature(ContentItem featureItem)
+    {
+        var feature = featureItem.Get<ContentPart>("Feature");
+        var screenshot = feature?.Get<MediaField>("Screenshot");
+        var light = screenshot?.Paths?.FirstOrDefault();
+        var dark = feature?.Get<MediaField>("ScreenshotDark")?.Paths?.FirstOrDefault();
+        var alt = screenshot?.MediaTexts?.FirstOrDefault();
+        if (string.IsNullOrEmpty(alt))
+        {
+            alt = featureItem.DisplayText;
+        }
+
+        return (light, dark, alt, feature?.Get<TextField>("Summary")?.Text, feature?.Get<HtmlField>("Description")?.Html);
+    }
+}
+<section id="@(string.IsNullOrEmpty(anchor) ? null : anchor)" class="theme-@themeName">
+    <div class="mx-auto max-w-content px-6 band">
+
+        @await DisplayAsync(await New.BlockIntro(Title: intro?.Get<TextField>("Title")?.Text, Lead: intro?.Get<HtmlField>("Lead")?.Html))
+
+        @if (features.Count > 0)
+        {
+            @* Desktop (lg+): tab rail + panel stage. A theme.js handler (`[data-feature-explorer]`)
+               toggles `.is-active` on the clicked tab and `hidden` on the matching panel. No radios; the tab
+               look lives in the `.feat-tab` component class (@@apply). *@
+            <div data-feature-explorer class="mt-12 hidden overflow-hidden rounded-2xl bg-cream lg:grid lg:grid-cols-12 lg:items-start">
+                <div class="space-y-1.5 p-3 lg:col-span-4" role="tablist" aria-label="Features">
+                    @{ var firstTab = true; }
+                    @foreach (var featureItem in features)
+                    {
+                        var (_, _, _, summary, _) = Feature(featureItem);
+                        <button type="button" data-feat-tab role="tab" aria-selected="@(firstTab ? "true" : "false")" class="feat-tab@(firstTab ? " is-active" : "")">
+                            <span class="min-w-0">
+                                <span class="feat-name">@featureItem.DisplayText</span>
+                                <span class="feat-summary">@summary</span>
+                            </span>
+                        </button>
+                        firstTab = false;
+                    }
+                </div>
+                <div class="lg:col-span-8">
+                    @{ var firstPanel = true; }
+                    @foreach (var featureItem in features)
+                    {
+                        var (light, dark, alt, _, description) = Feature(featureItem);
+                        <div data-feat-panel role="tabpanel" class="p-6 sm:p-8@(firstPanel ? "" : " hidden")">
+                            <h3 class="text-2xl text-green-900 theme-dark:text-white">@featureItem.DisplayText</h3>
+                            <div class="prose mt-3 max-w-2xl">@Html.Raw(description)</div>
+                            <figure class="feat-shot@(dark is not null ? " has-dark" : "") mt-6 overflow-hidden rounded-xl bg-white ring-1 ring-ink/10 theme-dark:bg-white/5 theme-dark:ring-white/10">
+                                <div class="flex items-center gap-2 border-b border-rule bg-cream-deep py-2 pl-3 pr-4 theme-dark:border-white/10">
+                                    <span class="h-2.5 w-2.5 shrink-0 rounded-full bg-red-400/80"></span>
+                                    <span class="h-2.5 w-2.5 shrink-0 rounded-full bg-amber/70"></span>
+                                    <span class="h-2.5 w-2.5 shrink-0 rounded-full bg-green-400/80"></span>
+                                </div>
+                                @if (light is not null)
+                                {
+                                    @await DisplayAsync(await New.Image(Path: light, Alt: alt, Width: 1250, Height: 760, Crop: false, Sizes: "(min-width:1024px) 640px, 92vw", Class: "feat-img--light block w-full"))
+                                }
+                                @if (dark is not null)
+                                {
+                                    @await DisplayAsync(await New.Image(Path: dark, Alt: alt, Width: 1250, Height: 760, Crop: false, Sizes: "(min-width:1024px) 640px, 92vw", Class: "feat-img--dark hidden w-full"))
+                                }
+                            </figure>
+                        </div>
+                        firstPanel = false;
+                    }
+                </div>
+            </div>
+
+            @* Mobile (<lg): native <details> accordion (exclusive via the shared name). *@
+            <div class="mt-12 space-y-3 lg:hidden">
+                @{ var firstDetails = true; }
+                @foreach (var featureItem in features)
+                {
+                    var (light, dark, alt, summary, description) = Feature(featureItem);
+                    <details name="featacc-@uid" class="group overflow-hidden rounded-xl bg-cream" open="@firstDetails">
+                        <summary class="flex cursor-pointer list-none items-center justify-between gap-3 px-5 py-4 [&::-webkit-details-marker]:hidden focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-700">
+                            <span class="min-w-0">
+                                <span class="block font-serif text-base text-green-900 theme-dark:text-white">@featureItem.DisplayText</span>
+                                <span class="mt-0.5 block text-sm text-ink-soft theme-dark:text-green-100/80">@summary</span>
+                            </span>
+                            <svg class="h-5 w-5 shrink-0 text-ink-soft transition-transform group-open:rotate-180 theme-dark:text-green-100/80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+                        </summary>
+                        <div class="px-5 pb-5">
+                            <div class="prose prose-sm">@Html.Raw(description)</div>
+                            @if (light is not null)
+                            {
+                                <figure class="feat-shot@(dark is not null ? " has-dark" : "") mt-4">
+                                    @await DisplayAsync(await New.Image(Path: light, Alt: alt, Width: 1250, Height: 760, Crop: false, Sizes: "(min-width:1024px) 640px, 92vw", Class: "feat-img--light block w-full rounded-lg ring-1 ring-ink/10 theme-dark:ring-white/10"))
+                                    @if (dark is not null)
+                                    {
+                                        @await DisplayAsync(await New.Image(Path: dark, Alt: alt, Width: 1250, Height: 760, Crop: false, Sizes: "(min-width:1024px) 640px, 92vw", Class: "feat-img--dark hidden w-full rounded-lg ring-1 ring-ink/10 theme-dark:ring-white/10"))
+                                    }
+                                </figure>
+                            }
+                        </div>
+                    </details>
+                    firstDetails = false;
+                }
+            </div>
+        }
+
+        @await DisplayAsync(await New.BlockActions(Heading: blockActions?.Get<TextField>("Heading")?.Text, Text: blockActions?.Get<HtmlField>("Text")?.Html, Actions: actionsHtml, MaxWidth: "max-w-none"))
+
+    </div>
+</section>
