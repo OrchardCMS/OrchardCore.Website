@@ -27,7 +27,6 @@
     <File Path="Reset-Local.ps1" />
   </Folder>
   <Folder Name="/Themes/">
-    <Project Path="Themes/OCWS/OCWS.csproj" />
     <Project Path="Themes/TheOrchardCoreTheme/TheOrchardCoreTheme.csproj" />
   </Folder>
   <Project Path="OrchardCore.Web/OrchardCore.Web.csproj" />
