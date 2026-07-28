@@ -1,0 +1,36 @@
+{
+    // As a GitHub organization admin, you can access the Renovate dashboard at
+    // https://developer.mend.io/github/OrchardCMS/OrchardCore and manage the GitHub app at
+    // https://github.com/organizations/OrchardCMS/settings/installations/57088442.
+    $schema: 'https://docs.renovatebot.com/renovate-schema.json',
+    extends: [
+        'config:recommended',
+        'helpers:pinGitHubActionDigests',
+        // See https://docs.renovatebot.com/semantic-commits/.
+        ':semanticCommitsDisabled',
+    ],
+    // See https://docs.renovatebot.com/configuration-options/#configmigration.
+    configMigration: true,
+    packageRules: [
+        {
+            // Since the app uses just a handful of dependencies, updating all of them at once is not a problem.
+            groupName: 'All Dependencies',
+            matchUpdateTypes: ['*'],
+        },
+    ],
+    // This is so major updates won't be put in a separate branch.
+    separateMajorMinor: false,
+    // Delay updates to try to avoid supply chain attacks by increasing the chance they're discovered.
+    minimumReleaseAge: '15 days',
+    // Without timestamp-optional, Renovate wouldn't update dependencies of package managers that don't provide
+    // timestamps, like GitHub Actions.
+    minimumReleaseAgeBehaviour: 'timestamp-optional',
+    // With GitHub Actions, concurrency is not really an issue.
+    prHourlyLimit: 0,
+    // Between 0:00 and 6:00 UTC on the 5th day of each month. Large time window to ensure that Renovate runs at least
+    // once then: https://docs.renovatebot.com/configuration-options/#schedule.
+    schedule: [
+        '* 0-6 5 * *',
+    ],
+    addLabels: ['dependencies'],
+}
