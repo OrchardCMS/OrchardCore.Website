@@ -24,6 +24,7 @@
     <File Path="NuGet.config" />
     <File Path="PostDeploymentActions/RemoveAppOffline.ps1" />
     <File Path="README.md" />
+    <File Path="renovate.json5" />
     <File Path="Reset-Local.ps1" />
   </Folder>
   <Folder Name="/Themes/">
