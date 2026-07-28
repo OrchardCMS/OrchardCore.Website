@@ -14,6 +14,8 @@ To reinitialize the site, just delete the `OrchardCore.Web/App_Data` folder, or 
 
 The `deploy` GitHub Actions workflow deploys the app automatically. Any commit to `main` will trigger it, but you can trigger it manually too for any branch.
 
+If you ever need to deactive the app temporarily, you can do that by opening the Advanced Tools from the Azure Portal, then copying the `site/wwwroot/AppOffline/app_offline.htm` file to `site/wwwroot`. This will show a maintenance page, keeping something visible while still stopping the app from running. To reactivate it, just delete the `app_offline.htm` file.
+
 ## Getting access to Azure resources
 
 The website runs under an Azure subscription sponsored by .NET Foundation. To work with the website's code and deploy it, you don't need to access the Azure resources. Should you need to for some reason, do the following.
