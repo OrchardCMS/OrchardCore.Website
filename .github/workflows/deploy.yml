@@ -14,9 +14,9 @@ jobs:
       contents: read
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
 
-      - uses: OrchardCMS/OrchardCore/.github/actions/setup-dotnet@main
+      - uses: OrchardCMS/OrchardCore/.github/actions/setup-dotnet@bee407c6f0270ae94e1932c5e6719983cafa088c # main
 
       - name: Build
         run: dotnet build ./OrchardCore.Web/OrchardCore.Web.csproj --configuration Release
@@ -25,7 +25,7 @@ jobs:
         run: dotnet publish ./OrchardCore.Web/OrchardCore.Web.csproj --configuration Release --output "${{env.DOTNET_ROOT}}/publish"
 
       - name: Upload Publish Package
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:
           name: publish-package
           path: ${{env.DOTNET_ROOT}}/publish
@@ -40,14 +40,14 @@ jobs:
     
     steps:
       - name: Download Publish Package
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
         with:
           name: publish-package
       
       # Stopping the app with an app_offline.htm file. Without this, files will remain locked and the deployment will
       # fail with a generic error.
       - name: Deploy App Offline to Azure Web App
-        uses: azure/webapps-deploy@v3
+        uses: azure/webapps-deploy@02a81bead70021f5284939794bcec79c271ab383 # v3
         with:
           app-name: 'orchardcoredotnet'
           slot-name: 'Production'
@@ -57,7 +57,7 @@ jobs:
 
       - name: Deploy Website to Azure Web App
         id: deploy-to-webapp
-        uses: azure/webapps-deploy@v3
+        uses: azure/webapps-deploy@02a81bead70021f5284939794bcec79c271ab383 # v3
         with:
           app-name: 'orchardcoredotnet'
           slot-name: 'Production'
