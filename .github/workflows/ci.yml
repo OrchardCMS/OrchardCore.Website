@@ -24,9 +24,9 @@ jobs:
         os: [ubuntu-24.04, windows-2022]
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
   
-    - uses: OrchardCMS/OrchardCore/.github/actions/setup-dotnet@main
+    - uses: OrchardCMS/OrchardCore/.github/actions/setup-dotnet@bee407c6f0270ae94e1932c5e6719983cafa088c # main
   
     - name: Build
       # We disable NuGet audit warnings, see https://learn.microsoft.com/en-us/nuget/reference/errors-and-warnings/nu1901-nu1904.
