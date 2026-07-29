@@ -211,7 +211,6 @@
             {
               <li>
                 <a href="@lang.Href" hreflang="@lang.Culture" lang="@lang.Culture" aria-current="@(lang.IsCurrent ? "true" : null)"
-                   data-pirsch-event="Language Switched" data-pirsch-meta-language="@lang.Culture"
                    class="flex items-center justify-between gap-6 px-4 py-2 text-sm hover:bg-cream @(lang.IsCurrent ? "font-semibold text-green-900 theme-dark:text-white" : "text-ink-soft")">
                   <span>@lang.Label</span>
                   @if (lang.IsCurrent)
@@ -263,8 +262,7 @@
           @foreach (var lang in languages)
           {
             <li>
-              <a class="nav-link flex items-center justify-between py-2" href="@lang.Href" hreflang="@lang.Culture" lang="@lang.Culture" aria-current="@(lang.IsCurrent ? "true" : null)"
-                 data-pirsch-event="Language Switched" data-pirsch-meta-language="@lang.Culture">
+              <a class="nav-link flex items-center justify-between py-2" href="@lang.Href" hreflang="@lang.Culture" lang="@lang.Culture" aria-current="@(lang.IsCurrent ? "true" : null)">
                 <span class="@(lang.IsCurrent ? "font-semibold" : "")">@lang.Label</span>
                 @if (lang.IsCurrent)
                 {

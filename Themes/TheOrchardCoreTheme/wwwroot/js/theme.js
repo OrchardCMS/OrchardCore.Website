@@ -270,17 +270,13 @@
 
   // --- Analytics: stamp every tracked element with the block it sits in, taken from the section's
   // anchor id (blocks with no Anchor ID set report no section). Both readers pick the meta attributes
-  // up when the interaction happens, not now, so setting them here is enough. Header and footer
-  // chrome sits outside the blocks, so it is labelled by the landmark instead.
+  // up when the interaction happens, not now, so setting them here is enough.
   (function () {
     document.querySelectorAll('[data-pirsch-event], [data-pirsch-open-event]').forEach(function (el) {
-      if (el.hasAttribute('data-pirsch-meta-section')) return;
       var section = el.closest('section[id]');
-      var name = section ? section.id
-        : el.closest('footer') ? 'footer'
-        : el.closest('header, #mobileNav') ? 'header'
-        : null;
-      if (name) { el.setAttribute('data-pirsch-meta-section', name); }
+      if (section && !el.hasAttribute('data-pirsch-meta-section')) {
+        el.setAttribute('data-pirsch-meta-section', section.id);
+      }
     });
   })();
 
