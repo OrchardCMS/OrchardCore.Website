@@ -46,7 +46,8 @@
         @if (!string.IsNullOrEmpty(codeSnippet))
         {
             <div data-code-block class="relative mx-auto mt-8 max-w-xl overflow-hidden rounded-2xl bg-code-bg text-left shadow-soft theme-dark:ring-1 theme-dark:ring-white/10">
-                <button type="button" class="copy-btn absolute right-3 top-3 z-10 rounded-full border border-white/20 px-3 py-1 text-xs text-white/70 transition hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber">Copy</button>
+                <button type="button" class="copy-btn absolute right-3 top-3 z-10 rounded-full border border-white/20 px-3 py-1 text-xs text-white/70 transition hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber"
+                        data-pirsch-event="Copy Install Command" data-pirsch-meta-source="Hero">Copy</button>
                 <pre class="overflow-x-auto p-6 font-mono text-sm leading-relaxed text-code-ink"><code>@Html.Raw(await ShortcodeService.ProcessAsync(codeSnippet))</code></pre>
             </div>
         }

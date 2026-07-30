@@ -268,6 +268,38 @@
     });
   })();
 
+  // --- Analytics: stamp every tracked element with the block it sits in, taken from the section's
+  // anchor id (blocks with no Anchor ID set report no section). Both readers pick the meta attributes
+  // up when the interaction happens, not now, so setting them here is enough.
+  (function () {
+    document.querySelectorAll('[data-pirsch-event], [data-pirsch-open-event]').forEach(function (el) {
+      var section = el.closest('section[id]');
+      if (section && !el.hasAttribute('data-pirsch-meta-section')) {
+        el.setAttribute('data-pirsch-meta-section', section.id);
+      }
+    });
+  })();
+
+  // --- Analytics: [data-pirsch-open-event] reports a <details> being opened (a click on a <summary>
+  // fires for closing too, so it can't carry the attribute Pirsch binds to itself).
+  (function () {
+    document.querySelectorAll('[data-pirsch-open-event]').forEach(function (panel) {
+      panel.addEventListener('toggle', function () {
+        if (!panel.open || typeof window.pirsch !== 'function') return;
+        var meta = {};
+        Array.prototype.forEach.call(panel.attributes, function (attribute) {
+          if (attribute.name.indexOf('data-pirsch-meta-') === 0 && attribute.value) {
+            meta[attribute.name.substring(17)] = attribute.value;
+          }
+        });
+        try {
+          var sent = window.pirsch(panel.getAttribute('data-pirsch-open-event'), { meta: meta });
+          if (sent && typeof sent.catch === 'function') { sent.catch(function () {}); }
+        } catch (error) {}
+      });
+    });
+  })();
+
   // --- Scroll-spy: highlight the header nav link for the section currently in view. Nav links carry
   // data-spy="<section id>" (rendered from each block's AnchorId); desktop and mobile links share the
   // same ids, so both stay in sync. No-op without IntersectionObserver or when there are no spy links
