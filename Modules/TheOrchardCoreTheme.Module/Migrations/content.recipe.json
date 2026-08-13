@@ -14,9 +14,7 @@
       "LocalizationSettings": {
         "DefaultCulture": "en",
         "SupportedCultures": [
-          "en",
-          "fr",
-          "hu"
+          "en"
         ],
         "FallBackToParentCulture": true
       }
