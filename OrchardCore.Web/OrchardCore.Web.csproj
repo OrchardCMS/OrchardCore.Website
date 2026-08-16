@@ -24,6 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="CrestApps.OrchardCore.AI.Mcp" Version="2.1.0" />
     <PackageReference Include="Lombiq.Marketing" Version="1.0.1" />
     <PackageReference Include="Lombiq.Marketing.Pirsch" Version="1.0.1" />
     <PackageReference Include="Lombiq.Marketing.UrlShortener" Version="1.0.1" />

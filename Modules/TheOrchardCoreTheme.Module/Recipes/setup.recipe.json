@@ -49,6 +49,7 @@
         "OrchardCore.Workflows.Http",
         "OrchardCore.Shortcodes",
         "OrchardCore.Shortcodes.Templates",
+        "OrchardCore.Tenants",
         "TheAdmin",
         "TheOrchardCoreTheme.Module",
         "TheOrchardCoreTheme"
