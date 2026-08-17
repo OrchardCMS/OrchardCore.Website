@@ -1,7 +1,7 @@
 {
-  "name": "TheOrchardCoreTheme.Setup.Mcp",
+  "name": "OrchardCore.Setup.Mcp",
   "displayName": "Orchard Core MCP Website - Setup",
-  "description": "Installs a fresh site that uses TheOrchardCoreTheme. Enabling the theme pulls in the companion module, whose migration runs the content model and seed content automatically.",
+  "description": "Sets up a new MCP Server for OrchardCore tenant.",
   "author": "Orchard Core",
   "website": "https://orchardcore.net",
   "version": "1.0.0",
