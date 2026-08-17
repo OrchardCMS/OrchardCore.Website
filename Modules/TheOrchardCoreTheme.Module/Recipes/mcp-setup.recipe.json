@@ -1,0 +1,290 @@
+{
+  "name": "OrchardCore.Setup.Mcp",
+  "displayName": "Orchard Core MCP Website - Setup",
+  "description": "Sets up a new MCP Server for OrchardCore tenant.",
+  "author": "Orchard Core",
+  "website": "https://orchardcore.net",
+  "version": "1.0.0",
+  "issetuprecipe": true,
+  "categories": [ "service" ],
+  "tags": [ "mcp server" ],
+  "steps": [
+    {
+      "name": "feature",
+      "enable": [
+        "OrchardCore.HomeRoute",
+        "OrchardCore.Admin",
+        "OrchardCore.Diagnostics",
+        "OrchardCore.DynamicCache",
+        "OrchardCore.Features",
+        "OrchardCore.Navigation",
+        "OrchardCore.Recipes",
+        "OrchardCore.Resources",
+        "OrchardCore.Roles",
+        "OrchardCore.Security",
+        "OrchardCore.Settings",
+        "OrchardCore.Themes",
+        "OrchardCore.Users",
+        "OrchardCore.Alias",
+        "OrchardCore.Autoroute",
+        "OrchardCore.Html",
+        "OrchardCore.ContentFields",
+        "OrchardCore.ContentPreview",
+        "OrchardCore.Contents",
+        "OrchardCore.ContentTypes",
+        "OrchardCore.Flows",
+        "OrchardCore.Liquid",
+        "OrchardCore.Media",
+        "OrchardCore.Menu",
+        "OrchardCore.Seo",
+        "OrchardCore.Templates",
+        "OrchardCore.Title",
+        "OrchardCore.Widgets",
+        "OrchardCore.Layers",
+        "OrchardCore.Markdown",
+        "CrestApps.OrchardCore.AI.Mcp.Server",
+        "CrestApps.OrchardCore.AI.ToolInstances",
+        "TheAdmin",
+        "TheTheme"
+      ]
+    },
+    {
+      "name": "themes",
+      "admin": "TheAdmin",
+      "site": "TheTheme"
+    },
+    {
+      "name": "ContentDefinition",
+      "ContentTypes": [
+        {
+          "Name": "Page",
+          "DisplayName": "Page",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Creatable": true,
+              "Listable": true,
+              "Draftable": true,
+              "Versionable": true,
+              "Securable": true,
+              "ThumbnailPath": "~/OrchardCore.ContentTypes/placeholder.png"
+            },
+            "FullTextAspectSettings": {
+              "IncludeFullTextTemplate": false,
+              "IncludeBodyAspect": true,
+              "IncludeDisplayText": true
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "Page",
+              "Name": "Page",
+              "Settings": {}
+            },
+            {
+              "PartName": "AutoroutePart",
+              "Name": "AutoroutePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "DisplayName": "Autoroute",
+                  "Position": "1"
+                },
+                "AutoroutePartSettings": {
+                  "AllowCustomPath": true,
+                  "Pattern": "{{ ContentItem.DisplayText | slugify }}",
+                  "ShowHomepageOption": true,
+                  "AllowUpdatePath": false,
+                  "AllowDisabled": false,
+                  "AllowRouteContainedItems": false,
+                  "ManageContainedItemRoutes": false,
+                  "AllowAbsolutePath": false
+                }
+              }
+            },
+            {
+              "PartName": "WidgetsListPart",
+              "Name": "WidgetsListPart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "DisplayName": "WidgetsList",
+                  "Position": "2"
+                },
+                "WidgetsListPartSettings": {
+                  "Zones": [
+                    "Content"
+                  ]
+                }
+              }
+            },
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                },
+                "TitlePartSettings": {
+                  "RenderTitle": false
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "MarkdownText",
+          "DisplayName": "MarkdownText",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Creatable": false,
+              "Listable": false,
+              "Draftable": false,
+              "Versionable": false,
+              "Stereotype": "Widget",
+              "Securable": false,
+              "ThumbnailPath": "~/OrchardCore.ContentTypes/placeholder.png"
+            },
+            "FullTextAspectSettings": {
+              "IncludeFullTextTemplate": false,
+              "IncludeBodyAspect": true,
+              "IncludeDisplayText": true
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "MarkdownText",
+              "Name": "MarkdownText",
+              "Settings": {}
+            },
+            {
+              "PartName": "MarkdownBodyPart",
+              "Name": "MarkdownBodyPart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "DisplayName": "MarkdownBody",
+                  "Position": "0",
+                  "Editor": "Wysiwyg"
+                },
+                "MarkdownBodyPartSettings": {
+                  "SanitizeHtml": true,
+                  "RenderLiquid": false
+                },
+                "MarkdownBodyPartWysiwygEditorSettings": {
+                  "Options": "{\r\n    toolbar: [\r\n        \u0022guide\u0022, \u0022|\u0022,\r\n        \u0022undo\u0022, \u0022redo\u0022, \u0022|\u0022,\r\n        \u0022bold\u0022, \u0022italic\u0022, \u0022strikethrough\u0022, \u0022|\u0022,\r\n        \u0022heading\u0022, \u0022|\u0022,\r\n        \u0022code\u0022, \u0022quote\u0022, \u0022|\u0022,\r\n        \u0022link\u0022, \u0022|\u0022,\r\n        \u0022shortcode\u0022, \u0022|\u0022,\r\n        \u0022image\u0022, \u0022|\u0022,\r\n        \u0022unordered-list\u0022, \u0022ordered-list\u0022, \u0022table\u0022, \u0022|\u0022,\r\n        \u0022horizontal-rule\u0022, \u0022|\u0022,\r\n        \u0022preview\u0022, \u0022side-by-side\u0022, \u0022fullscreen\u0022\r\n    ],\r\n    spellChecker: false\r\n}"
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "ContentParts": []
+    },
+    {
+      "name": "Content",
+      "data": [
+        {
+          "ContentItemId": "[js: uuid()]",
+          "ContentType": "Page",
+          "DisplayText": "Home Page",
+          "Latest": true,
+          "Published": true,
+          "Owner": "[js: parameters('AdminUserId')]",
+          "Author": "[js: parameters('AdminUsername')]",
+          "Page": {},
+          "AutoroutePart": {
+            "SetHomepage": true,
+            "Disabled": false,
+            "RouteContainedItems": false,
+            "Absolute": false,
+            "Path": "home-page"
+          },
+          "WidgetsListPart": {
+            "Widgets": {
+              "Content": [
+                {
+                  "ContentItemId": "[js: uuid()]",
+                  "ContentItemVersionId": null,
+                  "ContentType": "MarkdownText",
+                  "DisplayText": null,
+                  "Latest": false,
+                  "Published": false,
+                  "ModifiedUtc": null,
+                  "PublishedUtc": null,
+                  "CreatedUtc": null,
+                  "Owner": "[js: parameters('AdminUserId')]",
+                  "Author": "[js: parameters('AdminUsername')]",
+                  "MarkdownText": {},
+                  "MarkdownBodyPart": {
+                    "Markdown": "# Orchard Core MCP Server\r\n\r\nWelcome to the **Orchard Core MCP Server** \u2014 a [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) server that allows AI clients to connect to and interact with Orchard Core.\r\n\r\nConnect your favorite MCP-compatible AI client and let it discover and use the capabilities provided by Orchard Core.\r\n\r\n## \uD83D\uDD0C MCP Endpoint\r\n\r\nThe Orchard Core MCP Server is available at:\r\n\r\n\u0060\u0060\u0060text\r\nhttps://mcp.orchardcore.net/mcp\r\n\u0060\u0060\u0060\r\n\r\n**Transport:** Streamable HTTP\r\n\r\n---\r\n\r\n## GitHub Copilot CLI\r\n\r\nAdd the Orchard Core MCP Server to **GitHub Copilot CLI**:\r\n\r\n\u0060\u0060\u0060bash\r\ncopilot mcp add orchard-core https://mcp.orchardcore.net/mcp\r\n\u0060\u0060\u0060\r\n\r\nThen start Copilot:\r\n\r\n\u0060\u0060\u0060bash\r\ncopilot\r\n\u0060\u0060\u0060\r\n\r\nTo verify that the MCP server is connected, run:\r\n\r\n\u0060\u0060\u0060text\r\n/mcp\r\n\u0060\u0060\u0060\r\n\r\nThe \u0060orchard-core\u0060 server should appear in the list of configured MCP servers.\r\n\r\n---\r\n\r\n## Claude Code\r\n\r\nAdd the Orchard Core MCP Server to **Claude Code** using:\r\n\r\n\u0060\u0060\u0060bash\r\nclaude mcp add --transport http orchard-core https://mcp.orchardcore.net/mcp\r\n\u0060\u0060\u0060\r\n\r\nThen start Claude:\r\n\r\n\u0060\u0060\u0060bash\r\nclaude\r\n\u0060\u0060\u0060\r\n\r\nYou can verify the connection with:\r\n\r\n\u0060\u0060\u0060text\r\n/mcp\r\n\u0060\u0060\u0060\r\n\r\nThe Orchard Core MCP Server should appear in the list of available MCP servers.\r\n\r\n---\r\n\r\n## \uD83D\uDE80 Getting Started\r\n\r\nOnce connected, your AI client can discover the capabilities exposed by the Orchard Core MCP Server.\r\n\r\nTry asking:\r\n\r\n\u003E What Orchard Core tools are available?\r\n\r\nor:\r\n\r\n\u003E Show me the available Orchard Core resources.\r\n\r\nYou can then interact with Orchard Core using natural language, depending on the tools and capabilities enabled by the server.\r\n\r\n---\r\n\r\n## \uD83D\uDD10 Security\r\n\r\nThe MCP endpoint is publicly accessible, so any capabilities exposed through it should be carefully considered before being made available without authentication.\r\n\r\nFor production Orchard Core deployments, ensure that sensitive or administrative functionality is properly protected through authentication and authorization.\r\n\r\nAlways use HTTPS when connecting to the server:\r\n\r\n\u0060\u0060\u0060text\r\nhttps://mcp.orchardcore.net/mcp\r\n\u0060\u0060\u0060\r\n\r\n---\r\n\r\n## MCP Compatibility\r\n\r\nThe server implements the **Model Context Protocol (MCP)** over **Streamable HTTP**.\r\n\r\n**Endpoint:**\r\n\r\n\u0060\u0060\u0060text\r\nhttps://mcp.orchardcore.net/mcp\r\n\u0060\u0060\u0060\r\n\r\nIt can be used with MCP-compatible clients such as **GitHub Copilot CLI** and **Claude Code**.\r\n\r\nConnect your AI client and start working with Orchard Core through natural language.\r\n"
+                  },
+                  "WidgetMetadata": {
+                    "RenderTitle": false
+                  }
+                }
+              ]
+            }
+          },
+          "TitlePart": {
+            "Title": "Home Page"
+          }
+        }
+      ]
+    },
+    {
+      "name": "AIToolInstances",
+      "instances": [
+        {
+          "ItemId": "[js: uuid()]",
+          "Source": "search-index-documentation",
+          "Name": "search_orchardcore_gallery",
+          "Description": "Search the Gallery to discover community modules and themes that extend Orchard Core with reusable features, integrations, and site designs.",
+          "OwnerId": "[js: parameters('AdminUserId')]",
+          "Author": "[js: parameters('AdminUsername')]",
+          "Properties": {
+            "SearchIndexDocumentationToolSettings": {
+              "BaseUrl": "https://gallery.orchardcore.net/",
+              "IndexUrl": "https://gallery.orchardcore.net/search/search_index.json"
+            }
+          }
+        },
+        {
+          "ItemId": "[js: uuid()]",
+          "Source": "search-index-documentation",
+          "Name": "search_orchardcore_docs",
+          "Description": "Search the Official Orchard Core Documentations",
+          "OwnerId": "[js: parameters('AdminUserId')]",
+          "Author": "[js: parameters('AdminUsername')]",
+          "Properties": {
+            "SearchIndexDocumentationToolSettings": {
+              "BaseUrl": "https://docs.orchardcore.net/",
+              "IndexUrl": "https://docs.orchardcore.net/en/latest/search/search_index.json"
+            }
+          }
+        },
+        {
+          "ItemId": "[js: uuid()]",
+          "Source": "search-index-documentation",
+          "Name": "search_crestapps_orchardcore_docs",
+          "Description": "Browse the official CrestApps \u2013 Orchard Core Documentation to discover community-driven modules that extend Orchard Core with powerful capabilities, including AI-powered solutions and much more.",
+          "OwnerId": "[js: parameters('AdminUserId')]",
+          "Author": "[js: parameters('AdminUsername')]",
+          "Properties": {
+            "SearchIndexDocumentationToolSettings": {
+              "BaseUrl": "https://orchardcore.crestapps.com/",
+              "IndexUrl": "https://orchardcore.crestapps.com/search-index.json"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "settings",
+      "McpServerSettings": {
+        "AuthenticationType": "None",
+        "Tools": [
+          "search_orchardcore_gallery",
+          "search_orchardcore_docs",
+          "search_crestapps_orchardcore_docs"
+        ]
+      }
+    }
+  ]
+}
