@@ -110,7 +110,7 @@
                 },
                 "WidgetsListPartSettings": {
                   "Zones": [
-                    "main"
+                    "Content"
                   ]
                 }
               }
@@ -121,6 +121,9 @@
               "Settings": {
                 "ContentTypePartSettings": {
                   "Position": "0"
+                },
+                "TitlePartSettings": {
+                  "RenderTitle": false
                 }
               }
             }
@@ -195,7 +198,7 @@
           },
           "WidgetsListPart": {
             "Widgets": {
-              "main": [
+              "Content": [
                 {
                   "ContentItemId": "[js: uuid()]",
                   "ContentItemVersionId": null,
@@ -224,6 +227,64 @@
           }
         }
       ]
+    },
+    {
+      "name": "AIToolInstances",
+      "instances": [
+        {
+          "ItemId": "[js: uuid()]",
+          "Source": "search-index-documentation",
+          "Name": "search_orchardcore_gallery",
+          "Description": "Search the Gallery to discover community modules and themes that extend Orchard Core with reusable features, integrations, and site designs.",
+          "OwnerId": "[js: parameters('AdminUserId')]",
+          "Author": "[js: parameters('AdminUsername')]",
+          "Properties": {
+            "SearchIndexDocumentationToolSettings": {
+              "BaseUrl": "https://gallery.orchardcore.net/",
+              "IndexUrl": "https://gallery.orchardcore.net/search/search_index.json"
+            }
+          }
+        },
+        {
+          "ItemId": "[js: uuid()]",
+          "Source": "search-index-documentation",
+          "Name": "search_orchardcore_docs",
+          "Description": "Search the Official Orchard Core Documentations",
+          "OwnerId": "[js: parameters('AdminUserId')]",
+          "Author": "[js: parameters('AdminUsername')]",
+          "Properties": {
+            "SearchIndexDocumentationToolSettings": {
+              "BaseUrl": "https://docs.orchardcore.net/",
+              "IndexUrl": "https://docs.orchardcore.net/en/latest/search/search_index.json"
+            }
+          }
+        },
+        {
+          "ItemId": "[js: uuid()]",
+          "Source": "search-index-documentation",
+          "Name": "search_crestapps_orchardcore_docs",
+          "Description": "Browse the official CrestApps \u2013 Orchard Core Documentation to discover community-driven modules that extend Orchard Core with powerful capabilities, including AI-powered solutions and much more.",
+          "OwnerId": "[js: parameters('AdminUserId')]",
+          "Author": "[js: parameters('AdminUsername')]",
+          "Properties": {
+            "SearchIndexDocumentationToolSettings": {
+              "BaseUrl": "https://orchardcore.crestapps.com/",
+              "IndexUrl": "https://orchardcore.crestapps.com/search-index.json"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "settings",
+      "McpServerSettings": {
+        "AuthenticationType": "None",
+        "Tools": [
+          "search_orchardcore_gallery",
+          "search_orchardcore_docs",
+          "search_crestapps_orchardcore_docs"
+        ]
+      }
     }
   ]
 }
