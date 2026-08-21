@@ -1,13 +1,13 @@
 {
-  "name": "OrchardCore.Setup.Mcp",
-  "displayName": "Orchard Core MCP Website - Setup",
-  "description": "Sets up a new MCP Server for OrchardCore tenant.",
+  "name": "OrchardCore.Setup.AI",
+  "displayName": "Orchard Core AI Website - Setup",
+  "description": "Sets up a new AI Server for OrchardCore tenant.",
   "author": "Orchard Core",
   "website": "https://orchardcore.net",
   "version": "1.0.0",
   "issetuprecipe": true,
   "categories": [ "service" ],
-  "tags": [ "mcp server" ],
+  "tags": [ "ai server" ],
   "steps": [
     {
       "name": "feature",
