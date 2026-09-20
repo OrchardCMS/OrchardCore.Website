@@ -27,3 +27,11 @@ Monitoring alerts are sent to contact@orchardcore.net. These include availabilit
 ## Getting access to the live site's admin
 
 Do you want to manage the site's content right there online? Create an issue to ask for access, elaborating why you need it.
+
+## Receiving messages sent to contact@orchardcore.net
+
+The central e-mail address contact@orchardcore.net is managed using [Cloudflare Email Service](https://developers.cloudflare.com/email-service/)’s [Email Routing feature](https://developers.cloudflare.com/email-service/get-started/route-emails/), under the Orchard Core account. If you want to add a new e-mail address receiving messages sent to it, then do the following:
+
+1. Add the recipient as a [destination address](https://dash.cloudflare.com/3ebd7f17873dbce2300d6d425677602f/email-service/routing/71191c564ace082f8c0238e635a4f6b8/destination-addresses).
+2. Wait for the recipient to verify the address.
+3. The actual forwarding is done by our [Destination Worker]https://dash.cloudflare.com/3ebd7f17873dbce2300d6d425677602f/email-service/routing/71191c564ace082f8c0238e635a4f6b8/destination-workers). [Edit its code](https://dash.cloudflare.com/3ebd7f17873dbce2300d6d425677602f/workers/services/edit/forward-to-maintainers/production) to add the recipient among the others.
