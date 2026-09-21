@@ -24,11 +24,39 @@ jobs:
       - name: Publish
         run: dotnet publish ./OrchardCore.Web/OrchardCore.Web.csproj --configuration Release --output "${{env.DOTNET_ROOT}}/publish"
 
+      # upload-artifact excludes hidden files (anything starting with a dot) by default,
+      # which silently dropped the skills under .agents/skills from the deployed package.
+      # We want the opposite of the default AND the opposite of "include every hidden file":
+      # ship .agents and nothing else hidden. The upload glob cannot re-include a path once
+      # broadly excluded, so instead we remove every hidden entry except .agents here, then
+      # upload with hidden files enabled. Any stray dotfile (now or in future) is gone before
+      # upload; .agents is provably the only hidden folder that ships.
+      - name: Keep only the .agents hidden folder in the publish output
+        run: |
+          find "${{env.DOTNET_ROOT}}/publish" -mindepth 1 -name '.*' \
+            -not -path '*/.agents' -not -path '*/.agents/*' \
+            -prune -exec rm -rf {} +
+          echo "Remaining hidden entries under publish:"
+          find "${{env.DOTNET_ROOT}}/publish" -name '.*' | sed "s#${{env.DOTNET_ROOT}}/publish#<publish>#"
+
+      # Run after the prune so this validates the exact tree about to be uploaded: it catches
+      # both a package regression (skills never published) and a prune that harmed .agents.
+      # The skills flow in transitively from CrestApps.AgentSkills.Mcp.OrchardCore.
+      - name: Verify agent skills were published
+        run: |
+          count=$(find "${{env.DOTNET_ROOT}}/publish/.agents/skills" -name 'SKILL.md' 2>/dev/null | wc -l)
+          echo "Found $count SKILL.md file(s) in the publish output."
+          if [ "$count" -lt 1 ]; then
+            echo "::error::No agent skills under .agents/skills. Either the transitive skills from CrestApps.AgentSkills.Mcp.OrchardCore did not publish, or the prune step removed them."
+            exit 1
+          fi
+
       - name: Upload Publish Package
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:
           name: publish-package
           path: ${{env.DOTNET_ROOT}}/publish
+          include-hidden-files: true
 
   deploy:
     name: Deploy
@@ -43,7 +71,19 @@ jobs:
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
         with:
           name: publish-package
-      
+
+      # Guard on the artifact that is actually about to deploy, after the upload/download
+      # round-trip. This is where the hidden .agents/skills folder was previously lost, so
+      # fail here rather than silently deploy an MCP server with no skills.
+      - name: Verify agent skills are in the deployment package
+        run: |
+          count=$(find ./.agents/skills -name 'SKILL.md' 2>/dev/null | wc -l)
+          echo "Found $count SKILL.md file(s) in the deployment package."
+          if [ "$count" -lt 1 ]; then
+            echo "::error::The deployment package has no agent skills under .agents/skills. If publish produced them, the artifact upload likely stripped the hidden folder (set include-hidden-files: true)."
+            exit 1
+          fi
+
       # Stopping the app with an app_offline.htm file. Without this, files will remain locked and the deployment will
       # fail with a generic error.
       - name: Deploy App Offline to Azure Web App

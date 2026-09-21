@@ -13,7 +13,7 @@
 
   <ItemGroup>
     <!-- Compiles Assets/Styles/site.css -> wwwroot/css/site.css with the Tailwind CLI on build (no Node.js required). -->
-    <PackageReference Include="Lombiq.Tailwind.Targets" Version="1.0.0-alpha.9.nest-644" />
+    <PackageReference Include="Lombiq.Tailwind.Targets" Version="1.0.0" />
   </ItemGroup>
 
   <!-- TEMPORARY workaround (remove once Lombiq.Tailwind.Targets ships a fix): its default download
