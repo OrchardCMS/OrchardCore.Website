@@ -51,6 +51,16 @@ public sealed class Migrations : DataMigration
 
         await _recipeMigrator.ExecuteAsync("automation.recipe.json", this);
 
-        return 1;
+        await _recipeMigrator.ExecuteAsync("legal.recipe.json", this);
+
+        return 2;
+    }
+
+    // Adds the /privacy and /terms pages to sites created before they existed.
+    public async Task<int> UpdateFrom1Async()
+    {
+        await _recipeMigrator.ExecuteAsync("legal.recipe.json", this);
+
+        return 2;
     }
 }

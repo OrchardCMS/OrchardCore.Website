@@ -1,0 +1,434 @@
+{
+  "name": "TheOrchardCoreTheme.Content.Legal",
+  "displayName": "Orchard Core Website - Legal Pages",
+  "description": "The Privacy Policy (/privacy) and Terms of Service (/terms) pages.",
+  "author": "Orchard Core",
+  "version": "1.0.0",
+  "issetuprecipe": false,
+  "categories": [
+    "theme"
+  ],
+  "steps": [
+    {
+      "name": "content",
+      "data": [
+        {
+          "ContentItemId": "ocwebsiteprivacypage000000",
+          "ContentType": "LandingPage",
+          "DisplayText": "Privacy Policy",
+          "Latest": true,
+          "Published": true,
+          "TitlePart": {
+            "Title": "Privacy Policy"
+          },
+          "AutoroutePart": {
+            "Path": "privacy"
+          },
+          "LocalizationPart": {
+            "Culture": "en",
+            "LocalizationSet": "4d7a2c18-5b36-4e09-9a71-c3f8e1d20b64"
+          },
+          "Sections": {
+            "ContentItems": [
+              {
+                "ContentItemId": "[js:uuid()]",
+                "ContentType": "HeroText",
+                "DisplayText": "Privacy Policy",
+                "Latest": true,
+                "Published": true,
+                "BlockPart": {
+                  "Theme": {
+                    "Text": "White"
+                  },
+                  "AnchorId": {
+                    "Text": "hero"
+                  }
+                },
+                "HeroText": {
+                  "Lead": {
+                    "Html": "<p>Last updated: November 19, 2026</p>"
+                  }
+                },
+                "CallToActions": {
+                  "ContentItems": []
+                },
+                "TitlePart": {
+                  "Title": "Privacy Policy"
+                }
+              },
+              {
+                "ContentItemId": "[js:uuid()]",
+                "ContentType": "TextAndImage",
+                "DisplayText": "The website",
+                "Latest": true,
+                "Published": true,
+                "BlockPart": {
+                  "Theme": {
+                    "Text": "White"
+                  },
+                  "AnchorId": {
+                    "Text": "website"
+                  }
+                },
+                "TitlePart": {
+                  "Title": "The website"
+                },
+                "TextAndImage": {
+                  "Body": {
+                    "Html": "<p>orchardcore.net is a static website. It does not require an account, does not collect personal information through forms, and does not use its own cookies or tracking technologies. Like any web host, the server or content delivery network that serves the site may keep standard technical logs (such as IP address and requested page) for security and operational purposes.</p>"
+                  }
+                },
+                "CallToActions": {
+                  "ContentItems": []
+                }
+              },
+              {
+                "ContentItemId": "[js:uuid()]",
+                "ContentType": "TextAndImage",
+                "DisplayText": "Orchard Core Videos tool",
+                "Latest": true,
+                "Published": true,
+                "BlockPart": {
+                  "Theme": {
+                    "Text": "White"
+                  },
+                  "AnchorId": {
+                    "Text": "videos-tool"
+                  }
+                },
+                "TitlePart": {
+                  "Title": "Orchard Core Videos tool"
+                },
+                "TextAndImage": {
+                  "Body": {
+                    "Html": "<p>Orchard Core Videos is an internal tool used by maintainers of the Orchard Core open source project. It uploads videos that the Orchard Core project produces to the project's own YouTube channel, and updates their descriptions. It is not offered to the public and does not collect data from visitors or end users.</p><p>To do this, the tool asks the channel's owner to sign in with Google and grant these permissions:</p><ul><li><code>youtube.upload</code>, to upload the project's videos.</li><li><code>youtube.force-ssl</code>, to update the title, description and chapters of those videos.</li></ul><p>The tool uses the access only for these purposes. It does not sell, share or transfer Google user data to third parties, and it does not use that data for advertising. Its use of information received from Google APIs adheres to the <a href=\"https://developers.google.com/terms/api-services-user-data-policy\">Google API Services User Data Policy</a>, including the Limited Use requirements. Access can be revoked at any time at <a href=\"https://myaccount.google.com/permissions\">https://myaccount.google.com/permissions</a>.</p>"
+                  }
+                },
+                "CallToActions": {
+                  "ContentItems": []
+                }
+              },
+              {
+                "ContentItemId": "[js:uuid()]",
+                "ContentType": "TextAndImage",
+                "DisplayText": "Third-party services",
+                "Latest": true,
+                "Published": true,
+                "BlockPart": {
+                  "Theme": {
+                    "Text": "White"
+                  },
+                  "AnchorId": {
+                    "Text": "third-party-services"
+                  }
+                },
+                "TitlePart": {
+                  "Title": "Third-party services"
+                },
+                "TextAndImage": {
+                  "Body": {
+                    "Html": "<p>Videos are hosted on YouTube and embedded in the Orchard Core documentation. YouTube and Google handle data under their own policies: <a href=\"https://policies.google.com/privacy\">https://policies.google.com/privacy</a>.</p>"
+                  }
+                },
+                "CallToActions": {
+                  "ContentItems": []
+                }
+              },
+              {
+                "ContentItemId": "[js:uuid()]",
+                "ContentType": "TextAndImage",
+                "DisplayText": "Changes",
+                "Latest": true,
+                "Published": true,
+                "BlockPart": {
+                  "Theme": {
+                    "Text": "White"
+                  },
+                  "AnchorId": {
+                    "Text": "changes"
+                  }
+                },
+                "TitlePart": {
+                  "Title": "Changes"
+                },
+                "TextAndImage": {
+                  "Body": {
+                    "Html": "<p>We may update this policy from time to time. The current version is always available on this page.</p>"
+                  }
+                },
+                "CallToActions": {
+                  "ContentItems": []
+                }
+              },
+              {
+                "ContentItemId": "[js:uuid()]",
+                "ContentType": "TextAndImage",
+                "DisplayText": "Contact",
+                "Latest": true,
+                "Published": true,
+                "BlockPart": {
+                  "Theme": {
+                    "Text": "White"
+                  },
+                  "AnchorId": {
+                    "Text": "contact"
+                  }
+                },
+                "TitlePart": {
+                  "Title": "Contact"
+                },
+                "TextAndImage": {
+                  "Body": {
+                    "Html": "<p>Questions about this policy: <a href=\"mailto:contact@orchardcore.net\">contact@orchardcore.net</a></p>"
+                  }
+                },
+                "CallToActions": {
+                  "ContentItems": []
+                }
+              }
+            ]
+          },
+          "SeoMetaPart": {
+            "PageTitle": "Privacy Policy - Orchard Core",
+            "Render": true,
+            "MetaDescription": "How orchardcore.net and the Orchard Core Videos tool handle data."
+          }
+        },
+        {
+          "ContentItemId": "ocwebsitetermspage00000000",
+          "ContentType": "LandingPage",
+          "DisplayText": "Terms of Service",
+          "Latest": true,
+          "Published": true,
+          "TitlePart": {
+            "Title": "Terms of Service"
+          },
+          "AutoroutePart": {
+            "Path": "terms"
+          },
+          "LocalizationPart": {
+            "Culture": "en",
+            "LocalizationSet": "8e3b9f61-2a4d-4c57-b0e8-6d1f7a95c3e2"
+          },
+          "Sections": {
+            "ContentItems": [
+              {
+                "ContentItemId": "[js:uuid()]",
+                "ContentType": "HeroText",
+                "DisplayText": "Terms of Service",
+                "Latest": true,
+                "Published": true,
+                "BlockPart": {
+                  "Theme": {
+                    "Text": "White"
+                  },
+                  "AnchorId": {
+                    "Text": "hero"
+                  }
+                },
+                "HeroText": {
+                  "Lead": {
+                    "Html": "<p>Last updated: November 19, 2026</p>"
+                  }
+                },
+                "CallToActions": {
+                  "ContentItems": []
+                },
+                "TitlePart": {
+                  "Title": "Terms of Service"
+                }
+              },
+              {
+                "ContentItemId": "[js:uuid()]",
+                "ContentType": "TextAndImage",
+                "DisplayText": "About",
+                "Latest": true,
+                "Published": true,
+                "BlockPart": {
+                  "Theme": {
+                    "Text": "White"
+                  },
+                  "AnchorId": {
+                    "Text": "about"
+                  }
+                },
+                "TitlePart": {
+                  "Title": "About"
+                },
+                "TextAndImage": {
+                  "Body": {
+                    "Html": "<p>These terms apply to the Orchard Core Videos tool and to the orchardcore.net website, which are provided by the Orchard Core open source project.</p>"
+                  }
+                },
+                "CallToActions": {
+                  "ContentItems": []
+                }
+              },
+              {
+                "ContentItemId": "[js:uuid()]",
+                "ContentType": "TextAndImage",
+                "DisplayText": "Orchard Core Videos tool",
+                "Latest": true,
+                "Published": true,
+                "BlockPart": {
+                  "Theme": {
+                    "Text": "White"
+                  },
+                  "AnchorId": {
+                    "Text": "videos-tool"
+                  }
+                },
+                "TitlePart": {
+                  "Title": "Orchard Core Videos tool"
+                },
+                "TextAndImage": {
+                  "Body": {
+                    "Html": "<p>Orchard Core Videos is an internal tool for maintainers of the Orchard Core project. It is used to upload and manage the project's own videos on its YouTube channel. It is not a public service, and no accounts or sign-ups are offered to the public.</p>"
+                  }
+                },
+                "CallToActions": {
+                  "ContentItems": []
+                }
+              },
+              {
+                "ContentItemId": "[js:uuid()]",
+                "ContentType": "TextAndImage",
+                "DisplayText": "Website use",
+                "Latest": true,
+                "Published": true,
+                "BlockPart": {
+                  "Theme": {
+                    "Text": "White"
+                  },
+                  "AnchorId": {
+                    "Text": "website-use"
+                  }
+                },
+                "TitlePart": {
+                  "Title": "Website use"
+                },
+                "TextAndImage": {
+                  "Body": {
+                    "Html": "<p>The content of orchardcore.net is provided for general information about Orchard Core. You may browse it freely. The Orchard Core software is licensed separately under its open source license, available in the project's GitHub repository.</p>"
+                  }
+                },
+                "CallToActions": {
+                  "ContentItems": []
+                }
+              },
+              {
+                "ContentItemId": "[js:uuid()]",
+                "ContentType": "TextAndImage",
+                "DisplayText": "No warranty",
+                "Latest": true,
+                "Published": true,
+                "BlockPart": {
+                  "Theme": {
+                    "Text": "White"
+                  },
+                  "AnchorId": {
+                    "Text": "no-warranty"
+                  }
+                },
+                "TitlePart": {
+                  "Title": "No warranty"
+                },
+                "TextAndImage": {
+                  "Body": {
+                    "Html": "<p>The website and the tool are provided \"as is\", without warranty of any kind, express or implied. To the fullest extent permitted by law, the Orchard Core project and its contributors are not liable for any damages arising from their use.</p>"
+                  }
+                },
+                "CallToActions": {
+                  "ContentItems": []
+                }
+              },
+              {
+                "ContentItemId": "[js:uuid()]",
+                "ContentType": "TextAndImage",
+                "DisplayText": "YouTube",
+                "Latest": true,
+                "Published": true,
+                "BlockPart": {
+                  "Theme": {
+                    "Text": "White"
+                  },
+                  "AnchorId": {
+                    "Text": "youtube"
+                  }
+                },
+                "TitlePart": {
+                  "Title": "YouTube"
+                },
+                "TextAndImage": {
+                  "Body": {
+                    "Html": "<p>Videos are hosted on YouTube. By watching them you are also subject to the <a href=\"https://www.youtube.com/t/terms\">YouTube Terms of Service</a>.</p>"
+                  }
+                },
+                "CallToActions": {
+                  "ContentItems": []
+                }
+              },
+              {
+                "ContentItemId": "[js:uuid()]",
+                "ContentType": "TextAndImage",
+                "DisplayText": "Changes",
+                "Latest": true,
+                "Published": true,
+                "BlockPart": {
+                  "Theme": {
+                    "Text": "White"
+                  },
+                  "AnchorId": {
+                    "Text": "changes"
+                  }
+                },
+                "TitlePart": {
+                  "Title": "Changes"
+                },
+                "TextAndImage": {
+                  "Body": {
+                    "Html": "<p>We may update these terms from time to time. The current version is always available on this page.</p>"
+                  }
+                },
+                "CallToActions": {
+                  "ContentItems": []
+                }
+              },
+              {
+                "ContentItemId": "[js:uuid()]",
+                "ContentType": "TextAndImage",
+                "DisplayText": "Contact",
+                "Latest": true,
+                "Published": true,
+                "BlockPart": {
+                  "Theme": {
+                    "Text": "White"
+                  },
+                  "AnchorId": {
+                    "Text": "contact"
+                  }
+                },
+                "TitlePart": {
+                  "Title": "Contact"
+                },
+                "TextAndImage": {
+                  "Body": {
+                    "Html": "<p>Questions about these terms: contact@orchardcore.net</p>"
+                  }
+                },
+                "CallToActions": {
+                  "ContentItems": []
+                }
+              }
+            ]
+          },
+          "SeoMetaPart": {
+            "PageTitle": "Terms of Service - Orchard Core",
+            "Render": true,
+            "MetaDescription": "The terms that apply to the Orchard Core Videos tool and the orchardcore.net website."
+          }
+        }
+      ]
+    }
+  ]
+}
