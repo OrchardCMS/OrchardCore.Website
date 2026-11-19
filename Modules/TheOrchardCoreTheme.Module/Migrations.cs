@@ -1,5 +1,10 @@
+using OrchardCore.ContentFields.Fields;
+using OrchardCore.ContentManagement;
+using OrchardCore.ContentManagement.Records;
 using OrchardCore.Data.Migration;
+using OrchardCore.Flows.Models;
 using OrchardCore.Recipes.Services;
+using YesSql;
 
 namespace TheOrchardCoreTheme.Module;
 
@@ -12,10 +17,14 @@ namespace TheOrchardCoreTheme.Module;
 public sealed class Migrations : DataMigration
 {
     private readonly IRecipeMigrator _recipeMigrator;
+    private readonly IContentManager _contentManager;
+    private readonly ISession _session;
 
-    public Migrations(IRecipeMigrator recipeMigrator)
+    public Migrations(IRecipeMigrator recipeMigrator, IContentManager contentManager, ISession session)
     {
         _recipeMigrator = recipeMigrator;
+        _contentManager = contentManager;
+        _session = session;
     }
 
     public async Task<int> CreateAsync()
@@ -56,11 +65,51 @@ public sealed class Migrations : DataMigration
         return 2;
     }
 
-    // Adds the /privacy and /terms pages to sites created before they existed.
+    // Adds the /privacy and /terms pages, and their footer links, to sites created before they existed.
+    // Fresh sites get the links from content.recipe.json instead.
     public async Task<int> UpdateFrom1Async()
     {
         await _recipeMigrator.ExecuteAsync("legal.recipe.json", this);
+        await AddLegalFooterLinksAsync();
 
         return 2;
+    }
+
+    private async Task AddLegalFooterLinksAsync()
+    {
+        var columns = await _session
+            .Query<ContentItem, ContentItemIndex>(index => index.ContentType == "LinkColumn" && index.Published)
+            .ListAsync();
+
+        var project = columns.FirstOrDefault(column => column.DisplayText == "Project");
+        if (project is null)
+        {
+            return;
+        }
+
+        var existing = project.Get<BagPart>("Links")?.ContentItems ?? [];
+
+        foreach (var (text, url) in new[] { ("Privacy Policy", "~/privacy"), ("Terms of Service", "~/terms") })
+        {
+            if (existing.Any(item => item.Get<ContentPart>("Link")?.Get<LinkField>("Link")?.Url == url))
+            {
+                continue;
+            }
+
+            var link = await _contentManager.NewAsync("Link");
+            link.DisplayText = text;
+            link.Latest = true;
+            link.Published = true;
+            link.Alter<ContentPart>("Link", part => part.Alter<LinkField>("Link", field =>
+            {
+                field.Url = url;
+                field.Text = text;
+                field.Target = string.Empty;
+            }));
+
+            project.Alter<BagPart>("Links", bag => bag.ContentItems.Add(link));
+        }
+
+        await _contentManager.UpdateAsync(project);
     }
 }

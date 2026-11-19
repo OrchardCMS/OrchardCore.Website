@@ -9004,6 +9004,34 @@
                     "Target": ""
                   }
                 }
+              },
+              {
+                "ContentItemId": "[js:uuid()]",
+                "ContentType": "Link",
+                "DisplayText": "Privacy Policy",
+                "Latest": true,
+                "Published": true,
+                "Link": {
+                  "Link": {
+                    "Url": "~/privacy",
+                    "Text": "Privacy Policy",
+                    "Target": ""
+                  }
+                }
+              },
+              {
+                "ContentItemId": "[js:uuid()]",
+                "ContentType": "Link",
+                "DisplayText": "Terms of Service",
+                "Latest": true,
+                "Published": true,
+                "Link": {
+                  "Link": {
+                    "Url": "~/terms",
+                    "Text": "Terms of Service",
+                    "Target": ""
+                  }
+                }
               }
             ]
           },
