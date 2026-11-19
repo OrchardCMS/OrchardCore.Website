@@ -375,6 +375,21 @@
                   "UrlPlaceholder": "https://example.com"
                 }
               }
+            },
+            {
+              "FieldName": "BooleanField",
+              "Name": "DarkBackground",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Dark background",
+                  "Position": "2"
+                },
+                "BooleanFieldSettings": {
+                  "Hint": "Show the logo on a dark tile, filling it edge to edge. Use it for square logos that include their own dark background.",
+                  "Label": "Use a dark tile",
+                  "DefaultValue": false
+                }
+              }
             }
           ]
         },
