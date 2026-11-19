@@ -111,7 +111,7 @@
               {
                 "ContentItemId": "[js:uuid()]",
                 "ContentType": "TextAndImage",
-                "DisplayText": "Third-party services",
+                "DisplayText": "YouTube API Services",
                 "Latest": true,
                 "Published": true,
                 "BlockPart": {
@@ -119,15 +119,15 @@
                     "Text": "White"
                   },
                   "AnchorId": {
-                    "Text": "third-party-services"
+                    "Text": "youtube"
                   }
                 },
                 "TitlePart": {
-                  "Title": "Third-party services"
+                  "Title": "YouTube API Services"
                 },
                 "TextAndImage": {
                   "Body": {
-                    "Html": "<p>Videos are hosted on YouTube and embedded in the Orchard Core documentation. YouTube and Google handle data under their own policies: <a href=\"https://policies.google.com/privacy\">https://policies.google.com/privacy</a>.</p>"
+                    "Html": "<p>The Orchard Core project uses YouTube API Services in an internal publishing tool that uploads and updates our own tutorial and documentation videos on the Orchard Core YouTube channel. By using our videos on YouTube, you are also bound by the <a href=\"https://www.youtube.com/t/terms\">YouTube Terms of Service</a>.</p><ul><li><strong>What the tool accesses.</strong> The tool signs in once, with the authorization of the channel owner, and only manages content on our own channel: it uploads videos, sets titles, descriptions, tags, captions and thumbnails, and adds videos to our playlists. It is not available to the public and has no user accounts.</li><li><strong>What we do not collect.</strong> We do not collect, store, share, or sell data about viewers, subscribers, commenters, or any other YouTube users through YouTube API Services, and we do not access any other person's YouTube account or data.</li><li><strong>Google's Privacy Policy.</strong> Use of YouTube and of Google's services is governed by the <a href=\"https://policies.google.com/privacy\">Google Privacy Policy</a>.</li><li><strong>Revoking access.</strong> The channel owner can revoke the tool's access to the Orchard Core Google Account at any time in the <a href=\"https://myaccount.google.com/permissions\">Google security settings</a>. After access is revoked, the tool can no longer act on the channel.</li><li><strong>Deleting data.</strong> The tool keeps only the authorization needed to manage our own channel, and stores no personal data about viewers. If you believe we hold information about you that came from YouTube API Services, contact us and we will delete it.</li></ul>"
                   }
                 },
                 "CallToActions": {
