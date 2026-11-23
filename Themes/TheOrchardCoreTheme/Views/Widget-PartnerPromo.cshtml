@@ -42,27 +42,21 @@
                 var alt = partnerItem.DisplayText;
                 var logoPath = partner?.Get<MediaField>("Logo")?.Paths?.FirstOrDefault();
                 var link = partner?.Get<LinkField>("Link")?.Url;
-                // Square logos designed for a dark background (e.g. CrestApps) fill a dark tile edge to edge.
-                var dark = partner?.Get<BooleanField>("DarkBackground")?.Value == true;
-                var tileClass = dark
-                    ? "overflow-hidden bg-[#181618] transition hover:opacity-90"
-                    : "bg-white/90 p-5 transition hover:bg-white";
-                var imgClass = dark ? "size-full object-contain" : "max-h-16 w-auto max-w-full object-contain";
                 if (!string.IsNullOrEmpty(link))
                 {
-                    <a href="@Url.Content(link)" aria-label="@alt" class="flex aspect-square items-center justify-center rounded-xl @tileClass focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
+                    <a href="@Url.Content(link)" aria-label="@alt" class="flex aspect-square items-center justify-center rounded-xl bg-white/90 p-5 transition hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
                         @if (!string.IsNullOrEmpty(logoPath))
                         {
-                            <img src="@Orchard.AssetUrl(logoPath)" alt="@alt" loading="lazy" decoding="async" class="@imgClass">
+                            <img src="@Orchard.AssetUrl(logoPath)" alt="@alt" loading="lazy" decoding="async" class="max-h-16 w-auto max-w-full object-contain">
                         }
                     </a>
                 }
                 else
                 {
-                    <div class="flex aspect-square items-center justify-center rounded-xl @tileClass">
+                    <div class="flex aspect-square items-center justify-center rounded-xl bg-white/90 p-5">
                         @if (!string.IsNullOrEmpty(logoPath))
                         {
-                            <img src="@Orchard.AssetUrl(logoPath)" alt="@alt" loading="lazy" decoding="async" class="@imgClass">
+                            <img src="@Orchard.AssetUrl(logoPath)" alt="@alt" loading="lazy" decoding="async" class="max-h-16 w-auto max-w-full object-contain">
                         }
                     </div>
                 }
