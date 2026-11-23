@@ -1,0 +1,197 @@
+{
+  "name": "AddCrestAppsPartner",
+  "displayName": "Add CrestApps to the footer partners",
+  "description": "Adds the CrestApps logo and partner tile to the footer Partner promo widget on an existing site.",
+  "author": "Orchard Core",
+  "version": "1.0.0",
+  "issetuprecipe": false,
+  "categories": [
+    "Content"
+  ],
+  "tags": [
+    "footer",
+    "partners"
+  ],
+  "variables": {
+    "partnerPromoContentItemId": "REPLACE-WITH-THE-PARTNER-PROMO-WIDGET-ID"
+  },
+  "steps": [
+    {
+      "name": "media",
+      "Files": [
+        {
+          "TargetPath": "partners/crestapps.png",
+          "SourcePath": "crestapps.png"
+        }
+      ]
+    },
+    {
+      "name": "content",
+      "data": [
+        {
+          "ContentItemId": "[js: (function () { var id = variables('partnerPromoContentItemId'); if (id.indexOf('REPLACE') === 0) { throw new Error('Set the partnerPromoContentItemId variable in recipe.json to the ContentItemId of the footer Partner promo widget before importing.'); } return id; })()]",
+          "ContentType": "PartnerPromo",
+          "DisplayText": "Partner promo (English)",
+          "Latest": true,
+          "Published": true,
+          "LayerMetadata": {
+            "Layer": "English",
+            "Zone": "Footer Top",
+            "Position": 1,
+            "RenderTitle": false
+          },
+          "PartnerPromo": {
+            "Heading": {
+              "Text": "Built by the community, with help from our partners."
+            },
+            "Intro": {
+              "Html": "<p>These partners support the project in different ways, alongside the community that builds and maintains it.</p>"
+            }
+          },
+          "CallToActions": {
+            "ContentItems": [
+              {
+                "ContentItemId": "[js:uuid()]",
+                "ContentType": "CallToAction",
+                "DisplayText": "Get involved",
+                "Latest": true,
+                "Published": true,
+                "CallToAction": {
+                  "Link": {
+                    "Url": "https://docs.orchardcore.net/en/latest/contributing/",
+                    "Text": "Get involved",
+                    "Target": ""
+                  },
+                  "Variant": {
+                    "Text": "Primary"
+                  }
+                },
+                "TitlePart": {
+                  "Title": "Get involved"
+                }
+              }
+            ]
+          },
+          "Partners": {
+            "ContentItems": [
+              {
+                "ContentItemId": "[js:uuid()]",
+                "ContentType": "Partner",
+                "DisplayText": ".NET Foundation",
+                "Latest": true,
+                "Published": true,
+                "Partner": {
+                  "Logo": {
+                    "Paths": [
+                      "partners/dotnet-foundation.svg"
+                    ]
+                  },
+                  "Link": {
+                    "Url": "https://dotnetfoundation.org/",
+                    "Text": "",
+                    "Target": ""
+                  }
+                },
+                "TitlePart": {
+                  "Title": ".NET Foundation"
+                }
+              },
+              {
+                "ContentItemId": "[js:uuid()]",
+                "ContentType": "Partner",
+                "DisplayText": "DotNest",
+                "Latest": true,
+                "Published": true,
+                "Partner": {
+                  "Logo": {
+                    "Paths": [
+                      "partners/dotnest.png"
+                    ]
+                  },
+                  "Link": {
+                    "Url": "https://dotnest.com/",
+                    "Text": "",
+                    "Target": ""
+                  }
+                },
+                "TitlePart": {
+                  "Title": "DotNest"
+                }
+              },
+              {
+                "ContentItemId": "[js:uuid()]",
+                "ContentType": "Partner",
+                "DisplayText": "Dojo",
+                "Latest": true,
+                "Published": true,
+                "Partner": {
+                  "Logo": {
+                    "Paths": [
+                      "partners/dojo.png"
+                    ]
+                  },
+                  "Link": {
+                    "Url": "https://orcharddojo.net/",
+                    "Text": "",
+                    "Target": ""
+                  }
+                },
+                "TitlePart": {
+                  "Title": "Dojo"
+                }
+              },
+              {
+                "ContentItemId": "[js:uuid()]",
+                "ContentType": "Partner",
+                "Latest": true,
+                "Published": true,
+                "DisplayText": "Pirsch",
+                "Partner": {
+                  "Logo": {
+                    "Paths": [
+                      "partners/pirsch.svg"
+                    ]
+                  },
+                  "Link": {
+                    "Url": "https://pirsch.io/",
+                    "Text": "",
+                    "Target": ""
+                  }
+                },
+                "TitlePart": {
+                  "Title": "Pirsch"
+                }
+              },
+              {
+                "ContentItemId": "[js:uuid()]",
+                "ContentType": "Partner",
+                "Latest": true,
+                "Published": true,
+                "DisplayText": "CrestApps",
+                "Partner": {
+                  "Logo": {
+                    "Paths": [
+                      "partners/crestapps.png"
+                    ]
+                  },
+                  "Link": {
+                    "Url": "https://crestapps.com/",
+                    "Text": "",
+                    "Target": ""
+                  }
+                },
+                "TitlePart": {
+                  "Title": "CrestApps"
+                }
+              }
+            ]
+          },
+          "TitlePart": {
+            "Title": "Partner promo (English)"
+          },
+          "ContentItemVersionId": "[js: uuid()]"
+        }
+      ]
+    }
+  ]
+}

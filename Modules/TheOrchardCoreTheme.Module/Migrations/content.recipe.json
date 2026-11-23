@@ -227,6 +227,10 @@
           "SourcePath": "../wwwroot/assets/partners/pirsch.svg"
         },
         {
+          "TargetPath": "partners/crestapps.png",
+          "SourcePath": "../wwwroot/assets/partners/crestapps.png"
+        },
+        {
           "TargetPath": "harvest/harvest-2023/sipke-schoorstra.jpg",
           "SourcePath": "../wwwroot/assets/harvest/harvest-2023/sipke-schoorstra.jpg"
         },
@@ -8815,6 +8819,28 @@
                 },
                 "TitlePart": {
                   "Title": "Pirsch"
+                }
+              },
+              {
+                "ContentItemId": "[js:uuid()]",
+                "ContentType": "Partner",
+                "Latest": true,
+                "Published": true,
+                "DisplayText": "CrestApps",
+                "Partner": {
+                  "Logo": {
+                    "Paths": [
+                      "partners/crestapps.png"
+                    ]
+                  },
+                  "Link": {
+                    "Url": "https://crestapps.com/",
+                    "Text": "",
+                    "Target": ""
+                  }
+                },
+                "TitlePart": {
+                  "Title": "CrestApps"
                 }
               }
             ]
